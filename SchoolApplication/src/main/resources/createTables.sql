@@ -1,5 +1,5 @@
 -- Table: school_app.students
- DROP TABLE IF EXISTS school_app.students;
+-- DROP TABLE IF EXISTS school_app.students;
 CREATE TABLE IF NOT EXISTS school_app.students
 (
     student_id integer NOT NULL,
