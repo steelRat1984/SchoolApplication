@@ -1,12 +1,13 @@
 package ua.foxminded.SchoolApplication;
 
+import java.awt.print.Printable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 public class DataBaseAccess {
-	
+	Connection connection = Database.connection();
 	
 	
 // TEST filling in student data
@@ -14,13 +15,31 @@ public class DataBaseAccess {
 //		DataBaseAccess dataBaseAccess = new DataBaseAccess();
 //		DataGenerate dataGenerate = new DataGenerate();
 //		List<Student> students = dataGenerate.generateStudents();
-//		dataBaseAccess.insertStudentsData(students);
+//		dataBaseAccess.filingStudentsData(students);
 //	}
 	Database database = new Database();
 
-	public void insertStudentsData(List<Student> students) {
+	
+	public void fillingGroupData(List<Group>groups) {
+		String sql = "INSERT INTO sclool_app.students (group_id, group_name) VALUES (?, ?)";
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			for (Group group : groups ) {
+				statement.setInt(1, group.getGroupID());
+				statement.setString(2, group.getGroupName());
+				statement.addBatch();
+			}
+			statement.executeBatch();
+			statement.close();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	public void fillingStudentsData(List<Student> students) {
 		String sql = "INSERT INTO school_app.students (student_id, group_id, first_name, last_name) VALUES (?, ?, ?, ?)";
-		Connection connection = database.connection();
 		try {
 			PreparedStatement statement = connection.prepareStatement(sql);
 			for (Student student : students) {
@@ -31,6 +50,7 @@ public class DataBaseAccess {
 				statement.addBatch();
 			}
 			statement.executeBatch();
+			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
