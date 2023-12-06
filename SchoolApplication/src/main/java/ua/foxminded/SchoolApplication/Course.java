@@ -5,6 +5,11 @@ public class Course {
 	private String courseName;
 	private String courseDescription;
 	
+	public Course(int courseID, String courseName, String courseDescription) {
+		this.courseID = courseID;
+		this.courseName = courseName;
+		this.courseDescription = courseDescription;
+	}
 	public int getCourseID() {
 		return courseID;
 	}

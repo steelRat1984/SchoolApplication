@@ -6,12 +6,6 @@ import java.util.Random;
 
 public class DataGenerate {
 	
-	public static void main(String[] args) {
-		DataGenerate generate = new DataGenerate();
-		List<Student> students = generate.generateStudents();
-	}
-	
-
 	public List<String> generateFirstName() {
 		List<String> firstName = new ArrayList<>();
 		firstName.add("John");
@@ -86,4 +80,44 @@ public class DataGenerate {
 		}
 		return students;
 	}
+
+	public List<Group> generateGoup() {
+		List<Group> groups = new ArrayList<>();
+		for (int i = 0; i < 10; i++) {
+			Group group = new Group();
+			group.setGroupID(i + 1);
+			group.setGroupName("group" + "_" + String.valueOf(i + 1));
+			groups.add(group);
+		}
+
+		return groups;
+	}
+
+	public List<Course> generateCourse() {
+		List<Course> courses = new ArrayList<>();
+		Course courseHistory = new Course(1, "History", "learning History");
+		Course courseGeography = new Course(2, "Geography", "learning Geography");
+		Course courseChemistry = new Course(3, "Chemistry", "learning Chemistry");
+		Course coursePhysics = new Course(4, "Physics", "learning Physics");
+		Course courseBiology = new Course(5, "Biology", "learning Biology");
+		Course courseLiterature = new Course(6, "Literature", "learning Literature");
+		Course coursePhysicalEducation = new Course(7, "Physical Education", "learning Physical Education");
+		Course courseArt = new Course(8, "Art", "learning Art");
+		Course courseMusic = new Course(9, "Music", "learning Music");
+		Course courseComputerScience = new Course(10, "Computer Science", "learning Computer Science");
+
+		courses.add(courseHistory);
+		courses.add(courseGeography);
+		courses.add(courseChemistry);
+		courses.add(coursePhysics);
+		courses.add(courseBiology);
+		courses.add(courseLiterature);
+		courses.add(coursePhysicalEducation);
+		courses.add(courseArt);
+		courses.add(courseMusic);
+		courses.add(courseComputerScience);
+
+		return courses;
+	}
+
 }
