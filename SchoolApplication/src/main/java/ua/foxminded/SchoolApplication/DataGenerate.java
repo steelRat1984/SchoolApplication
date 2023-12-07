@@ -119,5 +119,19 @@ public class DataGenerate {
 
 		return courses;
 	}
-
+	public List<StudentCourseRelation> generateRelations(List<Student> students, List<Course> courses){
+		List<StudentCourseRelation> studentCourseRelations = new ArrayList<>();
+		Random random = new Random();
+		int amountCourses = random.nextInt(3) + 1;
+		int eaachCourse = random.nextInt(10) + 1;
+		for( int i = 0; i < students.size(); i ++ ) {
+			for (int j = 0; j < amountCourses; j ++) {
+				int studentID = students.get(i).getStudentID();
+				int courseID = courses.get(eaachCourse).getCourseID();
+				StudentCourseRelation studentCourseRelation = new StudentCourseRelation(studentID, courseID);
+				studentCourseRelations.add(studentCourseRelation);
+			}
+		}
+		return studentCourseRelations;	
+	}
 }

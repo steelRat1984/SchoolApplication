@@ -1,43 +1,48 @@
 package ua.foxminded.SchoolApplication;
 
-import java.awt.print.Printable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 
-public class DataBaseAccess {
+public class DataBaseFiller {
 	Connection connection = Database.connection();
-	
-	
-// TEST filling in student data
-//	public static void main(String[] args) {
-//		DataBaseAccess dataBaseAccess = new DataBaseAccess();
-//		DataGenerate dataGenerate = new DataGenerate();
-//		List<Student> students = dataGenerate.generateStudents();
-//		dataBaseAccess.filingStudentsData(students);
-//	}
 	Database database = new Database();
 
-	
-	public void fillingGroupData(List<Group>groups) {
-		String sql = "INSERT INTO sclool_app.students (group_id, group_name) VALUES (?, ?)";
+	public void fillingCourseData(List<Course> courses) {
+		String sql = "INSERT INTO school_app.courses (course_id, course_name, course_description) VALUES (?, ?, ?)";
 		try {
 			PreparedStatement statement = connection.prepareStatement(sql);
-			for (Group group : groups ) {
+			for (Course course : courses) {
+				statement.setInt(1, course.getCourseID());
+				statement.setString(2, course.getCourseName());
+				statement.setString(3, course.getCourseDescription());
+				statement.addBatch();
+			}
+			statement.executeBatch();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void fillingGroupData(List<Group> groups) {
+		String sql = "INSERT INTO school_app.groups (group_id, group_name) VALUES (?, ?)";
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			for (Group group : groups) {
 				statement.setInt(1, group.getGroupID());
 				statement.setString(2, group.getGroupName());
 				statement.addBatch();
 			}
 			statement.executeBatch();
 			statement.close();
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
 	public void fillingStudentsData(List<Student> students) {
 		String sql = "INSERT INTO school_app.students (student_id, group_id, first_name, last_name) VALUES (?, ?, ?, ?)";
 		try {
@@ -57,4 +62,10 @@ public class DataBaseAccess {
 
 	}
 
+	public void fillingRelations(List<Student> students, List<Course> courses) {
+		
+
+		int eaachCourse = random.nextInt(10) + 1;
+		int eaachStudent = random.nextInt(200) + 1;
+	}
 }
