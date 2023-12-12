@@ -2,11 +2,14 @@ package ua.foxminded.SchoolApplication;
 
 public class StudentCourseRelation {
 	private int studentID;
-	private int groupID;
+	private int courseID;
 	
-	public StudentCourseRelation(int studentID, int groupID) {
+	public StudentCourseRelation(int studentID, int courseID) {
 		this.studentID = studentID;
-		this.groupID = groupID;
+		this.courseID = courseID;
+	}
+	public StudentCourseRelation () {
+		
 	}
 	public int getStudentID() {
 		return studentID;
@@ -14,11 +17,11 @@ public class StudentCourseRelation {
 	public void setStudentID(int studentID) {
 		this.studentID = studentID;
 	}
-	public int getGroupID() {
-		return groupID;
+	public int getCourseID() {
+		return courseID;
 	}
-	public void setGroupID(int groupID) {
-		this.groupID = groupID;
+	public void setCourseID(int courseID) {
+		this.courseID = courseID;
 	}
 	
 }

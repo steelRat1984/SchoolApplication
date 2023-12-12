@@ -62,10 +62,20 @@ public class DataBaseFiller {
 
 	}
 
-	public void fillingRelations(List<Student> students, List<Course> courses) {
-		
+	public void fillingRelations(List<StudentCourseRelation> relations) {
+		String sql = "INSERT INTO school_app.students_courses_relations (student_id, course_id) VALUES (?, ?)";
+		try {
+			PreparedStatement statement = connection.prepareStatement(sql);
+			for (StudentCourseRelation relation : relations) {
+				statement.setInt(1, relation.getStudentID());
+				statement.setInt(2, relation.getCourseID());
+				statement.addBatch();
+			}
+			statement.executeBatch();
+			statement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
-		int eaachCourse = random.nextInt(10) + 1;
-		int eaachStudent = random.nextInt(200) + 1;
 	}
 }

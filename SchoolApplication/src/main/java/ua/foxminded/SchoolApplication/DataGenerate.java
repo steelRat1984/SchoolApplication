@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 public class DataGenerate {
-	
+
 	public List<String> generateFirstName() {
 		List<String> firstName = new ArrayList<>();
 		firstName.add("John");
@@ -119,19 +119,31 @@ public class DataGenerate {
 
 		return courses;
 	}
-	public List<StudentCourseRelation> generateRelations(List<Student> students, List<Course> courses){
-		List<StudentCourseRelation> studentCourseRelations = new ArrayList<>();
+
+	public List<StudentCourseRelation> generateRelations(List<Student> students, List<Course> courses) {
+		List<StudentCourseRelation> relations = new ArrayList<>();
 		Random random = new Random();
-		int amountCourses = random.nextInt(3) + 1;
-		int eaachCourse = random.nextInt(10) + 1;
-		for( int i = 0; i < students.size(); i ++ ) {
-			for (int j = 0; j < amountCourses; j ++) {
+
+		for (int i = 0; i < students.size(); i++) {
+			int amountCourses = random.nextInt(3) + 1;
+
+			for (int j = 0; j < amountCourses; j++) {
+				int eaachCourse = random.nextInt(courses.size());
 				int studentID = students.get(i).getStudentID();
 				int courseID = courses.get(eaachCourse).getCourseID();
-				StudentCourseRelation studentCourseRelation = new StudentCourseRelation(studentID, courseID);
-				studentCourseRelations.add(studentCourseRelation);
+				StudentCourseRelation relation = new StudentCourseRelation();
+				relation.setStudentID(studentID);
+				relation.setCourseID(courseID);
+				if (i > 0) {
+					while (relations.get(i - 1).getCourseID() == courseID) {
+						eaachCourse = random.nextInt(courses.size());
+						courseID = courses.get(eaachCourse).getCourseID();
+						relation.setCourseID(courseID);
+					}
+				}
+				relations.add(relation);
 			}
 		}
-		return studentCourseRelations;	
+		return relations;
 	}
 }
