@@ -1,8 +1,10 @@
 package ua.foxminded.SchoolApplication;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 public class DataGenerate {
 
@@ -68,7 +70,7 @@ public class DataGenerate {
 
 			Student student = new Student();
 			student.setStudentID(i + 1);
-			student.setGroupID(random.nextInt(11));
+			student.setGroupID(random.nextInt(10) + 1);
 			student.setFirstName(firstName.get(firstNameIndex));
 			student.setLastName(lastName.get(lastNameIndex));
 			firstNameIndex++;
@@ -123,25 +125,17 @@ public class DataGenerate {
 	public List<StudentCourseRelation> generateRelations(List<Student> students, List<Course> courses) {
 		List<StudentCourseRelation> relations = new ArrayList<>();
 		Random random = new Random();
-
-		for (int i = 0; i < students.size(); i++) {
+		for (Student student : students) {
 			int amountCourses = random.nextInt(3) + 1;
-
-			for (int j = 0; j < amountCourses; j++) {
+			Set<Integer> assignedCourses = new HashSet<>();
+			while (assignedCourses.size() < amountCourses) {
 				int eaachCourse = random.nextInt(courses.size());
-				int studentID = students.get(i).getStudentID();
-				int courseID = courses.get(eaachCourse).getCourseID();
-				StudentCourseRelation relation = new StudentCourseRelation();
-				relation.setStudentID(studentID);
-				relation.setCourseID(courseID);
-				if (i > 0) {
-					while (relations.get(i - 1).getCourseID() == courseID) {
-						eaachCourse = random.nextInt(courses.size());
-						courseID = courses.get(eaachCourse).getCourseID();
-						relation.setCourseID(courseID);
-					}
+				if (assignedCourses.add(courses.get(eaachCourse).getCourseID())) {
+					StudentCourseRelation relation = new StudentCourseRelation();
+					relation.setStudentID(student.getStudentID());
+					relation.setCourseID(courses.get(eaachCourse).getCourseID());
+					relations.add(relation);
 				}
-				relations.add(relation);
 			}
 		}
 		return relations;
