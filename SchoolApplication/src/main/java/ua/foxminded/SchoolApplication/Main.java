@@ -19,8 +19,10 @@ public class Main {
 //		dataBaseFiller.fillingGroupData(groups);
 //		dataBaseFiller.fillingCourseData(courses);	
 //		dataBaseFiller.fillingRelations(relations);
-		StudentsAndGroupsFinder finder = new StudentsAndGroupsFinder();
-		finder.findNumberStudentsInGroups();
+		SelectorNumberStudentsAndGroups finder = new SelectorNumberStudentsAndGroups();
+		finder.selectNumberStudentsInGroups();
+		SelectorNamesFromCourse selectorNamesFromGroups = new SelectorNamesFromCourse();
+		System.out.println(selectorNamesFromGroups.selectNamesFromCourse("Geography"));
 	}
 
 }

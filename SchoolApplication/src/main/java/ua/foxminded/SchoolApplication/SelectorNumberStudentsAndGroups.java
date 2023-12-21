@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class StudentsAndGroupsFinder {
+public class SelectorNumberStudentsAndGroups {
 
-	public void findNumberStudentsInGroups() {
+	public void selectNumberStudentsInGroups() {
 		Map<Integer, Integer> numberOfStudentGroups = numberOfStudentGroups();
 		Map<Integer, List<Integer>> groupByStudentCount = groupByStudentCount(numberOfStudentGroups);
 		printCalculatedGroups(groupByStudentCount);
