@@ -12,10 +12,12 @@ import java.util.TreeMap;
 
 public class SelectorNumberStudentsAndGroups {
 
-	public void selectNumberStudentsInGroups() {
+	public String selectNumberStudentsInGroups() {
 		Map<Integer, Integer> numberOfStudentGroups = numberOfStudentGroups();
 		Map<Integer, List<Integer>> groupByStudentCount = groupByStudentCount(numberOfStudentGroups);
-		printCalculatedGroups(groupByStudentCount);
+		String listOfStudentsAndGroups = createResultForPrint(groupByStudentCount);
+		return listOfStudentsAndGroups;
+
 	}
 
 	private Map<Integer, Integer> numberOfStudentGroups() {
@@ -46,7 +48,8 @@ public class SelectorNumberStudentsAndGroups {
 		return countGroups;
 	}
 
-	private void printCalculatedGroups(Map<Integer, List<Integer>> studentCountGroups) {
+	private String createResultForPrint(Map<Integer, List<Integer>> studentCountGroups) {
+		StringBuilder result = new StringBuilder();
 		for (Map.Entry<Integer, List<Integer>> entry : studentCountGroups.entrySet()) {
 			List<Integer> groupIds = entry.getValue();
 			if (!groupIds.isEmpty()) {
@@ -57,9 +60,21 @@ public class SelectorNumberStudentsAndGroups {
 						groupsIDsString.append(", ");
 					}
 				}
-				System.out.println("Groups with " + entry.getKey() + " students: " + groupsIDsString);
+				result.append("Group");
+				result.append(" ");
+				result.append(groupsIDsString);
+				result.append(" ");
+				result.append("has");
+				result.append(" ");
+				result.append(entry.getKey());
+				result.append(" ");
+				result.append("students");
+				result.append("\n");
+
 			}
 		}
+
+		return result.toString();
 	}
 
 }

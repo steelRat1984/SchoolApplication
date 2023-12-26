@@ -13,7 +13,7 @@ public class SelectorNamesFromCourse {
 		List<Integer> studentsIds = selectStudentIds(courseID);
 		List<Student> students = selectStudents(studentsIds);
 		String studentsFullNames = writeStudentsFullNames(students);
-		String result = writeResult(studentsFullNames, courseName);
+		String result = createResultForPrint(studentsFullNames, courseName);
 		return result;
 	}
 
@@ -100,7 +100,7 @@ public class SelectorNamesFromCourse {
 		return studentsFullNames.toString();
 	}
 
-	private String writeResult(String studentsFullNames, String courseName) {
+	private String createResultForPrint(String studentsFullNames, String courseName) {
 		String text = "List of student from" + " " + courseName + " course :";
 		StringBuilder result = new StringBuilder();
 		result.append(text);

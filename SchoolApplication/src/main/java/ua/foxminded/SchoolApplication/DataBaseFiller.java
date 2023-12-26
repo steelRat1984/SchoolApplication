@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class DataBaseFiller {
 	Connection connection = Database.connection();
-	Database database = new Database();
+
 
 	public void fillingCourseData(List<Course> courses) {
 		String sql = "INSERT INTO school_app.courses (course_id, course_name, course_description) VALUES (?, ?, ?)";
