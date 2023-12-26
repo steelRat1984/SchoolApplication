@@ -23,6 +23,11 @@ public class Main {
 		System.out.println(selectorNumberStudentsAndGroups.selectNumberStudentsInGroups());
 		SelectorNamesFromCourse selectorNamesFromGroups = new SelectorNamesFromCourse();
 		System.out.println(selectorNamesFromGroups.selectNamesFromCourse("Geography"));
+		StudentManipulations studentManipulations = new StudentManipulations();
+		Student newStudent = new Student();
+		newStudent.setFirstName("Anton");
+		newStudent.setLastName("Petrovchuk");
+		studentManipulations.createStudent(newStudent);
 	}
 
 }

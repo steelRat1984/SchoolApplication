@@ -6,7 +6,7 @@
 -- DROP TABLE IF EXISTS school_app.students;
 CREATE TABLE IF NOT EXISTS school_app.students
 (
-    student_id NOT NULL,
+    student_id integer NOT NULL,
     group_id integer NOT NULL,
     first_name character(250) NOT NULL,
     last_name character(250) NOT NULL,

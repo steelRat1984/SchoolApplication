@@ -60,7 +60,7 @@ public class DataBaseFiller {
 			e.printStackTrace();
 		}
 
-	}
+	}	
 
 	public void fillingRelations(List<StudentCourseRelation> relations) {
 		String sql = "INSERT INTO school_app.students_courses_relations (student_id, course_id) VALUES (?, ?)";
