@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SelectorNamesFromCourse {
-	public String selectNamesFromCourse(String courseName) {
+	public String selectNamesFromCourse(CourseName enumNames) {
+		String courseName = enumNames.getName();
 		int courseID = selectCourseID(courseName);
 		List<Integer> studentsIds = selectStudentIds(courseID);
 		List<Student> students = selectStudents(studentsIds);

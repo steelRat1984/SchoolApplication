@@ -97,16 +97,16 @@ public class DataGenerate {
 
 	public List<Course> generateCourse() {
 		List<Course> courses = new ArrayList<>();
-		Course courseHistory = new Course(1, "History", "learning History");
-		Course courseGeography = new Course(2, "Geography", "learning Geography");
-		Course courseChemistry = new Course(3, "Chemistry", "learning Chemistry");
-		Course coursePhysics = new Course(4, "Physics", "learning Physics");
-		Course courseBiology = new Course(5, "Biology", "learning Biology");
-		Course courseLiterature = new Course(6, "Literature", "learning Literature");
-		Course coursePhysicalEducation = new Course(7, "Physical Education", "learning Physical Education");
-		Course courseArt = new Course(8, "Art", "learning Art");
-		Course courseMusic = new Course(9, "Music", "learning Music");
-		Course courseComputerScience = new Course(10, "Computer Science", "learning Computer Science");
+		Course courseHistory = new Course(1, CourseName.HISTORY.getName(), "learning History");
+		Course courseGeography = new Course(2, CourseName.GEOGRAPHY.getName(), "learning Geography");
+		Course courseChemistry = new Course(3, CourseName.CHEMISTRY.getName(), "learning Chemistry");
+		Course coursePhysics = new Course(4, CourseName.PHYSICS.getName(), "learning Physics");
+		Course courseBiology = new Course(5, CourseName.BIOLOGY.getName(), "learning Biology");
+		Course courseLiterature = new Course(6, CourseName.LITERATURE.getName(), "learning Literature");
+		Course coursePhysicalEducation = new Course(7, CourseName.PHYSICAL_EDUCATION.getName(), "learning Physical Education");
+		Course courseArt = new Course(8, CourseName.ART.getName(), "learning Art");
+		Course courseMusic = new Course(9, CourseName.MUSIC.getName(), "learning Music");
+		Course courseComputerScience = new Course(10, CourseName.COMPUTER_SCIENCE.getName(), "learning Computer Science");
 
 		courses.add(courseHistory);
 		courses.add(courseGeography);

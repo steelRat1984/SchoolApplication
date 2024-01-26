@@ -9,12 +9,12 @@ public class Main {
 /*
  * the first data filling
  */
-//		DataGenerate dataGenerate = new DataGenerate();
-//		DataBaseFiller dataBaseFiller = new DataBaseFiller();
-//		List<Student> students = dataGenerate.generateStudents();
-//		List<Group> groups = dataGenerate.generateGoup();
-//		List<Course> courses = dataGenerate.generateCourse();
-//		List<StudentCourseRelation> relations = dataGenerate.generateRelations(students, courses);
+		DataGenerate dataGenerate = new DataGenerate();
+		DataBaseFiller dataBaseFiller = new DataBaseFiller();
+		List<Student> students = dataGenerate.generateStudents();
+		List<Group> groups = dataGenerate.generateGoup();
+		List<Course> courses = dataGenerate.generateCourse();
+		List<StudentCourseRelation> relations = dataGenerate.generateRelations(students, courses);
 //		dataBaseFiller.fillingStudentsData(students);
 //		dataBaseFiller.fillingGroupData(groups);
 //		dataBaseFiller.fillingCourseData(courses);	
@@ -22,12 +22,16 @@ public class Main {
 		SelectorNumberStudentsAndGroups selectorNumberStudentsAndGroups = new SelectorNumberStudentsAndGroups();
 		System.out.println(selectorNumberStudentsAndGroups.selectNumberStudentsInGroups());
 		SelectorNamesFromCourse selectorNamesFromGroups = new SelectorNamesFromCourse();
-		System.out.println(selectorNamesFromGroups.selectNamesFromCourse("Geography"));
+		System.out.println(selectorNamesFromGroups.selectNamesFromCourse(CourseName.COMPUTER_SCIENCE));
 		StudentManipulations studentManipulations = new StudentManipulations();
-		Student newStudent = new Student();
-		newStudent.setFirstName("Anton");
-		newStudent.setLastName("Petrovchuk");
-		studentManipulations.createStudent(newStudent);
+//		Student newStudent = new Student();
+//		newStudent.setFirstName("Anton");
+//		newStudent.setLastName("Petrovchuk");
+//		studentManipulations.CreateAndInsertStudent(newStudent);
+		studentManipulations.addStudentToCourse(4, CourseName.COMPUTER_SCIENCE);
+
+		
+
 	}
 
 }
