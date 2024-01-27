@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-
 public class StudentManipulations {
 	Connection connection = Database.connection();
 
@@ -60,9 +59,9 @@ public class StudentManipulations {
 
 	}
 
-	public void addStudentToCourse(int studentId, CourseName EnumCourseName) {
-		String courseName = EnumCourseName.getName();
-		String sqlInsertRelations = "INSERT INTO school_app.students_courses_relations (student_id, course_id) VALUES (?, ?)";
+	public void addStudentToCourse(int studentId, CourseName enumCourseName) {
+		String courseName = enumCourseName.getName();
+		String insertRelations = "INSERT INTO school_app.students_courses_relations (student_id, course_id) VALUES (?, ?)";
 		String selectCourseIdByName = "SELECT course_id FROM school_app.courses WHERE course_name = ?";
 		String checkExistingCourses = "SELECT COUNT(*) FROM school_app.students_courses_relations WHERE student_id = ?";
 		String checkCourseDuplication = "SELECT COUNT(*) FROM school_app.students_courses_relations WHERE student_id = ? AND course_id = ?";
@@ -80,10 +79,10 @@ public class StudentManipulations {
 									.prepareStatement(checkCourseDuplication)) {
 								checkDuplecateStatement.setInt(1, studentId);
 								checkDuplecateStatement.setInt(2, courseId);
-								try (ResultSet resultSet = checkDuplecateStatement.executeQuery()) {
-									if (resultSet.next() && resultSet.getInt(1) == 0) {
+								try (ResultSet checkDuplecateResultSet = checkDuplecateStatement.executeQuery()) {
+									if (checkDuplecateResultSet.next() && checkDuplecateResultSet.getInt(1) == 0) {
 										try (PreparedStatement insertRelationsStatement = connection
-												.prepareStatement(sqlInsertRelations)) {
+												.prepareStatement(insertRelations)) {
 											insertRelationsStatement.setInt(1, studentId);
 											insertRelationsStatement.setInt(2, courseId);
 											insertRelationsStatement.executeUpdate();
@@ -106,4 +105,38 @@ public class StudentManipulations {
 		}
 	}
 
+	public void removeStudentFromCourse(int studentId, CourseName enumCourseName) {
+		String courseName = enumCourseName.getName();
+		String selectCourseIdByName = "SELECT course_id FROM school_app.courses WHERE course_name = ?";
+		String deleteRelations = "DELETE FROM school_app.students_courses_relations WHERE student_id = ? AND course_id = ?";
+		String checkCourseExisting = "SELECT COUNT(*) FROM school_app.students_courses_relations WHERE student_id = ? AND course_id = ?";
+
+		try (PreparedStatement selectCourseIdStatement = connection.prepareStatement(selectCourseIdByName)) {
+			selectCourseIdStatement.setString(1, courseName);
+			try (ResultSet selectCourseIdResultSet = selectCourseIdStatement.executeQuery()) {
+				if (selectCourseIdResultSet.next()) {
+					int courseId = selectCourseIdResultSet.getInt("course_id");
+					try (PreparedStatement checkCourseExistingStatement = connection
+							.prepareStatement(checkCourseExisting)) {
+						checkCourseExistingStatement.setInt(1, studentId);
+						checkCourseExistingStatement.setInt(2, courseId);
+						try (ResultSet checkCourseExistingResultSet = checkCourseExistingStatement.executeQuery()) {
+							if (checkCourseExistingResultSet.next() && checkCourseExistingResultSet.getInt(1) != 0) {
+								try (PreparedStatement deleteRelationsStatement = connection
+										.prepareStatement(deleteRelations)) {
+									deleteRelationsStatement.setInt(1, studentId);
+									deleteRelationsStatement.setInt(2, courseId);
+									deleteRelationsStatement.executeUpdate();
+								}
+							} else {
+								System.out.println("this student doesn't have this course");
+							}
+						}
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -28,8 +28,8 @@ public class Main {
 //		newStudent.setFirstName("Anton");
 //		newStudent.setLastName("Petrovchuk");
 //		studentManipulations.CreateAndInsertStudent(newStudent);
-		studentManipulations.addStudentToCourse(4, CourseName.COMPUTER_SCIENCE);
-
+//		studentManipulations.addStudentToCourse(4, CourseName.COMPUTER_SCIENCE);
+		studentManipulations.removeStudentFromCourse(4, CourseName.COMPUTER_SCIENCE);
 		
 
 	}
