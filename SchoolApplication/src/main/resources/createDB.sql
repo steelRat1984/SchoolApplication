@@ -1,27 +1,25 @@
 -- Database: schoolapp
--- DROP DATABASE IF EXISTS schoolapp;
+ DROP DATABASE IF EXISTS school_app;
 CREATE DATABASE schoolapp
     WITH
-    OWNER = postgres
+    OWNER = school_admin
     ENCODING = 'UTF8'
-    LC_COLLATE = 'Ukrainian_Ukraine.1251'
-    LC_CTYPE = 'Ukrainian_Ukraine.1251'
+    LC_COLLATE = 'C'
+    LC_CTYPE = 'C'
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1
     IS_TEMPLATE = False;
 
-GRANT TEMPORARY, CONNECT ON DATABASE schoolapp TO PUBLIC;
+GRANT TEMPORARY, CONNECT ON DATABASE school_app TO PUBLIC;
 
-GRANT ALL ON DATABASE schoolapp TO postgres;
+GRANT ALL ON DATABASE school_app TO postgres;
 
-GRANT ALL ON DATABASE schoolapp TO schooladmin;
+GRANT ALL ON DATABASE school_app TO school_admin;
 
 
-
--- Role: schooladmin
--- DROP ROLE IF EXISTS schooladmin;
-
-CREATE ROLE schooladmin WITH
+-- Role: school_admin
+-- DROP ROLE IF EXISTS school_admin;
+CREATE ROLE school_admin WITH
   LOGIN
   SUPERUSER
   INHERIT
