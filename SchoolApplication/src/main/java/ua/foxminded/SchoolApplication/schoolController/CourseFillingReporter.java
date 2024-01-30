@@ -22,14 +22,14 @@ public class CourseFillingReporter {
 		return result;
 	}
 
-	private int selectCourseID(String course_name) {
+	private int selectCourseID(String courseName) {
 		String sql = "SELECT course_id FROM school_app.courses WHERE course_name = ?";
 		Connection connection = Database.connection();
 		int course_id = 0;
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, course_name);
+			preparedStatement.setString(1, courseName);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {
 				course_id = resultSet.getInt("course_id");
@@ -42,14 +42,14 @@ public class CourseFillingReporter {
 		return course_id;
 	}
 
-	private List<Integer> selectStudentIds(int course_id) {
+	private List<Integer> selectStudentIds(int courseId) {
 		List<Integer> studentIds = new ArrayList<>();
 		String sql = "SELECT student_id FROM school_app.students_courses_relations WHERE course_id = ?";
 		Connection connection = Database.connection();
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, course_id);
+			preparedStatement.setInt(1, courseId);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				int student_id = resultSet.getInt("student_id");
