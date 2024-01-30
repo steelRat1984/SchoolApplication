@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication;
+package ua.foxminded.SchoolApplication.schoolController;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,8 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectorNamesFromCourse {
-	public String selectNamesFromCourse(CourseName enumNames) {
+import ua.foxminded.SchoolApplication.database.Database;
+import ua.foxminded.SchoolApplication.model.CourseName;
+import ua.foxminded.SchoolApplication.model.Student;
+
+public class CourseFillingReporter {
+	public String getNamesFromCourse(CourseName enumNames) {
 		String courseName = enumNames.getName();
 		int courseID = selectCourseID(courseName);
 		List<Integer> studentsIds = selectStudentIds(courseID);
@@ -86,7 +90,7 @@ public class SelectorNamesFromCourse {
 		}
 		return students;
 	}
-	
+
 	private String writeStudentsFullNames(List<Student> students) {
 		StringBuilder studentsFullNames = new StringBuilder();
 		for (Student student : students) {

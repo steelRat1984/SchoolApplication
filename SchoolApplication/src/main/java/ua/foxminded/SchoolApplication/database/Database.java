@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication;
+package ua.foxminded.SchoolApplication.database;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;

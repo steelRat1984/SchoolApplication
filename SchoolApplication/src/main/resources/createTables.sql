@@ -1,5 +1,5 @@
 
--- DROP TABLE IF EXISTS school_app.students,school_app.groups, school_app.courses, school_app.students_groups_relations ;
+--DROP TABLE IF EXISTS school_app.students,school_app.groups, school_app.courses, school_app.students_groups_relations ;
 --DROP TABLE IF EXISTS school_app.students CASCADE;
 --DROP TABLE IF EXISTS school_app.groups;
 --DROP TABLE IF EXISTS school_app.courses CASCADE;

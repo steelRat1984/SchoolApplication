@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication;
+package ua.foxminded.SchoolApplication.model;
 
 public class Group {
 	private int groupID;

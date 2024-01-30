@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication;
+package ua.foxminded.SchoolApplication.schoolController;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,12 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class StudentManipulations {
+import ua.foxminded.SchoolApplication.database.DatabaseInserter;
+import ua.foxminded.SchoolApplication.database.DataGenerator;
+import ua.foxminded.SchoolApplication.database.Database;
+import ua.foxminded.SchoolApplication.model.Course;
+import ua.foxminded.SchoolApplication.model.CourseName;
+import ua.foxminded.SchoolApplication.model.Student;
+import ua.foxminded.SchoolApplication.model.StudentCourseRelation;
+
+public class StudentManager {
 	Connection connection = Database.connection();
 
 	public void CreateAndInsertStudent(Student student) {
-		DataGenerate dataGenerate = new DataGenerate();
-		DataBaseFiller dataBaseFiller = new DataBaseFiller();
+		DataGenerator dataGenerate = new DataGenerator();
+		DatabaseInserter dataBaseFiller = new DatabaseInserter();
 		List<Student> students = new ArrayList<>();
 		String SelectStudentId = "SELECT MAX(student_id) FROM school_app.students";
 		int studentID = 0;
@@ -40,7 +48,7 @@ public class StudentManipulations {
 		List<Course> courses = dataGenerate.generateCourse();
 		students.add(student);
 		List<StudentCourseRelation> newRelations = dataGenerate.generateRelations(students, courses);
-		dataBaseFiller.fillingRelations(newRelations);
+		dataBaseFiller.insertRelations(newRelations);
 	}
 
 	public void deleteStudentById(int studentId) {

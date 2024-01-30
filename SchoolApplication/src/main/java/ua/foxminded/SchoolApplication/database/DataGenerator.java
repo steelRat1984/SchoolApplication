@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication;
+package ua.foxminded.SchoolApplication.database;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -6,7 +6,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class DataGenerate {
+import ua.foxminded.SchoolApplication.model.Course;
+import ua.foxminded.SchoolApplication.model.CourseName;
+import ua.foxminded.SchoolApplication.model.Group;
+import ua.foxminded.SchoolApplication.model.Student;
+import ua.foxminded.SchoolApplication.model.StudentCourseRelation;
+
+public class DataGenerator {
 
 	public List<String> generateFirstName() {
 		List<String> firstName = new ArrayList<>();

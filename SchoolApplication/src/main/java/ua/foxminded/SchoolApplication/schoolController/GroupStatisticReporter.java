@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication;
+package ua.foxminded.SchoolApplication.schoolController;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,11 +10,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class SelectorNumberStudentsAndGroups {
+import ua.foxminded.SchoolApplication.database.Database;
 
-	public String selectNumberStudentsInGroups() {
+public class GroupStatisticReporter {
+
+	public String getGroupReport() {
 		Map<Integer, Integer> numberOfStudentGroups = numberOfStudentGroups();
-		Map<Integer, List<Integer>> groupByStudentCount = groupByStudentCount(numberOfStudentGroups);
+		Map<Integer, List<Integer>> groupByStudentCount = sortGroupBySize(numberOfStudentGroups);
 		String listOfStudentsAndGroups = createResultForPrint(groupByStudentCount);
 		return listOfStudentsAndGroups;
 
@@ -38,7 +40,7 @@ public class SelectorNumberStudentsAndGroups {
 		return groupCounts;
 	}
 
-	private Map<Integer, List<Integer>> groupByStudentCount(Map<Integer, Integer> numberOfStudents) {
+	private Map<Integer, List<Integer>> sortGroupBySize(Map<Integer, Integer> numberOfStudents) {
 		Map<Integer, List<Integer>> countGroups = new TreeMap<>();
 		for (Map.Entry<Integer, Integer> entry : numberOfStudents.entrySet()) {
 			int groupId = entry.getKey();
@@ -57,7 +59,7 @@ public class SelectorNumberStudentsAndGroups {
 				for (int i = 0; i < groupIds.size(); i++) {
 					groupsIDsString.append(groupIds.get(i));
 					if (i < groupIds.size() - 1) {
-						groupsIDsString.append(", ");
+						groupsIDsString.append("and ");
 					}
 				}
 				result.append("Group");

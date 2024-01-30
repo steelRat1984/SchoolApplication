@@ -1,15 +1,19 @@
-package ua.foxminded.SchoolApplication;
+package ua.foxminded.SchoolApplication.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public class DataBaseFiller {
+import ua.foxminded.SchoolApplication.model.Course;
+import ua.foxminded.SchoolApplication.model.Group;
+import ua.foxminded.SchoolApplication.model.Student;
+import ua.foxminded.SchoolApplication.model.StudentCourseRelation;
+
+public class DatabaseInserter {
 	Connection connection = Database.connection();
 
-
-	public void fillingCourseData(List<Course> courses) {
+	public void insertCourseData(List<Course> courses) {
 		String sql = "INSERT INTO school_app.courses (course_id, course_name, course_description) VALUES (?, ?, ?)";
 		try {
 			PreparedStatement statement = connection.prepareStatement(sql);
@@ -26,7 +30,7 @@ public class DataBaseFiller {
 		}
 	}
 
-	public void fillingGroupData(List<Group> groups) {
+	public void insertGroupData(List<Group> groups) {
 		String sql = "INSERT INTO school_app.groups (group_id, group_name) VALUES (?, ?)";
 		try {
 			PreparedStatement statement = connection.prepareStatement(sql);
@@ -42,7 +46,7 @@ public class DataBaseFiller {
 		}
 	}
 
-	public void fillingStudentsData(List<Student> students) {
+	public void insertStudentsData(List<Student> students) {
 		String sql = "INSERT INTO school_app.students (student_id, group_id, first_name, last_name) VALUES (?, ?, ?, ?)";
 		try {
 			PreparedStatement statement = connection.prepareStatement(sql);
@@ -59,9 +63,9 @@ public class DataBaseFiller {
 			e.printStackTrace();
 		}
 
-	}	
+	}
 
-	public void fillingRelations(List<StudentCourseRelation> relations) {
+	public void insertRelations(List<StudentCourseRelation> relations) {
 		String sql = "INSERT INTO school_app.students_courses_relations (student_id, course_id) VALUES (?, ?)";
 		try {
 			PreparedStatement statement = connection.prepareStatement(sql);
