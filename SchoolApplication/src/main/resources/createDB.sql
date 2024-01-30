@@ -9,14 +9,9 @@ CREATE DATABASE schoolapp
     TABLESPACE = pg_default
     CONNECTION LIMIT = -1
     IS_TEMPLATE = False;
-
 GRANT TEMPORARY, CONNECT ON DATABASE school_app TO PUBLIC;
-
 GRANT ALL ON DATABASE school_app TO postgres;
-
 GRANT ALL ON DATABASE school_app TO school_admin;
-
-
 -- Role: school_admin
 -- DROP ROLE IF EXISTS school_admin;
 CREATE ROLE school_admin WITH
