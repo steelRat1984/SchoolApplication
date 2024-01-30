@@ -7,7 +7,7 @@ import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 import ua.foxminded.SchoolApplication.model.StudentCourseRelation;
 
-public class DataBaseLoader {
+public class DatabaseLoader {
 
 	public void load() {
 		DataGenerator dataGenerate = new DataGenerator();
