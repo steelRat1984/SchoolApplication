@@ -5,13 +5,31 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ua.foxminded.SchoolApplication.database.Database;
 import ua.foxminded.SchoolApplication.model.CourseName;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class CourseFillingReporter {
+	
+	public Map createCoursesMap() {
+		Map<Integer, CourseName> courses = new HashMap<>();
+		courses.put(1, CourseName.ART);
+		courses.put(2, CourseName.BIOLOGY);
+		courses.put(3, CourseName.CHEMISTRY);
+		courses.put(4, CourseName.COMPUTER_SCIENCE);
+		courses.put(5, CourseName.GEOGRAPHY);
+		courses.put(6, CourseName.HISTORY);
+		courses.put(7, CourseName.LITERATURE);
+		courses.put(8, CourseName.MUSIC);
+		courses.put(9, CourseName.PHYSICAL_EDUCATION);
+		courses.put(10, CourseName.PHYSICS);
+		return courses;
+	}
+	
 	public String getNamesFromCourse(CourseName enumNames) {
 		String courseName = enumNames.getName();
 		int courseID = selectCourseID(courseName);
@@ -73,11 +91,11 @@ public class CourseFillingReporter {
 				ResultSet resultSet = preparedStatement.executeQuery();
 				while (resultSet.next()) {
 					Student student = new Student();
-					int stidentId = resultSet.getInt("student_id");
+					int studentId = resultSet.getInt("student_id");
 					int groupId = resultSet.getInt("group_id");
 					String firstNname = resultSet.getString("first_name");
 					String lastName = resultSet.getString("last_name");
-					student.setStudentID(stidentId);
+					student.setStudentID(studentId);
 					student.setGroupID(groupId);
 					student.setFirstName(firstNname);
 					student.setLastName(lastName);
@@ -92,27 +110,31 @@ public class CourseFillingReporter {
 	}
 
 	private String writeStudentsFullNames(List<Student> students) {
-		StringBuilder studentsFullNames = new StringBuilder();
+		StringBuilder studentsFullInfo = new StringBuilder();
 		for (Student student : students) {
+			int studentId = student.getStudentID();
 			String firstName = student.getFirstName().trim();
 			String lastName = student.getLastName().trim();
-			studentsFullNames.append(firstName);
-			studentsFullNames.append(" ");
-			studentsFullNames.append(lastName);
-			studentsFullNames.append("\n");
+			studentsFullInfo.append("id: " + studentId);
+			studentsFullInfo.append(" ");
+			studentsFullInfo.append(firstName);
+			studentsFullInfo.append(" ");
+			studentsFullInfo.append(lastName);
+			studentsFullInfo.append("\n");
 		}
 
-		return studentsFullNames.toString();
+		return studentsFullInfo.toString();
 	}
 
-	private String createResultForPrint(String studentsFullNames, String courseName) {
+	private String createResultForPrint(String studentsFullInfo, String courseName) {
 		String text = "List of student from" + " " + courseName + " course :";
 		StringBuilder result = new StringBuilder();
 		result.append(text);
 		result.append("\n");
-		result.append(studentsFullNames);
+		result.append(studentsFullInfo);
 		return result.toString();
 
 	}
+	
 
 }

@@ -59,7 +59,7 @@ public class GroupStatisticReporter {
 				for (int i = 0; i < groupIds.size(); i++) {
 					groupsIDsString.append(groupIds.get(i));
 					if (i < groupIds.size() - 1) {
-						groupsIDsString.append("and ");
+						groupsIDsString.append(" and ");
 					}
 				}
 				result.append("Group");
