@@ -18,6 +18,9 @@ public class Controller {
 	}
 
 	public void run() {
+		int courseNumber;
+		int studentId;
+		CourseName selectedCourse;
 		boolean exitRequest = false;
 		while (!exitRequest) {
 			System.out.println("choise an option:");
@@ -38,8 +41,8 @@ public class Controller {
 				for (Map.Entry<Integer, CourseName> entry : courses.entrySet()) {
 					System.out.println(entry.getKey() + " - " + entry.getValue().getName());
 				}
-				int courseNumber = scanner.nextInt();
-				CourseName selectedCourse = courses.get(courseNumber);
+				courseNumber = scanner.nextInt();
+				selectedCourse = courses.get(courseNumber);
 				System.out.println(courseFillingReporter.getNamesFromCourse(selectedCourse));
 				break;
 			case 3:
@@ -50,21 +53,41 @@ public class Controller {
 				String studentLastname = scanner.nextLine();
 				Student student = new Student(studentFirstname, studentLastname);
 				studentManager.CreateAndInsertStudent(student);
+				System.out.println("Student -" + studentFirstname + " " + studentLastname + " has been added" );
 				break;
-				// додати succes
 			case 4:
 				System.out.println("enter the student's id : ");
-				int studentId = scanner.nextInt();
+				studentId = scanner.nextInt();
 				studentManager.deleteStudentById(studentId);
+				System.out.println("the student whose id - " + studentId + " has been delated");
 				break;
-				// додати succes
 			case 5:
-				// виводимо назви курсів як в попередньому, логіка та сама id ми додали при воводі списка групи
-
+				System.out.println("choise a course number: ");
+				for (Map.Entry<Integer, CourseName> entry : courses.entrySet()) {
+					System.out.println(entry.getKey() + " - " + entry.getValue().getName());
+				}
+				courseNumber = scanner.nextInt();
+				selectedCourse = courses.get(courseNumber);
+				System.out.println("Enter student's id :");
+				studentId = scanner.nextInt();
+				studentManager.addStudentToCourse(studentId, selectedCourse);
+				System.out.println("the student whose id - " + studentId + " has been added to the " + selectedCourse.getName() + " course");
+				break;
+			case 6:
+				System.out.println("choise a course number: ");
+				for (Map.Entry<Integer, CourseName> entry : courses.entrySet()) {
+					System.out.println(entry.getKey() + " - " + entry.getValue().getName());
+				}
+				courseNumber = scanner.nextInt();
+				selectedCourse = courses.get(courseNumber);
+				System.out.println("Enter student's id :");
+				studentId = scanner.nextInt();
+				studentManager.removeStudentFromCourse(studentId, selectedCourse);
+				System.out.println("the student whose id - " + studentId + " has been remuved from the " + selectedCourse.getName() + " course");
+				break;
 			case 0:
 				exitRequest = true;
 				break;
-
 			default:
 				System.out.println("unknown command, try again");
 			}
