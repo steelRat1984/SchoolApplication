@@ -4,9 +4,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Database {
-	public static final String CONNECTION = "jdbc:postgresql://localhost:5432/school_app";
-	public static final String USER = "school_admin";
-	public static final String PASSWORD = "1234";
+	private static final String CONNECTION = "jdbc:postgresql://localhost:5432/school_app";
+	private static final String USER = "school_admin";
+	private static final String PASSWORD = "1234";
 
 	public static java.sql.Connection connection() {
 		try {
