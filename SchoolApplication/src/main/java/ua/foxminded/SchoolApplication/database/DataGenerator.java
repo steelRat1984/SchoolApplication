@@ -13,8 +13,9 @@ import ua.foxminded.SchoolApplication.model.Student;
 import ua.foxminded.SchoolApplication.model.StudentCourseRelation;
 
 public class DataGenerator {
+	private final Random random = new Random();
 
-	public List<String> generateFirstName() {
+	protected List<String> generateFirstName() {
 		List<String> firstName = new ArrayList<>();
 		firstName.add("John");
 		firstName.add("Petr");
@@ -40,7 +41,7 @@ public class DataGenerator {
 
 	}
 
-	public List<String> generateLastName() {
+	protected List<String> generateLastName() {
 		List<String> lastName = new ArrayList<>();
 		lastName.add("Bevz");
 		lastName.add("Malun");
@@ -65,11 +66,10 @@ public class DataGenerator {
 		return lastName;
 	}
 
-	public List<Student> generateStudents() {
+	protected List<Student> generateStudents() {
 		List<Student> students = new ArrayList<>();
 		List<String> firstName = generateFirstName();
 		List<String> lastName = generateLastName();
-		Random random = new Random();
 		int firstNameIndex = 0;
 		int lastNameIndex = 0;
 		for (int i = 0; i < 200; i++) {
@@ -89,7 +89,7 @@ public class DataGenerator {
 		return students;
 	}
 
-	public List<Group> generateGoup() {
+	protected List<Group> generateGoup() {
 		List<Group> groups = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
 			Group group = new Group();
@@ -101,7 +101,7 @@ public class DataGenerator {
 		return groups;
 	}
 
-	public List<Course> generateCourse() {
+	protected List<Course> generateCourse() {
 		List<Course> courses = new ArrayList<>();
 		Course courseHistory = new Course(1, CourseName.HISTORY.getName(), "learning History");
 		Course courseGeography = new Course(2, CourseName.GEOGRAPHY.getName(), "learning Geography");
@@ -128,9 +128,8 @@ public class DataGenerator {
 		return courses;
 	}
 
-	public List<StudentCourseRelation> generateRelations(List<Student> students, List<Course> courses) {
+	protected List<StudentCourseRelation> generateRelations(List<Student> students, List<Course> courses) {
 		List<StudentCourseRelation> relations = new ArrayList<>();
-		Random random = new Random();
 		for (Student student : students) {
 			int amountCourses = random.nextInt(3) + 1;
 			Set<Integer> assignedCourses = new HashSet<>();

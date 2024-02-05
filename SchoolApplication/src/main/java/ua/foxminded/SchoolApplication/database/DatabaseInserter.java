@@ -13,7 +13,7 @@ import ua.foxminded.SchoolApplication.model.StudentCourseRelation;
 public class DatabaseInserter {
 	Connection connection = Database.connection();
 
-	public void insertCourseData(List<Course> courses) {
+	protected void insertCourseData(List<Course> courses) {
 		String sql = "INSERT INTO school_app.courses (course_id, course_name, course_description) VALUES (?, ?, ?)";
 		try (PreparedStatement statement = connection.prepareStatement(sql)) {
 			for (Course course : courses) {
@@ -28,7 +28,7 @@ public class DatabaseInserter {
 		}
 	}
 
-	public void insertGroupData(List<Group> groups) {
+	protected void insertGroupData(List<Group> groups) {
 		String sql = "INSERT INTO school_app.groups (group_id, group_name) VALUES (?, ?)";
 		try (PreparedStatement statement = connection.prepareStatement(sql)) {
 			for (Group group : groups) {
@@ -42,7 +42,7 @@ public class DatabaseInserter {
 		}
 	}
 
-	public void insertStudentsData(List<Student> students) {
+	protected void insertStudentsData(List<Student> students) {
 		String sql = "INSERT INTO school_app.students (student_id, group_id, first_name, last_name) VALUES (?, ?, ?, ?)";
 		try (PreparedStatement statement = connection.prepareStatement(sql)) {
 			for (Student student : students) {
@@ -59,7 +59,7 @@ public class DatabaseInserter {
 
 	}
 
-	public void insertRelations(List<StudentCourseRelation> relations) {
+	protected void insertRelations(List<StudentCourseRelation> relations) {
 		String sql = "INSERT INTO school_app.students_courses_relations (student_id, course_id) VALUES (?, ?)";
 		try (PreparedStatement statement = connection.prepareStatement(sql)) {
 			for (StudentCourseRelation relation : relations) {
