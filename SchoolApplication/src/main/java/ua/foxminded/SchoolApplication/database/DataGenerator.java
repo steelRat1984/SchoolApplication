@@ -15,7 +15,7 @@ import ua.foxminded.SchoolApplication.model.StudentCourseRelation;
 public class DataGenerator {
 	private final Random random = new Random();
 
-	protected List<String> generateFirstName() {
+	private List<String> generateFirstName() {
 		List<String> firstName = new ArrayList<>();
 		firstName.add("John");
 		firstName.add("Petr");
@@ -41,7 +41,7 @@ public class DataGenerator {
 
 	}
 
-	protected List<String> generateLastName() {
+	private List<String> generateLastName() {
 		List<String> lastName = new ArrayList<>();
 		lastName.add("Bevz");
 		lastName.add("Malun");
@@ -70,20 +70,14 @@ public class DataGenerator {
 		List<Student> students = new ArrayList<>();
 		List<String> firstName = generateFirstName();
 		List<String> lastName = generateLastName();
-		int firstNameIndex = 0;
-		int lastNameIndex = 0;
 		for (int i = 0; i < 200; i++) {
-
+			int randomFirstNameIndex = random.nextInt(firstName.size());
+			int randomLastNameIndex = random.nextInt(firstName.size());
 			Student student = new Student();
 			student.setStudentID(i + 1);
 			student.setGroupID(random.nextInt(10) + 1);
-			student.setFirstName(firstName.get(firstNameIndex));
-			student.setLastName(lastName.get(lastNameIndex));
-			firstNameIndex++;
-			if (firstNameIndex >= firstName.size()) {
-				firstNameIndex = 0;
-				lastNameIndex++;
-			}
+			student.setFirstName(firstName.get(randomFirstNameIndex));
+			student.setLastName(lastName.get(randomLastNameIndex));
 			students.add(student);
 		}
 		return students;
@@ -109,10 +103,12 @@ public class DataGenerator {
 		Course coursePhysics = new Course(4, CourseName.PHYSICS.getName(), "learning Physics");
 		Course courseBiology = new Course(5, CourseName.BIOLOGY.getName(), "learning Biology");
 		Course courseLiterature = new Course(6, CourseName.LITERATURE.getName(), "learning Literature");
-		Course coursePhysicalEducation = new Course(7, CourseName.PHYSICAL_EDUCATION.getName(), "learning Physical Education");
+		Course coursePhysicalEducation = new Course(7, CourseName.PHYSICAL_EDUCATION.getName(),
+				"learning Physical Education");
 		Course courseArt = new Course(8, CourseName.ART.getName(), "learning Art");
 		Course courseMusic = new Course(9, CourseName.MUSIC.getName(), "learning Music");
-		Course courseComputerScience = new Course(10, CourseName.COMPUTER_SCIENCE.getName(), "learning Computer Science");
+		Course courseComputerScience = new Course(10, CourseName.COMPUTER_SCIENCE.getName(),
+				"learning Computer Science");
 
 		courses.add(courseHistory);
 		courses.add(courseGeography);
