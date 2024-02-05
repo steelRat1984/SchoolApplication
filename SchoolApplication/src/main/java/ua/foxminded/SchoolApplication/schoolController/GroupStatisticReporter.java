@@ -1,9 +1,9 @@
 package ua.foxminded.SchoolApplication.schoolController;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +13,7 @@ import java.util.TreeMap;
 import ua.foxminded.SchoolApplication.database.Database;
 
 public class GroupStatisticReporter {
+	private final Connection connection = Database.connection();
 
 	public String getGroupReport() {
 		Map<Integer, Integer> numberOfStudentGroups = numberOfStudentGroups();
@@ -25,11 +26,8 @@ public class GroupStatisticReporter {
 	private Map<Integer, Integer> numberOfStudentGroups() {
 		String sql = "SELECT group_id FROM school_app.students";
 		Map<Integer, Integer> groupCounts = new HashMap<>();
-		Connection connection = Database.connection();
-		Statement statement;
-		try {
-			statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(sql);
+		try (PreparedStatement statement = connection.prepareStatement(sql);
+				ResultSet resultSet = statement.executeQuery()) {
 			while (resultSet.next()) {
 				int groupId = resultSet.getInt("group_id");
 				groupCounts.put(groupId, groupCounts.getOrDefault(groupId, 0) + 1);

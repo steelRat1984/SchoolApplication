@@ -14,8 +14,9 @@ import ua.foxminded.SchoolApplication.model.CourseName;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class CourseFillingReporter {
-	
-	public Map createCoursesMap() {
+	private final Connection connection = Database.connection();
+
+	public Map<Integer, CourseName> createCoursesMap() {
 		Map<Integer, CourseName> courses = new HashMap<>();
 		courses.put(1, CourseName.ART);
 		courses.put(2, CourseName.BIOLOGY);
@@ -29,7 +30,7 @@ public class CourseFillingReporter {
 		courses.put(10, CourseName.PHYSICS);
 		return courses;
 	}
-	
+
 	public String getNamesFromCourse(CourseName enumNames) {
 		String courseName = enumNames.getName();
 		int courseID = selectCourseID(courseName);
@@ -42,36 +43,31 @@ public class CourseFillingReporter {
 
 	private int selectCourseID(String courseName) {
 		String sql = "SELECT course_id FROM school_app.courses WHERE course_name = ?";
-		Connection connection = Database.connection();
-		int course_id = 0;
-		PreparedStatement preparedStatement;
-		try {
-			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setString(1, courseName);
-			ResultSet resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {
-				course_id = resultSet.getInt("course_id");
-				return course_id;
+		int courseId = 0;
+		try (PreparedStatement statement = connection.prepareStatement(sql)) {
+			statement.setString(1, courseName);
+			try (ResultSet resultSet = statement.executeQuery()) {
+				if (resultSet.next()) {
+					courseId = resultSet.getInt("course_id");
+					return courseId;
+				}
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return course_id;
+		return courseId;
 	}
 
 	private List<Integer> selectStudentIds(int courseId) {
 		List<Integer> studentIds = new ArrayList<>();
 		String sql = "SELECT student_id FROM school_app.students_courses_relations WHERE course_id = ?";
-		Connection connection = Database.connection();
-		PreparedStatement preparedStatement;
-		try {
-			preparedStatement = connection.prepareStatement(sql);
-			preparedStatement.setInt(1, courseId);
-			ResultSet resultSet = preparedStatement.executeQuery();
-			while (resultSet.next()) {
-				int student_id = resultSet.getInt("student_id");
-				studentIds.add(student_id);
+		try (PreparedStatement statement = connection.prepareStatement(sql)) {
+			statement.setInt(1, courseId);
+			try (ResultSet resultSet = statement.executeQuery()) {
+				while (resultSet.next()) {
+					int studentId = resultSet.getInt("student_id");
+					studentIds.add(studentId);
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -82,27 +78,24 @@ public class CourseFillingReporter {
 	private List<Student> selectStudents(List<Integer> studentIds) {
 		List<Student> students = new ArrayList<>();
 		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students WHERE student_id = ?";
-		Connection connection = Database.connection();
-		PreparedStatement preparedStatement;
-		try {
-			preparedStatement = connection.prepareStatement(sql);
+		try (PreparedStatement statement = connection.prepareStatement(sql)) {
 			for (int student_id : studentIds) {
-				preparedStatement.setInt(1, student_id);
-				ResultSet resultSet = preparedStatement.executeQuery();
-				while (resultSet.next()) {
-					Student student = new Student();
-					int studentId = resultSet.getInt("student_id");
-					int groupId = resultSet.getInt("group_id");
-					String firstNname = resultSet.getString("first_name");
-					String lastName = resultSet.getString("last_name");
-					student.setStudentID(studentId);
-					student.setGroupID(groupId);
-					student.setFirstName(firstNname);
-					student.setLastName(lastName);
-					students.add(student);
+				statement.setInt(1, student_id);
+				try (ResultSet resultSet = statement.executeQuery()) {
+					while (resultSet.next()) {
+						Student student = new Student();
+						int studentId = resultSet.getInt("student_id");
+						int groupId = resultSet.getInt("group_id");
+						String firstNname = resultSet.getString("first_name");
+						String lastName = resultSet.getString("last_name");
+						student.setStudentID(studentId);
+						student.setGroupID(groupId);
+						student.setFirstName(firstNname);
+						student.setLastName(lastName);
+						students.add(student);
+					}
 				}
 			}
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -135,6 +128,5 @@ public class CourseFillingReporter {
 		return result.toString();
 
 	}
-	
 
 }
