@@ -12,9 +12,8 @@ public class Database {
 		try {
 			return DriverManager.getConnection(CONNECTION, USER, PASSWORD);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new RuntimeException("Cannot connect to the database", e);
 		}
-		return null;
 	}
 
 }
