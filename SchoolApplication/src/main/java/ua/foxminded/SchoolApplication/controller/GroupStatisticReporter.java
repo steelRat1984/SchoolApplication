@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication.schoolController;
+package ua.foxminded.SchoolApplication.controller;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

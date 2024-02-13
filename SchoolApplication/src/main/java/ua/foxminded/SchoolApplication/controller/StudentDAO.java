@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication.schoolController;
+package ua.foxminded.SchoolApplication.controller;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,11 +12,9 @@ import ua.foxminded.SchoolApplication.database.DatabaseInserter;
 import ua.foxminded.SchoolApplication.database.DataGenerator;
 import ua.foxminded.SchoolApplication.database.Database;
 import ua.foxminded.SchoolApplication.model.Course;
-import ua.foxminded.SchoolApplication.model.CourseName;
 import ua.foxminded.SchoolApplication.model.Student;
-import ua.foxminded.SchoolApplication.model.StudentCourseRelation;
 
-public class StudentManager {
+public class StudentDAO {
 	Connection connection = Database.connection();
 
 	public void CreateAndInsertStudent(Student student) {

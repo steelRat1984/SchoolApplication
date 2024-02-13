@@ -1,11 +1,13 @@
 package ua.foxminded.SchoolApplication.model;
 
+import java.util.List;
+
 public class Student {
 	private int studentID;
-	private int groupID;
+	private Group group;
 	private String firstName;
 	private String lastName;
-	
+	private List <Course> courses;
 	
 	public Student(String firstName, String lastName) {
 		this.firstName = firstName;
@@ -21,11 +23,17 @@ public class Student {
 	public void setStudentID(int studentID) {
 		this.studentID = studentID;
 	}
-	public int getGroupID() {
-		return groupID;
+	public Group getGroup() {
+		return group;
 	}
-	public void setGroupID(int groupID) {
-		this.groupID = groupID;
+	public void setGroup(Group group) {
+		this.group = group;
+	}
+	public List<Course> getCourses() {
+		return courses;
+	}
+	public void setCourses(List<Course> courses) {
+		this.courses = courses;
 	}
 	public String getFirstName() {
 		return firstName;

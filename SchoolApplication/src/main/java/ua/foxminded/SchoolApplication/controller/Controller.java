@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication.schoolController;
+package ua.foxminded.SchoolApplication.controller;
 
 import java.util.Map;
 import java.util.Scanner;
@@ -10,7 +10,7 @@ public class Controller {
 	private Scanner scanner;
 	GroupStatisticReporter groupStatisticReporter = new GroupStatisticReporter();
 	CourseFillingReporter courseFillingReporter = new CourseFillingReporter();
-	StudentManager studentManager = new StudentManager();
+	StudentDAO studentManager = new StudentDAO();
 	Map<Integer, CourseName> courses = courseFillingReporter.createCoursesMap();
 
 	public Controller(Scanner scanner) {
