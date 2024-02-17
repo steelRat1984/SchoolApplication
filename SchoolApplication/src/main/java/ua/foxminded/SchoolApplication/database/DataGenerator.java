@@ -3,6 +3,8 @@ package ua.foxminded.SchoolApplication.database;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import ua.foxminded.SchoolApplication.Services.CourseServices;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
@@ -14,14 +16,14 @@ public class DataGenerator {
 		StudentDAO studentDAO = new StudentDAO();
 		GroupDAO groupDAO = new GroupDAO();
 		CourseDAO courseDAO = new CourseDAO();
+		StudentRelationsDAO relationsDAO = new StudentRelationsDAO();
 		List<Group> groups = generateGoup();
 		List<Student> students = generateStudents();
 		List<Course> courses = generateCourse();
 		groupDAO.primaryinsertGroups(groups);
 		courseDAO.primaryinsertCourses(courses);
 		studentDAO.primaryInsertsStudents(students);
-		studentDAO.primaryInsertRelations(students);
-
+		relationsDAO.primaryInsertRelations(students);
 	}
 
 	private List<String> generateFirstName() {
@@ -48,7 +50,6 @@ public class DataGenerator {
 		firstName.add("Yaroslav");
 		return firstName;
 	}
-
 	private List<String> generateLastName() {
 		List<String> lastName = new ArrayList<>();
 		lastName.add("Bevz");
@@ -73,7 +74,6 @@ public class DataGenerator {
 		lastName.add("Nikson");
 		return lastName;
 	}
-
 	public List<Student> generateStudents() {
 		List<Course> allCourses = generateCourse();
 		List<Group> groups = generateGoup();
@@ -84,7 +84,7 @@ public class DataGenerator {
 			int randomFirstNameIndex = random.nextInt(firstName.size());
 			int randomLastNameIndex = random.nextInt(firstName.size());
 			Group group = groups.get(random.nextInt(groups.size()));
-			List<Course> certainCourses = cutCourseListRandomly(allCourses);
+			List<Course> certainCourses = CourseServices.cutCourseListRandomly(allCourses);
 			Student student = new Student();
 			student.setStudentID(i + 1);
 			student.setFirstName(firstName.get(randomFirstNameIndex));
@@ -95,7 +95,6 @@ public class DataGenerator {
 		}
 		return students;
 	}
-
 	public List<Group> generateGoup() {
 		List<Group> groups = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
@@ -106,7 +105,6 @@ public class DataGenerator {
 		}
 		return groups;
 	}
-
 	public List<Course> generateCourse() {
 		List<Course> courses = new ArrayList<>();
 		Course courseHistory = new Course(1, "History", "learning History");
@@ -132,18 +130,5 @@ public class DataGenerator {
 		courses.add(courseMusic);
 		courses.add(courseComputerScience);
 		return courses;
-	}
-
-	public List<Course> cutCourseListRandomly(List<Course> fullListCourses) {
-		Random random = new Random();
-		int amountCourses = random.nextInt(3) + 1;
-		List<Course> cutList = new ArrayList<>();
-		List<Course> tempFullList = new ArrayList<>(fullListCourses);
-		for (int i = 0; i < amountCourses; i++) {
-			int eaachCourseIndex = random.nextInt(tempFullList.size());
-			cutList.add(tempFullList.get(eaachCourseIndex));
-			tempFullList.remove(eaachCourseIndex);
-		}
-		return cutList;
 	}
 }
