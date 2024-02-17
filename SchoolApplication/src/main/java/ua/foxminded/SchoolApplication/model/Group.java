@@ -3,7 +3,12 @@ package ua.foxminded.SchoolApplication.model;
 public class Group {
 	private int groupID;
 	private String groupName;
-	
+	public Group() {
+	}
+	public Group(int groupID, String groupName) {
+		this.groupID = groupID;
+		this.groupName = groupName;
+	}
 	public int getGroupID() {
 		return groupID;
 	}
