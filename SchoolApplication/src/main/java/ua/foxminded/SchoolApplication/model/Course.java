@@ -10,6 +10,9 @@ public class Course {
 		this.courseName = courseName;
 		this.courseDescription = courseDescription;
 	}
+	public Course () {
+		
+	}
 	public int getCourseID() {
 		return courseID;
 	}

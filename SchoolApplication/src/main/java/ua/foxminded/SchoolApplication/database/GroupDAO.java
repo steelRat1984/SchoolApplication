@@ -12,7 +12,7 @@ import ua.foxminded.SchoolApplication.model.Group;
 
 public class GroupDAO {
 
-	public static List<Group> selectActualListOfGroups() {
+	public List<Group> selectActualListOfGroups() {
 		List<Group> actualListOfGroups = new ArrayList<>();
 		String sql = "SELECT group_id, group_name FROM school_app.groups";
 		try (Connection connection = Database.connection();
@@ -30,7 +30,7 @@ public class GroupDAO {
 		return actualListOfGroups;
 	}
 
-	public static Group getGroupById(int groupId) {
+	public Group getGroupById(int groupId) {
 		Group group = new Group();
 		String selectSQL = "SELECT group_id, group_name FROM school_app.groups WHERE group_id = ?";
 		try (Connection connection = Database.connection();

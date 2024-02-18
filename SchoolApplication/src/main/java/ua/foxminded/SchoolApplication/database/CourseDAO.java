@@ -10,8 +10,24 @@ import java.util.List;
 import ua.foxminded.SchoolApplication.model.Course;
 
 public class CourseDAO {
+	public Course getCourseById(int courseId) {
+		Course course = new Course();
+		String sql = "SELECT course_id, course_name, course_description FROM school_app.courses";
+		try (Connection connection = Database.connection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				String courseName = resultSet.getString("course_name");
+				String courseDescription = resultSet.getString("course_description");
+				course = new Course(courseId, courseName, courseDescription);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return course;
+	}
 
-	public static List<Course> selectActualListOfCourses() {
+	public List<Course> selectActualCourseList() {
 		List<Course> actualListOfCourses = new ArrayList<>();
 		String sql = "SELECT course_id, course_name, course_description FROM school_app.courses";
 		try (Connection connection = Database.connection();
@@ -44,4 +60,5 @@ public class CourseDAO {
 			e.printStackTrace();
 		}
 	}
+
 }
