@@ -11,21 +11,31 @@ import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class StudentRelationsDAO {
-	
-	
-	
-	public void addRelation(int studentId, int courseId) {
-		String sql = "INSERT INTO school_app.students_courses_relations (student_id, course_id) VALUES (?, ?)";
+
+	public void deleteRelation(int studentId, int courseId) {
+		String sql = "DELETE FROM school_app.students_courses_relations WHERE student_id = ? AND course_id = ?";
 		try (Connection connection = Database.connection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
-				statement.setInt(1, studentId);
-				statement.setInt(2, courseId);
+			statement.setInt(1, studentId);
+			statement.setInt(2, courseId);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+	public void addRelation(int studentId, int courseId) {
+		String sql = "INSERT INTO school_app.students_courses_relations (student_id, course_id) VALUES (?, ?)";
+		try (Connection connection = Database.connection();
+				PreparedStatement statement = connection.prepareStatement(sql)) {
+			statement.setInt(1, studentId);
+			statement.setInt(2, courseId);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 	public List<Integer> getSelectedCoursesID(int studentId) {
 		List<Integer> selectedCoursesID = new ArrayList<>();
 		String sql = "SELECT course_id FROM school_app.students_courses_relations WHERE student_id = ?";
@@ -93,7 +103,5 @@ public class StudentRelationsDAO {
 			e.printStackTrace();
 		}
 	}
-
-
 
 }

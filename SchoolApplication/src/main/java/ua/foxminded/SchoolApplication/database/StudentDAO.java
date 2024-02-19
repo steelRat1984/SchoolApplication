@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import ua.foxminded.SchoolApplication.Services.CourseServices;
@@ -12,32 +13,27 @@ import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class StudentDAO {
-	
-	
-	public Student getStudentById (int studentId) {
+
+	public Student getStudentById(int studentId) {
 		GroupDAO groupDAO = new GroupDAO();
 		CourseServices courseServices = new CourseServices();
-		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students WHERE student_id = ?" ;
+		Student student = new Student();
+		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students WHERE student_id = ?";
 		try (Connection connection = Database.connection();
-				PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 			preparedStatement.setInt(1, studentId);
-			try (ResultSet resultSet = preparedStatement.executeQuery() ){
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
 					int groupId = resultSet.getInt("group_id");
-					Group group = groupDAO.getGroupById(groupId);
-					String firstName = resultSet.getString("first_name");
-					String lastName = resultSet.getString("last_name");
-					List <Course> selectedCourses = courseServices.getSelectedCourses(studentId);
-					Student student = new Student(studentId, group, firstName, lastName, selectedCourses);
-
-
+					student.setGroup(groupDAO.getGroupById(groupId));
+					student.setFirstName(resultSet.getString("first_name"));
+					student.setLastName(resultSet.getString("last_name"));
+					student.setCourses(courseServices.getSelectedCourses(studentId));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
 		return student;
 	}
 
