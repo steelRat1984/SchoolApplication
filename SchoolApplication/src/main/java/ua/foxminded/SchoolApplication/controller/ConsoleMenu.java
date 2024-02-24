@@ -9,6 +9,7 @@ import ua.foxminded.SchoolApplication.controller.commands.CreateStudentCommand;
 import ua.foxminded.SchoolApplication.controller.commands.DeleteStudentCommand;
 import ua.foxminded.SchoolApplication.controller.commands.EnrollStudentToCourseCommand;
 import ua.foxminded.SchoolApplication.controller.commands.GetCourseStatisticReportCommand;
+import ua.foxminded.SchoolApplication.controller.commands.GetGroupStatisticReportCommand;
 import ua.foxminded.SchoolApplication.controller.commands.RemoveStudentFromCourseCommand;
 import ua.foxminded.SchoolApplication.controller.commands.ShowAllCoursesCommand;
 import ua.foxminded.SchoolApplication.controller.commands.ShowMenuCommand;
@@ -28,7 +29,7 @@ public class ConsoleMenu {
 	private void registerCommands() {
 		invoker.register(1, new ShowMenuCommand());
 		invoker.register(2, new ShowAllCoursesCommand(courseServices));
-		invoker.register(3, new GetGroupStatisticReport(groupServices));
+		invoker.register(3, new GetGroupStatisticReportCommand(groupServices));
 		invoker.register(4, new GetCourseStatisticReportCommand(courseServices, scanner));
 		invoker.register(5, new CreateStudentCommand(studentServices, scanner));
 		invoker.register(6, new ShowStudentInfoByNameCommand(studentServices, scanner));

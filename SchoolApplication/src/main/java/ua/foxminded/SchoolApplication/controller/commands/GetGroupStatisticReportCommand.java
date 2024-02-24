@@ -1,16 +1,17 @@
-package ua.foxminded.SchoolApplication.controller;
+package ua.foxminded.SchoolApplication.controller.commands;
 
 
 import java.util.List;
 import java.util.Map;
 
 import ua.foxminded.SchoolApplication.Services.GroupServices;
+import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Group;
 
-public class GetGroupStatisticReport implements Command {
+public class GetGroupStatisticReportCommand implements Command {
 	private GroupServices groupServices = new GroupServices();
 
-	public GetGroupStatisticReport(GroupServices groupServices) {
+	public GetGroupStatisticReportCommand(GroupServices groupServices) {
 		this.groupServices = groupServices;
 	}
 
