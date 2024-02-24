@@ -10,6 +10,7 @@ import java.util.List;
 import ua.foxminded.SchoolApplication.model.Course;
 
 public class CourseDAO {
+	
 	public Course getCourseById(int courseId) {
 		Course course = new Course();
 		String sql = "SELECT course_id, course_name, course_description FROM school_app.courses";

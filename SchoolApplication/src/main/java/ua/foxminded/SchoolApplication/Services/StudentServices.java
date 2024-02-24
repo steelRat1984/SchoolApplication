@@ -17,7 +17,17 @@ public class StudentServices {
 	StudentDAO studentDAO = new StudentDAO();
 	GroupDAO groupDAO = new GroupDAO();
 	StudentRelationsDAO studentRelationsDAO = new StudentRelationsDAO();
-
+	
+	
+	public Student getStudentnByName (String firstName, String lastName) {
+		Student student = studentDAO.getStudentByName(firstName, lastName);
+		return student; 
+	}
+	public Student getStudentById(int studentId){
+		Student student = studentDAO.getStudentById(studentId);
+		return student;
+	}
+	
 	public boolean enrollStudentToCourse(int studentId, int courseId) {
 		Student student = studentDAO.getStudentById(studentId);
 		List<Course> selectedCourses = student.getCourses();
@@ -49,11 +59,12 @@ public class StudentServices {
 	}
 
 	public void deleteStudentById(int studentId) {
-		studentDAO.deleteStudentById(studentId);
 		studentRelationsDAO.deleteAllRelationsByStudentId(studentId);
+		studentDAO.deleteStudentById(studentId);
+
 	}
 
-	public void IsertStudent(String firstName, String lastName) {
+	public void insertStudent(String firstName, String lastName) {
 		Random random = new Random();
 		int groupId = random.nextInt(groupDAO.selectActualListOfGroups().size() + 1);
 		int studentId = studentDAO.getMaximumStudentId() + 1;

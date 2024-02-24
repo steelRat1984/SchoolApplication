@@ -11,6 +11,23 @@ import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class StudentRelationsDAO {
+	public List<Integer> getStudentsIdByCourseId(int courseid) {
+		List<Integer> studentIds = new ArrayList<>();
+		String sql = "SELECT student_id FROM school_app.students_courses_relations WHERE course_id = ?";
+		try (Connection connection = Database.connection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+			preparedStatement.setInt(1, courseid);
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					int studentId = resultSet.getInt("student_id");
+					studentIds.add(studentId);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return studentIds;
+	}
 
 	public void deleteRelation(int studentId, int courseId) {
 		String sql = "DELETE FROM school_app.students_courses_relations WHERE student_id = ? AND course_id = ?";

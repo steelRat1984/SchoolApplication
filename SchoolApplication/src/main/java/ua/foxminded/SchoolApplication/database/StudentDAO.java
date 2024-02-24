@@ -8,11 +8,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.foxminded.SchoolApplication.Services.CourseServices;
-import ua.foxminded.SchoolApplication.model.Course;
-import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class StudentDAO {
+
+	public Student getStudentByName(String firstName, String lastName) {
+		GroupDAO groupDAO = new GroupDAO();
+		CourseServices courseServices = new CourseServices();
+		Student student = new Student();
+		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students WHERE first_name = ? AND last_name = ?";
+		try (Connection connection = Database.connection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+			preparedStatement.setString(1, firstName);
+			preparedStatement.setString(2, lastName);
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				if (resultSet.next()) {
+					int studentId = resultSet.getInt("student_id");
+					int groupId = resultSet.getInt("group_id");
+					String studentFirstName = resultSet.getString("first_name").trim();
+					String studentLastName = resultSet.getString("last_name").trim();
+					student.setStudentID(studentId);
+					student.setGroup(groupDAO.getGroupById(groupId));
+					student.setFirstName(studentFirstName);
+					student.setLastName(studentLastName);
+					student.setCourses(courseServices.getSelectedCoursesforStudent(studentId));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return student;
+	}
 
 	public Student getStudentById(int studentId) {
 		GroupDAO groupDAO = new GroupDAO();
@@ -28,7 +54,7 @@ public class StudentDAO {
 					student.setGroup(groupDAO.getGroupById(groupId));
 					student.setFirstName(resultSet.getString("first_name"));
 					student.setLastName(resultSet.getString("last_name"));
-					student.setCourses(courseServices.getSelectedCourses(studentId));
+					student.setCourses(courseServices.getSelectedCoursesforStudent(studentId));
 				}
 			}
 		} catch (SQLException e) {
@@ -97,6 +123,35 @@ public class StudentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public List<Student> getAllStudents() {
+		List<Student> allStudents = new ArrayList<>();
+		GroupDAO groupDAO = new GroupDAO();
+		CourseServices courseServices = new CourseServices();
+		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students";
+
+		try (Connection connection = Database.connection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql);
+				ResultSet resultSet = preparedStatement.executeQuery()) {
+
+			while (resultSet.next()) {
+				Student student = new Student();
+				int studentId = resultSet.getInt("student_id");
+				int groupId = resultSet.getInt("group_id");
+
+				student.setStudentID(studentId);
+				student.setGroup(groupDAO.getGroupById(groupId));
+				student.setFirstName(resultSet.getString("first_name"));
+				student.setLastName(resultSet.getString("last_name"));
+				student.setCourses(courseServices.getSelectedCoursesforStudent(studentId));
+
+				allStudents.add(student);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return allStudents;
 	}
 
 }
