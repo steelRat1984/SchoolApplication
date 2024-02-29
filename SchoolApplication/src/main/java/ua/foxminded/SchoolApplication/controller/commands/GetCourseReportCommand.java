@@ -9,11 +9,11 @@ import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
-public class GetCourseStatisticReportCommand implements Command {
+public class GetCourseReportCommand implements Command {
 	private CourseServices courseServices = new CourseServices();
 	Scanner scanner = new Scanner(System.in);
 
-	public GetCourseStatisticReportCommand(CourseServices courseServices, Scanner scanner) {
+	public GetCourseReportCommand(CourseServices courseServices, Scanner scanner) {
 		this.courseServices = courseServices;
 		this.scanner = scanner;
 	}

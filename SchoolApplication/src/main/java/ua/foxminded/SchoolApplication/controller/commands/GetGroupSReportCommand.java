@@ -8,10 +8,10 @@ import ua.foxminded.SchoolApplication.Services.GroupServices;
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Group;
 
-public class GetGroupStatisticReportCommand implements Command {
+public class GetGroupSReportCommand implements Command {
 	private GroupServices groupServices = new GroupServices();
 
-	public GetGroupStatisticReportCommand(GroupServices groupServices) {
+	public GetGroupSReportCommand(GroupServices groupServices) {
 		this.groupServices = groupServices;
 	}
 
