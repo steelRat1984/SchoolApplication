@@ -9,7 +9,7 @@ import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Group;
 
 public class GetGroupSReportCommand implements Command {
-	private GroupServices groupServices = new GroupServices();
+	private final GroupServices groupServices;
 
 	public GetGroupSReportCommand(GroupServices groupServices) {
 		this.groupServices = groupServices;

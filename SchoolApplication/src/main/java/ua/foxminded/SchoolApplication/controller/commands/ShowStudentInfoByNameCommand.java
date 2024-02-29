@@ -7,8 +7,8 @@ import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class ShowStudentInfoByNameCommand implements Command {
-	private StudentServices studentServices = new StudentServices();
-	Scanner scanner = new Scanner(System.in);
+	private final StudentServices studentServices;
+	private final Scanner scanner;
 	
 	public ShowStudentInfoByNameCommand(StudentServices services, Scanner scanner) {
 		this.studentServices = services;

@@ -9,9 +9,9 @@ import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class EnrollStudentToCourseCommand implements Command {
-	private CourseServices courseServices = new CourseServices();
-	private StudentServices studentServices = new StudentServices();
-	Scanner scanner = new Scanner(System.in);
+	private final CourseServices courseServices;
+	private final StudentServices studentServices;
+	private final Scanner scanner;
 
 	public EnrollStudentToCourseCommand(CourseServices courseServices, StudentServices studentServices, Scanner scanner) {
 		this.courseServices = courseServices;

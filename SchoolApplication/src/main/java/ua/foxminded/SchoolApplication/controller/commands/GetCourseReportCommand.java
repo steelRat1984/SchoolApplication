@@ -10,8 +10,8 @@ import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class GetCourseReportCommand implements Command {
-	private CourseServices courseServices = new CourseServices();
-	Scanner scanner = new Scanner(System.in);
+	private final CourseServices courseServices;
+	private final Scanner scanner;
 
 	public GetCourseReportCommand(CourseServices courseServices, Scanner scanner) {
 		this.courseServices = courseServices;
