@@ -22,4 +22,10 @@ public class ShowAllCoursesCommand implements Command {
 					course.getCourseID() + ". " + course.getCourseName().trim() + ", " + course.getCourseDescription().trim());
 		}
 	}
+
+	@Override
+	public String getDescription() {
+		String description = "show all avaible courses";
+		return description;
+	}
 }

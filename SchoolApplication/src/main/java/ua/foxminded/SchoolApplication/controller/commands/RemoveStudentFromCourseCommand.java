@@ -38,4 +38,10 @@ public class RemoveStudentFromCourseCommand implements Command {
 		System.out.println(stringBuilder.toString());
 
 	}
+
+	@Override
+	public String getDescription() {
+		String description = "remove the student from the course"; 
+		return description;
+	}
 }

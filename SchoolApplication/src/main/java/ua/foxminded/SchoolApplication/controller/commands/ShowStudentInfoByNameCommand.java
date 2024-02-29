@@ -26,4 +26,10 @@ public class ShowStudentInfoByNameCommand implements Command {
 		System.out.println(student);
 	}
 
+	@Override
+	public String getDescription() {
+		String description = "show student info";
+		return description;
+	}
+
 }

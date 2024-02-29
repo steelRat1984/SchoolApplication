@@ -36,5 +36,10 @@ public class EnrollStudentToCourseCommand implements Command {
 		System.out.println(stringBuilder.toString());
 
 	}
+	@Override
+	public String getDescription() {
+		String description = "enroll a student to the course";
+		return description;
+	}
 
 }

@@ -36,7 +36,12 @@ public class GetCourseReportCommand implements Command {
 				}
 		}
 		System.out.println(resultReport.toString());
-
+	}
+	
+	@Override
+	public String getDescription() {
+		String description = "get a report on students on the course";
+		return description;
 	}
 
 }

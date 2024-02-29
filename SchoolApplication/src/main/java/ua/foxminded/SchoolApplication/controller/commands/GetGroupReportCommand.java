@@ -8,10 +8,10 @@ import ua.foxminded.SchoolApplication.Services.GroupServices;
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Group;
 
-public class GetGroupSReportCommand implements Command {
+public class GetGroupReportCommand implements Command {
 	private final GroupServices groupServices;
 
-	public GetGroupSReportCommand(GroupServices groupServices) {
+	public GetGroupReportCommand(GroupServices groupServices) {
 		this.groupServices = groupServices;
 	}
 
@@ -32,6 +32,12 @@ public class GetGroupSReportCommand implements Command {
 			}
 		}
 		System.out.println(resultReport.toString());
+	}
+
+	@Override
+	public String getDescription() {
+		String description = "get number of students in a group report";
+		return description;
 	}
 
 }

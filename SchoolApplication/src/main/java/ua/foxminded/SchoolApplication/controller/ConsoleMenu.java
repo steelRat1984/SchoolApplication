@@ -9,10 +9,9 @@ import ua.foxminded.SchoolApplication.controller.commands.CreateStudentCommand;
 import ua.foxminded.SchoolApplication.controller.commands.DeleteStudentCommand;
 import ua.foxminded.SchoolApplication.controller.commands.EnrollStudentToCourseCommand;
 import ua.foxminded.SchoolApplication.controller.commands.GetCourseReportCommand;
-import ua.foxminded.SchoolApplication.controller.commands.GetGroupSReportCommand;
+import ua.foxminded.SchoolApplication.controller.commands.GetGroupReportCommand;
 import ua.foxminded.SchoolApplication.controller.commands.RemoveStudentFromCourseCommand;
 import ua.foxminded.SchoolApplication.controller.commands.ShowAllCoursesCommand;
-import ua.foxminded.SchoolApplication.controller.commands.ShowMenuCommand;
 import ua.foxminded.SchoolApplication.controller.commands.ShowStudentInfoByNameCommand;
 
 public class ConsoleMenu {
@@ -27,20 +26,19 @@ public class ConsoleMenu {
 	}
 
 	private void registerCommands() {
-		invoker.register(1, new ShowMenuCommand());
-		invoker.register(2, new ShowAllCoursesCommand(courseServices));
-		invoker.register(3, new GetGroupSReportCommand(groupServices));
-		invoker.register(4, new GetCourseReportCommand(courseServices, scanner));
-		invoker.register(5, new CreateStudentCommand(studentServices, scanner));
-		invoker.register(6, new ShowStudentInfoByNameCommand(studentServices, scanner));
-		invoker.register(7, new DeleteStudentCommand(studentServices, scanner));
-		invoker.register(8, new EnrollStudentToCourseCommand(courseServices, studentServices, scanner));
-		invoker.register(9, new RemoveStudentFromCourseCommand(courseServices, studentServices, scanner));
+		invoker.register(1, new ShowAllCoursesCommand(courseServices));
+		invoker.register(2, new GetGroupReportCommand(groupServices));
+		invoker.register(3, new GetCourseReportCommand(courseServices, scanner));
+		invoker.register(4, new CreateStudentCommand(studentServices, scanner));
+		invoker.register(5, new ShowStudentInfoByNameCommand(studentServices, scanner));
+		invoker.register(6, new DeleteStudentCommand(studentServices, scanner));
+		invoker.register(7, new EnrollStudentToCourseCommand(courseServices, studentServices, scanner));
+		invoker.register(8, new RemoveStudentFromCourseCommand(courseServices, studentServices, scanner));
 
 	}
 
 	public void run() {
-		invoker.executeCommand(1);
+		invoker.showCommandsDescriopion();
 		try {
 			while (true) {
 				int commandId = Integer.parseInt(scanner.nextLine());
@@ -49,8 +47,6 @@ public class ConsoleMenu {
 					break;
 				}
 				invoker.executeCommand(commandId);
-				System.out.println("\n"
-						+ "To see all available options, press 1");
 			}
 		} catch (NumberFormatException e) {
 			System.out.println("Please enter a correct command identifier.");

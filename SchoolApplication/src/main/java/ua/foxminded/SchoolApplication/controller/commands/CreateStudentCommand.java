@@ -28,4 +28,10 @@ public class CreateStudentCommand implements Command {
 		String message = String.format("Student %s %s has been added", studentFirstname, studentLastname);
 		System.out.println(message);
 	}
+
+	@Override
+	public String getDescription() {
+		String description = "create a new student";
+		return description;
+	}
 }

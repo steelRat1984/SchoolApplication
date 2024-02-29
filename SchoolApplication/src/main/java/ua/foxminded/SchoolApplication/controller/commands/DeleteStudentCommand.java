@@ -19,6 +19,7 @@ public class DeleteStudentCommand implements Command {
 	public void execute() {
 		System.out.println("Enter student's Id: ");
 		int studentId = scanner.nextInt();
+		scanner.nextLine();
 		Student student = studentServices.getStudentById(studentId);
 		studentServices.deleteStudentById(studentId);
 		StringBuilder stringBuilder = new StringBuilder();
@@ -27,6 +28,11 @@ public class DeleteStudentCommand implements Command {
 		stringBuilder.append("has been deleted!");
 		System.out.println(stringBuilder.toString());
 
+	}
+	@Override
+	public String getDescription() {
+		String description = "delete the student";
+		return description;
 	}
 
 }
