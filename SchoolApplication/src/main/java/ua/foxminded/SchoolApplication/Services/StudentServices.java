@@ -7,7 +7,6 @@ import java.util.Random;
 import ua.foxminded.SchoolApplication.database.CourseDAO;
 import ua.foxminded.SchoolApplication.database.GroupDAO;
 import ua.foxminded.SchoolApplication.database.StudentDAO;
-import ua.foxminded.SchoolApplication.database.StudentRelationsDAO;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
@@ -16,7 +15,6 @@ public class StudentServices {
 	CourseDAO courseDAO = new CourseDAO();
 	StudentDAO studentDAO = new StudentDAO();
 	GroupDAO groupDAO = new GroupDAO();
-	StudentRelationsDAO studentRelationsDAO = new StudentRelationsDAO();
 
 	public Student getStudentnByName(String firstName, String lastName) {
 		Student student = studentDAO.getStudentByName(firstName, lastName);
@@ -50,7 +48,7 @@ public class StudentServices {
 			Course selectedToDeleteCourse = iterator.next();
 			if (selectedToDeleteCourse.getCourseID() == courseId) {
 				iterator.remove();
-				studentRelationsDAO.deleteRelation(studentId, courseId);
+				studentDAO.deleteRelation(studentId, courseId);
 				isDelated = true;
 				break;
 			}
@@ -59,7 +57,7 @@ public class StudentServices {
 	}
 
 	public void deleteStudentById(int studentId) {
-		studentRelationsDAO.deleteAllRelationsByStudentId(studentId);
+		studentDAO.deleteAllRelationsByStudentId(studentId);
 		studentDAO.deleteStudentById(studentId);
 
 	}
@@ -73,6 +71,6 @@ public class StudentServices {
 		Student student = new Student(studentId, group, inputStudent.getFirstName(), inputStudent.getLastName(),
 				courses);
 		studentDAO.inserntTheStudent(student);
-		studentRelationsDAO.insertRelation(student);
+		studentDAO.insertRelation(student);
 	}
 }

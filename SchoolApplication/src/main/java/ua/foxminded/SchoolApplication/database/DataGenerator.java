@@ -16,14 +16,13 @@ public class DataGenerator {
 		StudentDAO studentDAO = new StudentDAO();
 		GroupDAO groupDAO = new GroupDAO();
 		CourseDAO courseDAO = new CourseDAO();
-		StudentRelationsDAO relationsDAO = new StudentRelationsDAO();
 		List<Group> groups = generateGoup();
 		List<Student> students = generateStudents();
 		List<Course> courses = generateCourse();
 		groupDAO.primaryinsertGroups(groups);
 		courseDAO.primaryinsertCourses(courses);
 		studentDAO.primaryInsertsStudents(students);
-		relationsDAO.primaryInsertRelations(students);
+		studentDAO.primaryInsertRelations(students);
 	}
 
 	private List<String> generateFirstName() {

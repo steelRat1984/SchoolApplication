@@ -8,11 +8,9 @@ import java.util.Random;
 
 import ua.foxminded.SchoolApplication.database.CourseDAO;
 import ua.foxminded.SchoolApplication.database.StudentDAO;
-import ua.foxminded.SchoolApplication.database.StudentRelationsDAO;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 public class CourseServices {
-	StudentRelationsDAO studentRelationsDAO = new StudentRelationsDAO();	
 	CourseDAO courseDAO = new CourseDAO();
 	StudentDAO studentDAO = new StudentDAO();
 	
@@ -27,7 +25,7 @@ public class CourseServices {
 	}
 	public Map <Course,List<Student>> getDataForCertainCourseReport(int courseId ) {
 		Course course = courseDAO.getCourseById(courseId);
-		List<Integer> enrolledstudentsId = studentRelationsDAO.getStudentsIdByCourseId(courseId);
+		List<Integer> enrolledstudentsId = studentDAO.getStudentsIdByCourseId(courseId);
 		List<Student> enrolledStudents = new ArrayList<>();
 		Map <Course,List<Student>> courseReport = new HashMap<>();
 		for (int studentId : enrolledstudentsId ) {
@@ -39,7 +37,7 @@ public class CourseServices {
 	}
 	
 	public List<Course> getSelectedCoursesforStudent(int studentId) {
-		List<Integer> selectedCourseId = studentRelationsDAO.getSelectedCoursesID(studentId);
+		List<Integer> selectedCourseId = studentDAO.getSelectedCoursesID(studentId);
 		List<Course> actualCourseList = courseDAO.selectActualCourseList();
 		List<Course> selectedCourses = new ArrayList<>();
 		for (int courseId : selectedCourseId) {
