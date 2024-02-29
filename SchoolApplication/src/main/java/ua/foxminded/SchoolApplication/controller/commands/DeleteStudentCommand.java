@@ -20,11 +20,11 @@ public class DeleteStudentCommand implements Command {
 		System.out.println("Enter student's Id: ");
 		int studentId = scanner.nextInt();
 		Student student = studentServices.getStudentById(studentId);
+		studentServices.deleteStudentById(studentId);
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Student \n");
 		stringBuilder.append(student.toString() + "\n");
 		stringBuilder.append("has been deleted!");
-		studentServices.deleteStudentById(studentId);
 		System.out.println(stringBuilder.toString());
 
 	}
