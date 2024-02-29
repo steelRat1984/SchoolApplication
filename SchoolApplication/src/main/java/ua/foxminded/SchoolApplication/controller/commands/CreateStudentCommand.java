@@ -25,9 +25,7 @@ public class CreateStudentCommand implements Command {
 		student.setFirstName(studentFirstname);
 		student.setLastName(studentLastname);
 		studentServices.insertStudent(student);
-		StringBuilder stringBuilder = new StringBuilder("Student ");
-		stringBuilder.append(studentFirstname).append(" ").append(studentLastname);
-		stringBuilder.append(" has been added!");
-		System.out.println(stringBuilder.toString());
+		String message = String.format("Student %s %s has been added", studentFirstname, studentLastname);
+		System.out.println(message);
 	}
 }
