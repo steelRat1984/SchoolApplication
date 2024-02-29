@@ -17,17 +17,17 @@ public class StudentServices {
 	StudentDAO studentDAO = new StudentDAO();
 	GroupDAO groupDAO = new GroupDAO();
 	StudentRelationsDAO studentRelationsDAO = new StudentRelationsDAO();
-	
-	
-	public Student getStudentnByName (String firstName, String lastName) {
+
+	public Student getStudentnByName(String firstName, String lastName) {
 		Student student = studentDAO.getStudentByName(firstName, lastName);
-		return student; 
+		return student;
 	}
-	public Student getStudentById(int studentId){
+
+	public Student getStudentById(int studentId) {
 		Student student = studentDAO.getStudentById(studentId);
 		return student;
 	}
-	
+
 	public boolean enrollStudentToCourse(int studentId, int courseId) {
 		Student student = studentDAO.getStudentById(studentId);
 		List<Course> selectedCourses = student.getCourses();
@@ -64,13 +64,14 @@ public class StudentServices {
 
 	}
 
-	public void insertStudent(String firstName, String lastName) {
+	public void insertStudent(Student inputStudent) {
 		Random random = new Random();
 		int groupId = random.nextInt(groupDAO.selectActualListOfGroups().size() + 1);
 		int studentId = studentDAO.getMaximumStudentId() + 1;
 		Group group = groupDAO.getGroupById(groupId);
 		List<Course> courses = CourseServices.cutCourseListRandomly(courseDAO.selectActualCourseList());
-		Student student = new Student(studentId, group, firstName, lastName, courses);
+		Student student = new Student(studentId, group, inputStudent.getFirstName(), inputStudent.getLastName(),
+				courses);
 		studentDAO.inserntTheStudent(student);
 		studentRelationsDAO.insertRelation(student);
 	}

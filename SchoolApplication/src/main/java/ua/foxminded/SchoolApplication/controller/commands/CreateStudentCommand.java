@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import ua.foxminded.SchoolApplication.Services.StudentServices;
 import ua.foxminded.SchoolApplication.controller.Command;
+import ua.foxminded.SchoolApplication.model.Student;
 
 public class CreateStudentCommand implements Command {
 	private StudentServices studentServices = new StudentServices();
@@ -18,11 +19,12 @@ public class CreateStudentCommand implements Command {
 	public void execute() {
 		System.out.println("Enter student's first name:");
 		String studentFirstname = scanner.nextLine();
-
 		System.out.println("Enter student's last name:");
 		String studentLastname = scanner.nextLine();
-		
-		studentServices.insertStudent(studentFirstname, studentLastname);
+		Student student = new Student();
+		student.setFirstName(studentFirstname);
+		student.setLastName(studentLastname);
+		studentServices.insertStudent(student);
 		StringBuilder stringBuilder = new StringBuilder("Student ");
 		stringBuilder.append(studentFirstname).append(" ").append(studentLastname);
 		stringBuilder.append(" has been added!");
