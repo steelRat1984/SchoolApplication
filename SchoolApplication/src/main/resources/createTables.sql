@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS school_app.courses
 )
 TABLESPACE pg_default;
         -- Table: school_app.students_groups_relations
-CREATE TABLE IF NOT EXISTS school_app.students_courses_relations
+CREATE TABLE IF NOT EXISTS school_app.students_courses
     (
     student_id int NOT NULL,
     course_id int NOT NULL,
@@ -45,5 +45,5 @@ ALTER TABLE IF EXISTS school_app.groups
     OWNER to school_admin;        
 ALTER TABLE IF EXISTS school_app.courses
     OWNER to school_admin;
-ALTER TABLE IF EXISTS school_app.students_courses_relations
+ALTER TABLE IF EXISTS school_app.students_courses
     OWNER to school_admin;
