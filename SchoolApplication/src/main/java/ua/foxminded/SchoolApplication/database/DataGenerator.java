@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import ua.foxminded.SchoolApplication.Services.CourseServices;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
@@ -83,7 +82,7 @@ public class DataGenerator {
 			int randomFirstNameIndex = random.nextInt(firstName.size());
 			int randomLastNameIndex = random.nextInt(firstName.size());
 			Group group = groups.get(random.nextInt(groups.size()));
-			List<Course> certainCourses = CourseServices.cutCourseListRandomly(allCourses);
+			List<Course> certainCourses = DataGenerator.cutCourseListRandomly(allCourses);
 			Student student = new Student();
 			student.setStudentID(i + 1);
 			student.setFirstName(firstName.get(randomFirstNameIndex));
@@ -129,5 +128,18 @@ public class DataGenerator {
 		courses.add(courseMusic);
 		courses.add(courseComputerScience);
 		return courses;
+	}
+
+	public static List<Course> cutCourseListRandomly(List<Course> fullListCourses) {
+		Random random = new Random();
+		int amountCourses = random.nextInt(3) + 1;
+		List<Course> cutListOfCourses = new ArrayList<>();
+		List<Course> tempFullList = new ArrayList<>(fullListCourses);
+		for (int i = 0; i < amountCourses; i++) {
+			int eaachCourseIndex = random.nextInt(tempFullList.size());
+			cutListOfCourses.add(tempFullList.get(eaachCourseIndex));
+			tempFullList.remove(eaachCourseIndex);
+		}
+		return cutListOfCourses;
 	}
 }
