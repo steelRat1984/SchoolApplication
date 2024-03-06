@@ -73,7 +73,7 @@ class GroupDAOTest {
 		when(resultSetMock.next()).thenReturn(true, true, false);
 		when(resultSetMock.getInt("group_id")).thenReturn(groupId1, groupId2);
 		when(resultSetMock.getString("group_name")).thenReturn(name1, name2);
-		List<Group> resultGroupsList = groupDAO.selectActualListOfGroups();
+		List<Group> resultGroupsList = groupDAO.selectAllGroups();
 
 		assertEquals(2, resultGroupsList.size());
 		assertEquals(groupId1, resultGroupsList.get(0).getGroupID());

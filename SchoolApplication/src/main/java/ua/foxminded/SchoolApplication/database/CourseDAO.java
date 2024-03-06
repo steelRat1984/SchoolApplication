@@ -31,8 +31,8 @@ public class CourseDAO {
 		return course;
 	}
 
-	public List<Course> selectActualCourseList() {
-		List<Course> actualListOfCourses = new ArrayList<>();
+	public List<Course> selectAllCourses() {
+		List<Course> allCourses = new ArrayList<>();
 		String sql = "SELECT course_id, course_name, course_description FROM school_app.courses";
 		try (Connection connection = Database.connection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -42,12 +42,12 @@ public class CourseDAO {
 				String courseName = resultSet.getString("course_name");
 				String courseDescription = resultSet.getString("course_description");
 				Course course = new Course(courseId, courseName, courseDescription);
-				actualListOfCourses.add(course);
+				allCourses.add(course);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return actualListOfCourses;
+		return allCourses;
 	}
 
 	public void primaryGenerationCourses(List<Course> courses) {

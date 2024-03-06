@@ -1,17 +1,18 @@
-package ua.foxminded.SchoolApplication.Services;
+package ua.foxminded.SchoolApplication.Service;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 import ua.foxminded.SchoolApplication.database.CourseDAO;
+import ua.foxminded.SchoolApplication.database.DataGenerator;
 import ua.foxminded.SchoolApplication.database.GroupDAO;
 import ua.foxminded.SchoolApplication.database.StudentDAO;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 
-public class StudentServices {
+public class StudentService {
 	CourseDAO courseDAO = new CourseDAO();
 	StudentDAO studentDAO = new StudentDAO();
 	GroupDAO groupDAO = new GroupDAO();
@@ -64,10 +65,10 @@ public class StudentServices {
 
 	public void insertStudent(Student inputStudent) {
 		Random random = new Random();
-		int groupId = random.nextInt(groupDAO.selectActualListOfGroups().size() + 1);
+		int groupId = random.nextInt(groupDAO.selectAllGroups().size() + 1);
 		int studentId = studentDAO.getMaximumStudentId() + 1;
 		Group group = groupDAO.getGroupById(groupId);
-		List<Course> courses = CourseServices.cutCourseListRandomly(courseDAO.selectActualCourseList());
+		List<Course> courses = DataGenerator.cutCourseListRandomly(courseDAO.selectAllCourses());
 		Student student = new Student(studentId, group, inputStudent.getFirstName(), inputStudent.getLastName(),
 				courses);
 		studentDAO.inserntTheStudent(student);

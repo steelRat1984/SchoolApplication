@@ -4,16 +4,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
-import ua.foxminded.SchoolApplication.Services.CourseServices;
+import ua.foxminded.SchoolApplication.Service.CourseService;
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class GetCourseReportCommand implements Command {
-	private final CourseServices courseServices;
+	private final CourseService courseServices;
 	private final Scanner scanner;
 
-	public GetCourseReportCommand(CourseServices courseServices, Scanner scanner) {
+	public GetCourseReportCommand(CourseService courseServices, Scanner scanner) {
 		this.courseServices = courseServices;
 		this.scanner = scanner;
 	}

@@ -2,9 +2,9 @@ package ua.foxminded.SchoolApplication.controller;
 
 import java.util.Scanner;
 
-import ua.foxminded.SchoolApplication.Services.CourseServices;
-import ua.foxminded.SchoolApplication.Services.GroupServices;
-import ua.foxminded.SchoolApplication.Services.StudentServices;
+import ua.foxminded.SchoolApplication.Service.CourseService;
+import ua.foxminded.SchoolApplication.Service.GroupService;
+import ua.foxminded.SchoolApplication.Service.StudentService;
 import ua.foxminded.SchoolApplication.controller.commands.CreateStudentCommand;
 import ua.foxminded.SchoolApplication.controller.commands.DeleteStudentCommand;
 import ua.foxminded.SchoolApplication.controller.commands.EnrollStudentToCourseCommand;
@@ -17,9 +17,9 @@ import ua.foxminded.SchoolApplication.controller.commands.ShowStudentInfoByNameC
 public class ConsoleMenu {
 	private final CommandInvoker invoker = new CommandInvoker();
 	private final Scanner scanner = new Scanner(System.in);
-	private final StudentServices studentServices = new StudentServices();
-	private final CourseServices courseServices = new CourseServices();
-	private final GroupServices groupServices = new GroupServices();
+	private final StudentService studentServices = new StudentService();
+	private final CourseService courseServices = new CourseService();
+	private final GroupService groupServices = new GroupService();
 
 	public ConsoleMenu() {
 		registerCommands();

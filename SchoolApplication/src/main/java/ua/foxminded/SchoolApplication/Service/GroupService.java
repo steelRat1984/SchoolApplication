@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication.Services;
+package ua.foxminded.SchoolApplication.Service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -11,7 +11,7 @@ import ua.foxminded.SchoolApplication.database.StudentDAO;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 
-public class GroupServices {
+public class GroupService {
 	
 	
 	public Map <Integer, List<Group>> getDataforReport() {

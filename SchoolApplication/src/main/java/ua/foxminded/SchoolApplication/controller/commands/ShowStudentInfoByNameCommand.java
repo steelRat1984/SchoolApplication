@@ -2,15 +2,15 @@ package ua.foxminded.SchoolApplication.controller.commands;
 
 import java.util.Scanner;
 
-import ua.foxminded.SchoolApplication.Services.StudentServices;
+import ua.foxminded.SchoolApplication.Service.StudentService;
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class ShowStudentInfoByNameCommand implements Command {
-	private final StudentServices studentServices;
+	private final StudentService studentServices;
 	private final Scanner scanner;
 	
-	public ShowStudentInfoByNameCommand(StudentServices services, Scanner scanner) {
+	public ShowStudentInfoByNameCommand(StudentService services, Scanner scanner) {
 		this.studentServices = services;
 		this.scanner = scanner;
 	}

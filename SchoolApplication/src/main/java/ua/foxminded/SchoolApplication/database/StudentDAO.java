@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ua.foxminded.SchoolApplication.Services.CourseServices;
+import ua.foxminded.SchoolApplication.Service.CourseService;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
@@ -15,7 +15,7 @@ public class StudentDAO {
 
 	public Student getStudentByName(String firstName, String lastName) {
 		GroupDAO groupDAO = new GroupDAO();
-		CourseServices courseServices = new CourseServices();
+		CourseService courseServices = new CourseService();
 		Student student = new Student();
 		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students WHERE first_name = ? AND last_name = ?";
 		try (Connection connection = Database.connection();
@@ -43,7 +43,7 @@ public class StudentDAO {
 
 	public Student getStudentById(int studentId) {
 		GroupDAO groupDAO = new GroupDAO();
-		CourseServices courseServices = new CourseServices();
+		CourseService courseServices = new CourseService();
 		Student student = new Student();
 		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students WHERE student_id = ?";
 		try (Connection connection = Database.connection();
@@ -129,7 +129,7 @@ public class StudentDAO {
 	public List<Student> getAllStudents() {
 		List<Student> allStudents = new ArrayList<>();
 		GroupDAO groupDAO = new GroupDAO();
-		CourseServices courseServices = new CourseServices();
+		CourseService courseServices = new CourseService();
 		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students";
 
 		try (Connection connection = Database.connection();

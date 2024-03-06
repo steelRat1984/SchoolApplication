@@ -2,18 +2,18 @@ package ua.foxminded.SchoolApplication.controller.commands;
 
 import java.util.Scanner;
 
-import ua.foxminded.SchoolApplication.Services.CourseServices;
-import ua.foxminded.SchoolApplication.Services.StudentServices;
+import ua.foxminded.SchoolApplication.Service.CourseService;
+import ua.foxminded.SchoolApplication.Service.StudentService;
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class EnrollStudentToCourseCommand implements Command {
-	private final CourseServices courseServices;
-	private final StudentServices studentServices;
+	private final CourseService courseServices;
+	private final StudentService studentServices;
 	private final Scanner scanner;
 
-	public EnrollStudentToCourseCommand(CourseServices courseServices, StudentServices studentServices, Scanner scanner) {
+	public EnrollStudentToCourseCommand(CourseService courseServices, StudentService studentServices, Scanner scanner) {
 		this.courseServices = courseServices;
 		this.studentServices = studentServices;
 		this.scanner = scanner;

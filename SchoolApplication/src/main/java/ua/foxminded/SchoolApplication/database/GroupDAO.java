@@ -11,8 +11,8 @@ import ua.foxminded.SchoolApplication.model.Group;
 
 public class GroupDAO {
 
-	public List<Group> selectActualListOfGroups() {
-		List<Group> actualListOfGroups = new ArrayList<>();
+	public List<Group> selectAllGroups() {
+		List<Group> allGroups = new ArrayList<>();
 		String sql = "SELECT group_id, group_name FROM school_app.groups";
 		try (Connection connection = Database.connection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -21,12 +21,12 @@ public class GroupDAO {
 				int groupId = resultSet.getInt("group_id");
 				String groupName = resultSet.getString("group_name");
 				Group group = new Group(groupId, groupName);
-				actualListOfGroups.add(group);
+				allGroups.add(group);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return actualListOfGroups;
+		return allGroups;
 	}
 
 	public Group getGroupById(int groupId) {
