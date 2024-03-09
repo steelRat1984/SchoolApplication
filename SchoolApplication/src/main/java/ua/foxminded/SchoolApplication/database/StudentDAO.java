@@ -7,14 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import ua.foxminded.SchoolApplication.Service.CourseService;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class StudentDAO {
 	private GroupDAO groupDAO = new GroupDAO();
-	private CourseService courseService = new CourseService();
+	private CourseDAO courseDAO = new CourseDAO();
 
 	public List<Student> getEnrolledStudents(int courseId) {
 		String sql = "SELECT s.student_id, s.first_name, s.last_name, s.group_id FROM school_app.students s "
@@ -29,7 +28,7 @@ public class StudentDAO {
 					Group group = groupDAO.getGroupById(resultSet.getInt("group_id"));
 					String studentFirstName = resultSet.getString("first_name").trim();
 					String studentLastName = resultSet.getString("last_name").trim();
-					List<Course> сourses = courseService.getSelectedCoursesforStudent(studentId);
+					List<Course> сourses = courseDAO.getSelectedCoursesForStudent(studentId);
 					Student student = new Student(studentId, group, studentFirstName, studentLastName, сourses);
 					enrolledStudents.add(student);
 				}
@@ -57,7 +56,7 @@ public class StudentDAO {
 					student.setGroup(groupDAO.getGroupById(groupId));
 					student.setFirstName(studentFirstName);
 					student.setLastName(studentLastName);
-					student.setCourses(courseServices.getSelectedCoursesforStudent(studentId));
+					student.setCourses(courseDAO.getSelectedCoursesForStudent(studentId));
 				}
 			}
 		} catch (SQLException e) {
@@ -78,7 +77,7 @@ public class StudentDAO {
 					student.setGroup(groupDAO.getGroupById(groupId));
 					student.setFirstName(resultSet.getString("first_name"));
 					student.setLastName(resultSet.getString("last_name"));
-					student.setCourses(courseServices.getSelectedCoursesforStudent(studentId));
+					student.setCourses(courseDAO.getSelectedCoursesForStudent(studentId));
 				}
 			}
 		} catch (SQLException e) {
@@ -166,7 +165,7 @@ public class StudentDAO {
 				student.setGroup(groupDAO.getGroupById(groupId));
 				student.setFirstName(resultSet.getString("first_name"));
 				student.setLastName(resultSet.getString("last_name"));
-				student.setCourses(courseServices.getSelectedCoursesforStudent(studentId));
+				student.setCourses(courseDAO.getSelectedCoursesForStudent(studentId));
 
 				allStudents.add(student);
 			}
