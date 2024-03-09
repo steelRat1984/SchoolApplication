@@ -9,13 +9,38 @@ import java.util.List;
 
 import ua.foxminded.SchoolApplication.Service.CourseService;
 import ua.foxminded.SchoolApplication.model.Course;
+import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class StudentDAO {
+	private GroupDAO groupDAO = new GroupDAO();
+	private CourseService courseService = new CourseService();
+
+	public List<Student> getEnrolledStudents(int courseId) {
+		String sql = "SELECT s.student_id, s.first_name, s.last_name, s.group_id FROM school_app.students s "
+				+ "JOIN school_app.students_courses sc ON s.student_id = sc.student_id WHERE sc.course_id = ?";
+		List<Student> enrolledStudents = new ArrayList<>();
+		try (Connection connection = Database.connection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+			preparedStatement.setInt(1, courseId);
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					int studentId = resultSet.getInt("student_id");
+					Group group = groupDAO.getGroupById(resultSet.getInt("group_id"));
+					String studentFirstName = resultSet.getString("first_name").trim();
+					String studentLastName = resultSet.getString("last_name").trim();
+					List<Course> сourses = courseService.getSelectedCoursesforStudent(studentId);
+					Student student = new Student(studentId, group, studentFirstName, studentLastName, сourses);
+					enrolledStudents.add(student);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return enrolledStudents;
+	}
 
 	public Student getStudentByName(String firstName, String lastName) {
-		GroupDAO groupDAO = new GroupDAO();
-		CourseService courseServices = new CourseService();
 		Student student = new Student();
 		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students WHERE first_name = ? AND last_name = ?";
 		try (Connection connection = Database.connection();
@@ -42,8 +67,6 @@ public class StudentDAO {
 	}
 
 	public Student getStudentById(int studentId) {
-		GroupDAO groupDAO = new GroupDAO();
-		CourseService courseServices = new CourseService();
 		Student student = new Student();
 		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students WHERE student_id = ?";
 		try (Connection connection = Database.connection();
@@ -128,8 +151,6 @@ public class StudentDAO {
 
 	public List<Student> getAllStudents() {
 		List<Student> allStudents = new ArrayList<>();
-		GroupDAO groupDAO = new GroupDAO();
-		CourseService courseServices = new CourseService();
 		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students";
 
 		try (Connection connection = Database.connection();

@@ -5,16 +5,19 @@ import java.util.Map;
 import java.util.Scanner;
 
 import ua.foxminded.SchoolApplication.Service.CourseService;
+import ua.foxminded.SchoolApplication.Service.StudentService;
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class GetCourseReportCommand implements Command {
 	private final CourseService courseServices;
+	private final StudentService studentService;
 	private final Scanner scanner;
 
-	public GetCourseReportCommand(CourseService courseServices, Scanner scanner) {
+	public GetCourseReportCommand(CourseService courseServices, StudentService studentService, Scanner scanner) {
 		this.courseServices = courseServices;
+		this.studentService = studentService;
 		this.scanner = scanner;
 	}
 
@@ -23,21 +26,17 @@ public class GetCourseReportCommand implements Command {
 		System.out.println("Please enter the course ID:");
 		int courseId = scanner.nextInt();
 		scanner.nextLine();
-		StringBuilder resultReport = new StringBuilder("Report on the names of students in courses:\n");
-		Map<Course, List<Student>> courseReport = courseServices.getDataForCertainCourseReport(courseId);
-		for (Map.Entry<Course, List<Student>> entry : courseReport.entrySet()) {
-			String courseName = entry.getKey().getCourseName();
-			List<Student> students = entry.getValue();
-			
-				resultReport.append("the following students study in the ").append(courseName).append("course");
-				for (Student student : students){
-					String studentFullName = student.getFirstName().trim()+ " " + student.getLastName().trim();
-					resultReport.append(studentFullName).append("\n");
-				}
+		StringBuilder resultReport = new StringBuilder("Report on the names of students in courses :\n");
+		Course course = courseServices.getCourseById(courseId);
+		List<Student> enrolledStudents = studentService.getDataForCertainCourseReport(courseId);
+		resultReport.append("the following students study in the ").append(course.getCourseName()).append("course :\n");
+		for (Student student : enrolledStudents) {
+			String studentFullName = student.getFirstName() + " " + student.getLastName();
+			resultReport.append(studentFullName).append("\n");
 		}
 		System.out.println(resultReport.toString());
 	}
-	
+
 	@Override
 	public String getDescription() {
 		String description = "get a report on students on the course";

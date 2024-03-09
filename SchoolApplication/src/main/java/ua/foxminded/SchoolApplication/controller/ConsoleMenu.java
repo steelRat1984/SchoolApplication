@@ -28,7 +28,7 @@ public class ConsoleMenu {
 	private void registerCommands() {
 		invoker.register(1, new ShowAllCoursesCommand(courseServices));
 		invoker.register(2, new GetGroupReportCommand(groupServices));
-		invoker.register(3, new GetCourseReportCommand(courseServices, scanner));
+		invoker.register(3, new GetCourseReportCommand(courseServices,studentServices, scanner));
 		invoker.register(4, new CreateStudentCommand(studentServices, scanner));
 		invoker.register(5, new ShowStudentInfoByNameCommand(studentServices, scanner));
 		invoker.register(6, new DeleteStudentCommand(studentServices, scanner));

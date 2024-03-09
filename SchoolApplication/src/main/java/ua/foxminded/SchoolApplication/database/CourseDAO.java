@@ -19,8 +19,8 @@ public class CourseDAO {
 			preparedStatement.setInt(1, InputcourseId);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					String courseName = resultSet.getString("course_name");
-					String courseDescription = resultSet.getString("course_description");
+					String courseName = resultSet.getString("course_name").trim();
+					String courseDescription = resultSet.getString("course_description").trim();
 					int courseId = resultSet.getInt("course_id");
 					course = new Course(courseId, courseName, courseDescription);
 				}

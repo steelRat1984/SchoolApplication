@@ -1,14 +1,11 @@
 package ua.foxminded.SchoolApplication.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import ua.foxminded.SchoolApplication.database.CourseDAO;
 import ua.foxminded.SchoolApplication.database.StudentDAO;
 import ua.foxminded.SchoolApplication.model.Course;
-import ua.foxminded.SchoolApplication.model.Student;
 
 public class CourseService {
 	CourseDAO courseDAO = new CourseDAO();
@@ -23,19 +20,6 @@ public class CourseService {
 		List<Course> coursesList = courseDAO.selectAllCourses();
 		return coursesList;
 	}
-	public Map<Course,List<Student>> getDataForCertainCourseReport(int courseId ) {
-		Course course = courseDAO.getCourseById(courseId);
-		List<Integer> enrolledstudentsId = studentDAO.getStudentsIdByCourseId(courseId);
-		List<Student> enrolledStudents = new ArrayList<>();
-		Map<Course,List<Student>> courseReport = new HashMap<>();
-		for (int studentId : enrolledstudentsId ) {
-			Student student = studentDAO.getStudentById(studentId);
-			enrolledStudents.add(student);
-		}
-		courseReport.put(course, enrolledStudents);
-		return courseReport;
-	}
-	
 	public List<Course> getSelectedCoursesforStudent(int studentId) {
 		List<Integer> selectedCourseId = studentDAO.getSelectedCoursesID(studentId);
 		List<Course> allCourses = courseDAO.selectAllCourses();
