@@ -14,7 +14,7 @@ import ua.foxminded.SchoolApplication.model.Student;
 public class StudentDAO {
 	private GroupDAO groupDAO = new GroupDAO();
 	private CourseDAO courseDAO = new CourseDAO();
-
+	
 	public List<Student> getEnrolledStudents(int courseId) {
 		String sql = "SELECT s.student_id, s.first_name, s.last_name, s.group_id FROM school_app.students s "
 				+ "JOIN school_app.students_courses sc ON s.student_id = sc.student_id WHERE sc.course_id = ?";
@@ -215,25 +215,6 @@ public class StudentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public List<Integer> getSelectedCoursesID(int studentId) {
-		List<Integer> selectedCoursesID = new ArrayList<>();
-		String sql = "SELECT course_id FROM school_app.students_courses WHERE student_id = ?";
-		try (Connection connection = Database.connection();
-				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-			preparedStatement.setInt(1, studentId);
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					int courseId = resultSet.getInt("course_id");
-					selectedCoursesID.add(courseId);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return selectedCoursesID;
 	}
 
 	public void deleteAllRelationsByStudentId(int studentId) {
