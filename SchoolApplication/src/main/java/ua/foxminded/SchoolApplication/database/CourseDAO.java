@@ -7,16 +7,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ua.foxminded.SchoolApplication.Service.CourseService;
 import ua.foxminded.SchoolApplication.model.Course;
-import ua.foxminded.SchoolApplication.model.Group;
-import ua.foxminded.SchoolApplication.model.Student;
 
 public class CourseDAO {
+	private CourseService courseService = new CourseService();
 
-	
-	
-	
-	public List<Course> getSelectedCoursesForStudent (int studentId){
+	public List<Course> getSelectedCoursesForStudent(int studentId) {
 		String sql = "SELECT c.course_id, c.course_name, c.course_description FROM school_app.courses c "
 				+ "JOIN school_app.students_courses sc ON c.course_id = sc.course_id WHERE sc.student_id = ?";
 		List<Course> selectedCourses = new ArrayList<>();
@@ -26,9 +23,10 @@ public class CourseDAO {
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
 					int courseId = resultSet.getInt("course_id");
+					int numberOfStudents = courseService.countStudentsByCourse(courseId);
 					String courseName = resultSet.getString("course_name").trim();
 					String courseDescription = resultSet.getString("course_description").trim();
-					Course course = new Course(courseId, courseName, courseDescription);
+					Course course = new Course(courseId, numberOfStudents, courseName, courseDescription);
 					selectedCourses.add(course);
 				}
 			}
@@ -36,11 +34,8 @@ public class CourseDAO {
 			e.printStackTrace();
 		}
 		return selectedCourses;
-		
-		
-		
 	}
-	
+
 	public Course getCourseById(int InputcourseId) {
 		Course course = new Course();
 		String sql = "SELECT course_id, course_name, course_description FROM school_app.courses WHERE course_id = ?";
@@ -52,7 +47,8 @@ public class CourseDAO {
 					String courseName = resultSet.getString("course_name").trim();
 					String courseDescription = resultSet.getString("course_description").trim();
 					int courseId = resultSet.getInt("course_id");
-					course = new Course(courseId, courseName, courseDescription);
+					int numberOfStudents = courseService.countStudentsByCourse(courseId);
+					course = new Course(courseId, numberOfStudents, courseName, courseDescription);
 				}
 			}
 		} catch (SQLException e) {
@@ -69,9 +65,10 @@ public class CourseDAO {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				int courseId = resultSet.getInt("course_id");
+				int numberOfStudents = courseService.countStudentsByCourse(courseId);
 				String courseName = resultSet.getString("course_name");
 				String courseDescription = resultSet.getString("course_description");
-				Course course = new Course(courseId, courseName, courseDescription);
+				Course course = new Course(courseId, numberOfStudents, courseName, courseDescription);
 				allCourses.add(course);
 			}
 		} catch (SQLException e) {
