@@ -6,13 +6,15 @@ public class Group {
 
 	private int groupID;
 	private String groupName;
-
+	private int numberOfStudents;
+	
 	public Group() {
 	}
 
-	public Group(int groupID, String groupName) {
+	public Group(int groupID, String groupName, int numberOfStudents) {
 		this.groupID = groupID;
 		this.groupName = groupName;
+		this.numberOfStudents = numberOfStudents;
 	}
 
 	public int getGroupID() {
@@ -29,6 +31,14 @@ public class Group {
 
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
+	}
+
+	public int getNumberOfStudents() {
+		return numberOfStudents;
+	}
+
+	public void setNumberOfStudents(int numberOfStudents) {
+		this.numberOfStudents = numberOfStudents;
 	}
 
 	@Override
