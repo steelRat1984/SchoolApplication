@@ -24,14 +24,13 @@ public class CreateStudentCommand implements Command {
 		Student student = new Student();
 		student.setFirstName(studentFirstname);
 		student.setLastName(studentLastname);
-		studentServices.insertStudent(student);
+		studentServices.createStudent(student);
 		String message = String.format("Student %s %s has been added", studentFirstname, studentLastname);
 		System.out.println(message);
 	}
 
 	@Override
 	public String getDescription() {
-		String description = "create a new student";
-		return description;
+		return "create a new student";
 	}
 }
