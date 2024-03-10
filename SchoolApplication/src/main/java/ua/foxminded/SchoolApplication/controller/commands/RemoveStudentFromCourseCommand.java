@@ -32,16 +32,22 @@ public class RemoveStudentFromCourseCommand implements Command {
 		scanner.nextLine();
 		Student student = studentServices.getStudentById(studentId);
 		Course course = courseServices.getCourseById(courseId);
-		stringBuilder.append(student.getFirstName().trim()).append(" ").append(student.getLastName().trim());
-		stringBuilder.append(" has been deleted from the course -").append(course.getCourseName());
-		studentServices.deleteStudentFromCourse(studentId, courseId);
-		System.out.println(stringBuilder.toString());
-
+		boolean isDelated = studentServices.deletedStudentFromCourse(studentId, courseId);
+		if (isDelated == true) {
+			stringBuilder.append(student.getFirstName().trim()).append(" ").append(student.getLastName().trim());
+			stringBuilder.append(" has been deleted from the course -").append(course.getCourseName());
+			System.out.println(stringBuilder.toString());
+		}else {
+			stringBuilder.append(student.getFirstName()).append(" ").append(student.getLastName());
+			stringBuilder.append(" did not study in this course - ").append(course.getCourseName()).append(", please choose another one");
+			System.out.println(stringBuilder.toString());
+		}
+		
+		
 	}
 
 	@Override
 	public String getDescription() {
-		String description = "remove the student from the course"; 
-		return description;
+		return "remove the student from the course"; 
 	}
 }
