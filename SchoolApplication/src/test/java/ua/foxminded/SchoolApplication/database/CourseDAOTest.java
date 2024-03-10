@@ -75,7 +75,7 @@ class CourseDAOTest {
 		when(resultSetMock.getInt("course_id")).thenReturn(1, 2);
 		when(resultSetMock.getString("course_name")).thenReturn(name1, name2);
 		when(resultSetMock.getString("course_description")).thenReturn(description1, description2);
-		List<Course> resultCoursesList = courseDAO.selectAllCourses();
+		List<Course> resultCoursesList = courseDAO.getAllCourses();
 
 		assertEquals(2, resultCoursesList.size());
 		assertEquals(1, resultCoursesList.get(0).getCourseID());
