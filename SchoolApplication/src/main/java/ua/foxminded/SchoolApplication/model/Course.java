@@ -12,9 +12,15 @@ public class Course {
 		this.courseName = courseName;
 		this.courseDescription = courseDescription;
 	}
+	public Course(int courseID, String courseName, String courseDescription) {
+		this.courseID = courseID;
+		this.courseName = courseName;
+		this.courseDescription = courseDescription;
+	}
 	public Course () {
 		
 	}
+
 	
 	public int getCourseID() {
 		return courseID;
