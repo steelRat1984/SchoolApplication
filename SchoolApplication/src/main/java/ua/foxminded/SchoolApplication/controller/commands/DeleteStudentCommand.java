@@ -31,8 +31,7 @@ public class DeleteStudentCommand implements Command {
 	}
 	@Override
 	public String getDescription() {
-		String description = "delete the student";
-		return description;
+		return "delete the student";
 	}
 
 }
