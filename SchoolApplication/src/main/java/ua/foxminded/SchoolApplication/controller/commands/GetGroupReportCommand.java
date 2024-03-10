@@ -36,8 +36,7 @@ public class GetGroupReportCommand implements Command {
 
 	@Override
 	public String getDescription() {
-		String description = "get number of students in a group report";
-		return description;
+		return "get number of students in a group report"; 
 	}
 
 }
