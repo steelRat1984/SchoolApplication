@@ -18,11 +18,11 @@ public class StudentService {
 	GroupDAO groupDAO = new GroupDAO();
 	
 	public List<Student> getDataForCertainCourseReport(int courseId ) {
-		List<Student> enrolledStudents = studentDAO.getEnrolledStudents(courseId);
+		List<Student> enrolledStudents = studentDAO.getCourseEnrolledStudents(courseId);
 		return enrolledStudents;
 	}
 	
-	public Student getStudentnByName(String firstName, String lastName) {
+	public Student getStudentByName(String firstName, String lastName) {
 		Student student = studentDAO.getStudentByName(firstName, lastName);
 		return student;
 	}
@@ -40,12 +40,13 @@ public class StudentService {
 			Course course = courseDAO.getCourseById(courseId);
 			selectedCourses.add(course);
 			student.setCourses(selectedCourses);
+			studentDAO.addRelation(studentId, courseId);
 			return true;
 		}
 		return false;
 	}
 
-	public boolean deleteStudentFromCourse(int studentId, int courseId) {
+	public boolean deletedStudentFromCourse(int studentId, int courseId) {
 		Student student = studentDAO.getStudentById(studentId);
 		List<Course> selectedCourses = student.getCourses();
 		boolean isDelated = false;
@@ -68,15 +69,15 @@ public class StudentService {
 
 	}
 
-	public void insertStudent(Student inputStudent) {
+	public void createStudent(Student inputStudent) {
 		Random random = new Random();
-		int groupId = random.nextInt(groupDAO.selectAllGroups().size() + 1);
+		int groupId = random.nextInt(groupDAO.selectAllGroups().size());
 		int studentId = studentDAO.getMaximumStudentId() + 1;
 		Group group = groupDAO.getGroupById(groupId);
-		List<Course> courses = DataGenerator.cutCourseListRandomly(courseDAO.selectAllCourses());
+		List<Course> courses = DataGenerator.cutCourseListRandomly(courseDAO.getAllCourses());
 		Student student = new Student(studentId, group, inputStudent.getFirstName(), inputStudent.getLastName(),
 				courses);
-		studentDAO.inserntTheStudent(student);
+		studentDAO.inserntOneStudent(student);
 		studentDAO.insertRelation(student);
 	}
 }
