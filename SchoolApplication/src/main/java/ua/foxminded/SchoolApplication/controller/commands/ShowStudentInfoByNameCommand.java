@@ -21,15 +21,19 @@ public class ShowStudentInfoByNameCommand implements Command {
 		String studentFirstName = scanner.nextLine();
 		System.out.println("Enter student's last name ");
 		String studentLastName = scanner.nextLine();
-		Student student = studentServices.getStudentnByName(studentFirstName, studentLastName);
+		Student student = studentServices.getStudentByName(studentFirstName, studentLastName);
 		System.out.println("infirmation about student :");
-		System.out.println(student);
+		try { 
+			System.out.println(student);
+		}catch (NullPointerException e) {
+			String message = String.format("student %s %s was not founded", studentFirstName, studentLastName);
+			System.out.println(message);
+		}
 	}
 
 	@Override
 	public String getDescription() {
-		String description = "show student info";
-		return description;
+		return "show student info";
 	}
 
 }
