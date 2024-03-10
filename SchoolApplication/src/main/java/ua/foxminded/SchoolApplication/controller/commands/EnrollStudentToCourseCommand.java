@@ -9,13 +9,13 @@ import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class EnrollStudentToCourseCommand implements Command {
-	private final CourseService courseServices;
-	private final StudentService studentServices;
+	private final CourseService courseService;
+	private final StudentService studentService;
 	private final Scanner scanner;
 
-	public EnrollStudentToCourseCommand(CourseService courseServices, StudentService studentServices, Scanner scanner) {
-		this.courseServices = courseServices;
-		this.studentServices = studentServices;
+	public EnrollStudentToCourseCommand(CourseService courseService, StudentService studentService, Scanner scanner) {
+		this.courseService = courseService;
+		this.studentService = studentService;
 		this.scanner = scanner;
 	}
 
@@ -28,18 +28,25 @@ public class EnrollStudentToCourseCommand implements Command {
 		System.out.println("Enter course id :");
 		int courseId = scanner.nextInt();
 		scanner.nextLine();
-		Student student = studentServices.getStudentById(studentId);
-		Course course = courseServices.getCourseById(courseId);
-		stringBuilder.append(student.getFirstName().trim()).append(" ").append(student.getLastName().trim());
-		stringBuilder.append(" has been enrolled to the course -").append(course.getCourseName());
-		studentServices.enrollStudentToCourse(studentId, courseId);
-		System.out.println(stringBuilder.toString());
+		Student student = studentService.getStudentById(studentId);
+		Course course = courseService.getCourseById(courseId);
+		boolean isEnrolled = studentService.enrollStudentToCourse(studentId, courseId);
+		if (isEnrolled == true) {
+			stringBuilder.append(student.getFirstName().trim()).append(" ").append(student.getLastName().trim());
+			stringBuilder.append(" has been enrolled to the course - ").append(course.getCourseName());
+			System.out.println(stringBuilder.toString());
+		}else {
+			stringBuilder.append(student.getFirstName()).append(" ").append(student.getLastName());
+			stringBuilder.append(" is already enrolled in this course - ").append(course.getCourseName()).append(", please choose another one");
+			System.out.println(stringBuilder.toString());
+		}
+		
 
 	}
 	@Override
 	public String getDescription() {
-		String description = "enroll a student to the course";
-		return description;
+		return "enroll a student to the course";
+		
 	}
 
 }
