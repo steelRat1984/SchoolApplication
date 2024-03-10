@@ -1,7 +1,6 @@
 package ua.foxminded.SchoolApplication.controller.commands;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
 import ua.foxminded.SchoolApplication.Service.CourseService;
@@ -39,8 +38,7 @@ public class GetCourseReportCommand implements Command {
 
 	@Override
 	public String getDescription() {
-		String description = "get a report on students on the course";
-		return description;
+		return "get a report on students on the course";
 	}
 
 }
