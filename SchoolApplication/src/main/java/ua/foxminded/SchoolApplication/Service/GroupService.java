@@ -1,42 +1,33 @@
 package ua.foxminded.SchoolApplication.Service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
+import ua.foxminded.SchoolApplication.database.GroupDAO;
 import ua.foxminded.SchoolApplication.database.StudentDAO;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class GroupService {
+	private GroupDAO groupDAO = new GroupDAO();
 	
-	
-	public Map <Integer, List<Group>> getDataforReport() {
-		Map <Group, List<Student>> studentslistInEachGroup = getStudentslistInEachGroup();
-		Map <Integer, List<Group>> groupsByStudentCount = new HashMap<>();
-		studentslistInEachGroup.forEach((group, students) -> {
-		    int studentCount = students.size();
-		    groupsByStudentCount.computeIfAbsent(studentCount, k -> new ArrayList<>()).add(group);
-		});
-		return groupsByStudentCount;
+	public List<Group> getAllGrouops() {
+		List<Group> allGroups = groupDAO.selectAllGroups();
+		return allGroups;
 	}
 
-	private Map<Group, List<Student>> getStudentslistInEachGroup() {
-	    StudentDAO studentDAO = new StudentDAO();
-	    List<Student> allStudents = studentDAO.getAllStudents();
-	    Map<Group, List<Student>> studentslistInEachGroup = new TreeMap<>(new Comparator<Group>() {
-	    	@Override
-	    	public int compare(Group o1, Group o2) {
-	    		return Integer.compare(o1.getGroupID(), o2.getGroupID());
-	    	}
-		});
-	    for (Student student : allStudents) {
-	        Group group = student.getGroup();
-	        studentslistInEachGroup.computeIfAbsent(group, k -> new ArrayList<>()).add(student);
-	    }
-	    return studentslistInEachGroup;
+	public Map<Integer, List<Group>> getDataforReport() {
+		Map<Integer, List<Group>> groupsByNumberOfStudents = new HashMap<>();
+		List<Group> groups = getAllGrouops();
+		Collections.sort(groups,
+				(group1, group2) -> Integer.compare(group1.getNumberOfStudents(), group2.getNumberOfStudents()));
+		for (Group group : groups) {
+			groupsByNumberOfStudents.computeIfAbsent(group.getNumberOfStudents(), k -> new ArrayList<>()).add(group);
+		}
+		return groupsByNumberOfStudents;
 	}
+
 }
