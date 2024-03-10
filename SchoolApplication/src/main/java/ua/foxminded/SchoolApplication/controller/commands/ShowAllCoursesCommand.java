@@ -16,16 +16,16 @@ public class ShowAllCoursesCommand implements Command {
 	@Override
 	public void execute() {
 		System.out.println("Here is the list of all courses that are available at the moment :");
-		List<Course> courses = courseServices.getCourses();
-		for (Course course : courses) {
-			System.out.println(
-					course.getCourseID() + ". " + course.getCourseName().trim() + ", " + course.getCourseDescription().trim());
-		}
+		List<Course> courses = courseServices.getAllCourses();
+		courses.stream()
+				.forEach(course -> System.out.println(course.getCourseID() + ". "
+						+ course.getCourseName() + ", "
+						+ course.getCourseDescription()));
 	}
 
 	@Override
 	public String getDescription() {
-		String description = "show all avaible courses";
-		return description;
+		return "show all avaible courses";
+
 	}
 }
