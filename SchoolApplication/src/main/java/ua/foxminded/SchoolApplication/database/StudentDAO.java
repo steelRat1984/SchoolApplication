@@ -14,14 +14,13 @@ import ua.foxminded.SchoolApplication.model.Student;
 public class StudentDAO {
 	private GroupDAO groupDAO = new GroupDAO();
 	private CourseDAO courseDAO = new CourseDAO();
-	
-	public List<Student> getEnrolledStudents(int courseId) {
-		String sql = "SELECT s.student_id, s.first_name, s.last_name, s.group_id FROM school_app.students s "
-				+ "JOIN school_app.students_courses sc ON s.student_id = sc.student_id WHERE sc.course_id = ?";
+		
+	public List<Student> getGroupEnrolledStudents(int groupId){
+		String sql = "SELECT student_id, first_name, last_name, group_id FROM school_app.students WHERE group_id = ?";
 		List<Student> enrolledStudents = new ArrayList<>();
 		try (Connection connection = Database.connection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-			preparedStatement.setInt(1, courseId);
+			preparedStatement.setInt(1, groupId);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
 					int studentId = resultSet.getInt("student_id");
@@ -30,6 +29,35 @@ public class StudentDAO {
 					String studentLastName = resultSet.getString("last_name").trim();
 					List<Course> сourses = courseDAO.getSelectedCoursesForStudent(studentId);
 					Student student = new Student(studentId, group, studentFirstName, studentLastName, сourses);
+					enrolledStudents.add(student);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return enrolledStudents;
+	}
+	
+	public List<Student> getCourseEnrolledStudents(int courseId) {
+		String sql = "SELECT s.student_id, s.first_name, s.last_name, s.group_id FROM school_app.students s "
+				+ "JOIN school_app.students_courses sc ON s.student_id = sc.student_id WHERE sc.course_id = ?";
+		List<Student> enrolledStudents = new ArrayList<>();
+		try (Connection connection = Database.connection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+			preparedStatement.setInt(1, courseId);
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					Student student = new Student();
+					int studentId = resultSet.getInt("student_id");
+					Group group = groupDAO.getGroupById(resultSet.getInt("group_id"));
+					String studentFirstName = resultSet.getString("first_name").trim();
+					String studentLastName = resultSet.getString("last_name").trim();
+					List<Course> сourses = courseDAO.getSelectedCoursesForStudent(studentId);
+					student.setStudentID(studentId);
+					student.setGroup(group);
+					student.setFirstName(studentFirstName);
+					student.setLastName(studentLastName);
+					student.setCourses(сourses);
 					enrolledStudents.add(student);
 				}
 			}
@@ -75,8 +103,8 @@ public class StudentDAO {
 				if (resultSet.next()) {
 					int groupId = resultSet.getInt("group_id");
 					student.setGroup(groupDAO.getGroupById(groupId));
-					student.setFirstName(resultSet.getString("first_name"));
-					student.setLastName(resultSet.getString("last_name"));
+					student.setFirstName(resultSet.getString("first_name").trim());
+					student.setLastName(resultSet.getString("last_name").trim());
 					student.setCourses(courseDAO.getSelectedCoursesForStudent(studentId));
 				}
 			}
@@ -97,7 +125,7 @@ public class StudentDAO {
 		}
 	}
 
-	public void inserntTheStudent(Student student) {
+	public void inserntOneStudent(Student student) {
 		String insertStudent = "INSERT INTO school_app.students (student_id, group_id, first_name, last_name) VALUES (?, ?, ?, ?)";
 		int studentId = student.getStudentID();
 		int groupId = student.getGroup().getGroupID();
