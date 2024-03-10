@@ -11,6 +11,7 @@ import ua.foxminded.SchoolApplication.model.Group;
 
 public class GroupDAO {
 
+	
 	public List<Group> selectAllGroups() {
 		List<Group> allGroups = new ArrayList<>();
 		String sql = "SELECT group_id, group_name FROM school_app.groups";
@@ -20,7 +21,8 @@ public class GroupDAO {
 			while (resultSet.next()) {
 				int groupId = resultSet.getInt("group_id");
 				String groupName = resultSet.getString("group_name");
-				Group group = new Group(groupId, groupName);
+				int numberOfStudents = countStudentInGroup(groupId);
+				Group group = new Group(groupId, groupName, numberOfStudents);
 				allGroups.add(group);
 			}
 		} catch (SQLException e) {
@@ -39,6 +41,7 @@ public class GroupDAO {
 				if (resultSet.next()) {
 					int id = resultSet.getInt("group_id");
 					String name = resultSet.getString("group_name");
+					group.setNumberOfStudents(countStudentInGroup(groupId));
 					group.setGroupID(id);
 					group.setGroupName(name);
 				}
@@ -47,6 +50,23 @@ public class GroupDAO {
 			e.printStackTrace();
 		}
 		return group;
+	}
+	
+	public Integer countStudentInGroup (int groupId) {
+		String sql = "SELECT COUNT(*) AS number_of_students FROM school_app.students WHERE group_id = ?";
+		int numberOfStudents = 0;
+		try(Connection connection = Database.connection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+			preparedStatement.setInt(1, groupId);
+			try(ResultSet resultSet = preparedStatement.executeQuery()){
+				if (resultSet.next()) {
+					numberOfStudents = resultSet.getInt("number_of_students");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return numberOfStudents;
 	}
 
 	public void primaryinsertGroups(List<Group> groups) {
