@@ -13,41 +13,6 @@ import ua.foxminded.SchoolApplication.model.StudentMapper;
 
 public class StudentDAO {
 
-	public List<Student> getGroupEnrolledStudents(int groupId) {
-		String sql = "SELECT student_id, first_name, last_name, group_id FROM school_app.students WHERE group_id = ?";
-		List<Student> enrolledStudents = new ArrayList<>();
-		try (Connection connection = Database.connection();
-				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-			preparedStatement.setInt(1, groupId);
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					enrolledStudents.add(StudentMapper.map(resultSet));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return enrolledStudents;
-	}
-
-	public List<Student> getCourseEnrolledStudents(int courseId) {
-		String sql = "SELECT s.student_id, s.first_name, s.last_name, s.group_id FROM school_app.students s "
-				+ "JOIN school_app.students_courses sc ON s.student_id = sc.student_id WHERE sc.course_id = ?";
-		List<Student> enrolledStudents = new ArrayList<>();
-		try (Connection connection = Database.connection();
-				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-			preparedStatement.setInt(1, courseId);
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					enrolledStudents.add(StudentMapper.map(resultSet));
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return enrolledStudents;
-	}
-
 	public Student getStudentByName(String firstName, String lastName) {
 		Student student = new Student();
 		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students WHERE first_name = ? AND last_name = ?";
