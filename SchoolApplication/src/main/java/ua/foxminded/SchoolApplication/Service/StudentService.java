@@ -1,15 +1,11 @@
 package ua.foxminded.SchoolApplication.Service;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 import ua.foxminded.SchoolApplication.database.CourseDAO;
-import ua.foxminded.SchoolApplication.database.DataGenerator;
 import ua.foxminded.SchoolApplication.database.GroupDAO;
 import ua.foxminded.SchoolApplication.database.StudentDAO;
 import ua.foxminded.SchoolApplication.model.Course;
-import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class StudentService {
