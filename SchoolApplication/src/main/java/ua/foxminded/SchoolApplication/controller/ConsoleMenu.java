@@ -17,23 +17,23 @@ import ua.foxminded.SchoolApplication.controller.commands.ShowStudentInfoByNameC
 public class ConsoleMenu {
 	private final CommandInvoker invoker = new CommandInvoker();
 	private final Scanner scanner = new Scanner(System.in);
-	private final StudentService studentServices = new StudentService();
-	private final CourseService courseServices = new CourseService();
-	private final GroupService groupServices = new GroupService();
+	private final StudentService studentService = new StudentService();
+	private final CourseService courseService = new CourseService();
+	private final GroupService groupService = new GroupService();
 
 	public ConsoleMenu() {
 		registerCommands();
 	}
 
 	private void registerCommands() {
-		invoker.register(1, new ShowAllCoursesCommand(courseServices));
-		invoker.register(2, new GetGroupReportCommand(groupServices));
-		invoker.register(3, new GetCourseReportCommand(courseServices,studentServices, scanner));
-		invoker.register(4, new CreateStudentCommand(studentServices, scanner, groupServices));
-		invoker.register(5, new ShowStudentInfoByNameCommand(studentServices, scanner));
-		invoker.register(6, new DeleteStudentCommand(studentServices, scanner));
-		invoker.register(7, new EnrollStudentToCourseCommand(courseServices, studentServices, scanner));
-		invoker.register(8, new RemoveStudentFromCourseCommand(courseServices, studentServices, scanner));
+		invoker.register(1, new ShowAllCoursesCommand(courseService));
+		invoker.register(2, new GetGroupReportCommand(groupService));
+		invoker.register(3, new GetCourseReportCommand(courseService, scanner));
+		invoker.register(4, new CreateStudentCommand(studentService, scanner, groupService));
+		invoker.register(5, new ShowStudentInfoByNameCommand(studentService, scanner));
+		invoker.register(6, new DeleteStudentCommand(studentService, scanner));
+		invoker.register(7, new EnrollStudentToCourseCommand(courseService, studentService, scanner));
+		invoker.register(8, new RemoveStudentFromCourseCommand(courseService, studentService, scanner));
 
 	}
 

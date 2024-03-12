@@ -9,6 +9,7 @@ import java.util.List;
 
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.CourseMapper;
+import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 import ua.foxminded.SchoolApplication.model.StudentMapper;
 
@@ -74,7 +75,14 @@ public class CourseDAO {
 			preparedStatement.setInt(1, courseId);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					students.add(StudentMapper.map(resultSet));
+					Student student = new Student();
+					student.setStudentID(resultSet.getInt("student_id"));
+					student.setFirstName(resultSet.getString("first_name"));
+					student.setLastName(resultSet.getString("last_name"));
+					int groupId = resultSet.getInt("group_id");
+					Group group = new GroupDAO().getGroupById(groupId);
+					student.setGroup(group);
+					students.add(student);
 				}
 			}
 		} catch (SQLException e) {
@@ -82,8 +90,6 @@ public class CourseDAO {
 		}
 
 		return students;
-	}
-
 	}
 
 	public void primaryGenerationCourses(List<Course> courses) {
@@ -101,5 +107,6 @@ public class CourseDAO {
 			e.printStackTrace();
 		}
 	}
+
 
 }
