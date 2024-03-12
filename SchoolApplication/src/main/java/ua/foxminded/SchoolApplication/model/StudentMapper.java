@@ -11,8 +11,8 @@ public class StudentMapper {
 
 	public static Student map(ResultSet resultSet) throws SQLException {
 		int studentId = resultSet.getInt("student_id");
-		String firstName = resultSet.getString("first_name");
-		String lastName = resultSet.getString("last_name");
+		String firstName = resultSet.getString("first_name").trim();
+		String lastName = resultSet.getString("last_name").trim();
 		int groupId = resultSet.getInt("group_id");
 		Group group = new GroupDAO().getGroupById(groupId);
 		List<Course> courses = new CourseDAO().getSelectedCoursesForStudent(studentId);
