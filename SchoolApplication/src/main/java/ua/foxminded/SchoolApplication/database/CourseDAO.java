@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.foxminded.SchoolApplication.model.Course;
+import ua.foxminded.SchoolApplication.model.CourseMapper;
 
 public class CourseDAO {
 	public List<Course> getSelectedCoursesForStudent(int studentId) {
@@ -19,12 +20,7 @@ public class CourseDAO {
 			preparedStatement.setInt(1, studentId);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					int courseId = resultSet.getInt("course_id");
-					int numberOfStudents = countStudentOnCourse(courseId);
-					String courseName = resultSet.getString("course_name").trim();
-					String courseDescription = resultSet.getString("course_description").trim();
-					Course course = new Course(courseId, numberOfStudents, courseName, courseDescription);
-					selectedCourses.add(course);
+					selectedCourses.add(CourseMapper.map(resultSet));
 				}
 			}
 		} catch (SQLException e) {
@@ -41,11 +37,7 @@ public class CourseDAO {
 			preparedStatement.setInt(1, inputcourseId);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					String courseName = resultSet.getString("course_name").trim();
-					String courseDescription = resultSet.getString("course_description").trim();
-					int courseId = resultSet.getInt("course_id");
-					int numberOfStudents = countStudentOnCourse(courseId);
-					course = new Course(courseId, numberOfStudents, courseName, courseDescription);
+					course = CourseMapper.map(resultSet);
 				}
 			}
 		} catch (SQLException e) {
@@ -61,12 +53,7 @@ public class CourseDAO {
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				int courseId = resultSet.getInt("course_id");
-				int numberOfStudents = countStudentOnCourse(courseId);
-				String courseName = resultSet.getString("course_name").trim();
-				String courseDescription = resultSet.getString("course_description").trim();
-				Course course = new Course(courseId, numberOfStudents, courseName, courseDescription);
-				allCourses.add(course);
+				allCourses.add(CourseMapper.map(resultSet));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
