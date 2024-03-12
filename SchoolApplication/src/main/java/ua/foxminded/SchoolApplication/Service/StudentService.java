@@ -13,10 +13,6 @@ public class StudentService {
 	StudentDAO studentDAO = new StudentDAO();
 	GroupDAO groupDAO = new GroupDAO();
 	
-	public List<Student> getDataForCertainCourseReport(int courseId) {
-		return studentDAO.getCourseEnrolledStudents(courseId);
-	}
-	
 	public Student getStudentByName(String firstName, String lastName) {
 		Student student = studentDAO.getStudentByName(firstName, lastName);
 		return student;
