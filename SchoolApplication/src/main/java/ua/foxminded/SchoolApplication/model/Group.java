@@ -7,6 +7,11 @@ public class Group {
 	private int groupID;
 	private String groupName;
 	private int numberOfStudents;
+
+	public Group(int groupID, String groupName) {
+		this.groupID = groupID;
+		this.groupName = groupName;
+	}
 	
 	public Group() {
 	}
