@@ -32,8 +32,8 @@ public class RemoveStudentFromCourseCommand implements Command {
 		scanner.nextLine();
 		Student student = studentServices.getStudentById(studentId);
 		Course course = courseServices.getCourseById(courseId);
-		boolean isDelated = studentServices.deletedStudentFromCourse(studentId, courseId);
-		if (isDelated == true) {
+		boolean isDeleted = studentServices.deletedStudentFromCourse(studentId, courseId);
+		if (isDeleted == true) {
 			stringBuilder.append(student.getFirstName().trim()).append(" ").append(student.getLastName().trim());
 			stringBuilder.append(" has been deleted from the course -").append(course.getCourseName());
 			System.out.println(stringBuilder.toString());
