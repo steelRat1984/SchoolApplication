@@ -10,7 +10,7 @@ public class CourseMapper {
 		int courseId = resultSet.getInt("course_id");
 		String courseName = resultSet.getString("course_name");
 		String courseDesctiption = resultSet.getString("course_description");
-		int numberOfStudents = new CourseDAO().countStudentOnCourse(courseId);
+		int numberOfStudents = new CourseDAO().getStudentsOnCourse(courseId).size();
 		return new Course(courseId, numberOfStudents, courseName, courseDesctiption);
 	}
 }

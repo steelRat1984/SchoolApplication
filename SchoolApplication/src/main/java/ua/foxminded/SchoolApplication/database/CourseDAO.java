@@ -9,6 +9,8 @@ import java.util.List;
 
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.CourseMapper;
+import ua.foxminded.SchoolApplication.model.Student;
+import ua.foxminded.SchoolApplication.model.StudentMapper;
 
 public class CourseDAO {
 	public List<Course> getSelectedCoursesForStudent(int studentId) {
@@ -28,7 +30,7 @@ public class CourseDAO {
 		}
 		return selectedCourses;
 	}
-	
+
 	public Course getCourseById(int inputcourseId) {
 		Course course = new Course();
 		String sql = "SELECT course_id, course_name, course_description FROM school_app.courses WHERE course_id = ?";
@@ -61,22 +63,29 @@ public class CourseDAO {
 		return allCourses;
 	}
 
-	public Integer countStudentOnCourse(int courseId) {
-		String sql = "SELECT COUNT(*) AS number_of_students FROM school_app.students_courses WHERE course_id = ?";
-		int numberOfStudents = 0;
-		try(Connection connection = Database.connection();
-				PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+	public List<Student> getStudentsOnCourse(int courseId) {
+		List<Student> students = new ArrayList<>();
+		String sql = "SELECT s.student_id, s.first_name, s.last_name, s.group_id " +
+				"FROM school_app.students s " +
+				"JOIN school_app.students_courses sc ON s.student_id = sc.student_id " +
+				"WHERE sc.course_id = ?";
+		try (Connection connection = Database.connection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 			preparedStatement.setInt(1, courseId);
-			try(ResultSet resultSet = preparedStatement.executeQuery()){
-				if (resultSet.next()) {
-					numberOfStudents = resultSet.getInt("number_of_students");
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					students.add(StudentMapper.map(resultSet));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return numberOfStudents;
+
+		return students;
 	}
+
+	}
+
 	public void primaryGenerationCourses(List<Course> courses) {
 		String sql = "INSERT INTO school_app.courses (course_id, course_name, course_description) VALUES (?, ?, ?)";
 		try (Connection connection = Database.connection();

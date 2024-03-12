@@ -8,13 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.foxminded.SchoolApplication.model.Course;
-import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 import ua.foxminded.SchoolApplication.model.StudentMapper;
 
 public class StudentDAO {
-	private GroupDAO groupDAO = new GroupDAO();
-	private CourseDAO courseDAO = new CourseDAO();
 
 	public List<Student> getGroupEnrolledStudents(int groupId) {
 		String sql = "SELECT student_id, first_name, last_name, group_id FROM school_app.students WHERE group_id = ?";
