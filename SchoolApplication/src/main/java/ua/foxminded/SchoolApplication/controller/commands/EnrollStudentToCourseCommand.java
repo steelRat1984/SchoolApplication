@@ -32,8 +32,9 @@ public class EnrollStudentToCourseCommand implements Command {
 		Course course = courseService.getCourseById(courseId);
 		boolean isEnrolled = studentService.enrollStudentToCourse(studentId, courseId);
 		if (isEnrolled == true) {
-			stringBuilder.append(student.getFirstName().trim()).append(" ").append(student.getLastName().trim());
-			stringBuilder.append(" has been enrolled to the course - ").append(course.getCourseName());
+			stringBuilder.append("success! ");
+			stringBuilder.append(student.getFirstName()).append(" ").append(student.getLastName());
+			stringBuilder.append(" was enrolled in this course - ").append(course.getCourseName());
 			System.out.println(stringBuilder.toString());
 		} else {
 			stringBuilder.append(student.getFirstName()).append(" ").append(student.getLastName());
