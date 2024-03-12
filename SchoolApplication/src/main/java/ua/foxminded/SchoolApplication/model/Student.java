@@ -9,7 +9,13 @@ public class Student {
 	private String lastName;
 	private List <Course> courses;
 	
-
+	public Student(int studentID, Group group, String firstName, String lastName) {
+		this.studentID = studentID;
+		this.group = group;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+	
 	public Student(int studentID, Group group, String firstName, String lastName, List<Course> courses) {
 		this.studentID = studentID;
 		this.group = group;
