@@ -59,6 +59,6 @@ public class StudentService {
 		int studentId = studentDAO.getMaximumStudentId() + 1;
 		Student student = inputStudent;
 		student.setStudentID(studentId);
-		studentDAO.inserntOneStudent(student);
+		studentDAO.createOneStudent(student);
 	}
 }
