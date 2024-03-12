@@ -20,6 +20,10 @@ public class GroupService {
 	
 	public List<Group> getAllGrouops() {
 		List<Group> allGroups = groupDAO.selectAllGroups();
+		for (Group group : allGroups) {
+			int numberOfStudent = groupDAO.getStudentsInGroup(group.getGroupID()).size();
+			group.setNumberOfStudents(numberOfStudent);
+		}
 		return allGroups;
 	}
 
