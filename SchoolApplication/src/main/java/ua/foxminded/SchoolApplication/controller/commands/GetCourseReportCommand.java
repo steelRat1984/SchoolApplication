@@ -4,19 +4,17 @@ import java.util.List;
 import java.util.Scanner;
 
 import ua.foxminded.SchoolApplication.Service.CourseService;
-import ua.foxminded.SchoolApplication.Service.StudentService;
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class GetCourseReportCommand implements Command {
-	private final CourseService courseServices;
-	private final StudentService studentService;
+	private final CourseService courseService;
 	private final Scanner scanner;
 
-	public GetCourseReportCommand(CourseService courseServices, StudentService studentService, Scanner scanner) {
-		this.courseServices = courseServices;
-		this.studentService = studentService;
+
+	public GetCourseReportCommand(CourseService courseService, Scanner scanner) {
+		this.courseService = courseService;
 		this.scanner = scanner;
 	}
 
@@ -26,8 +24,8 @@ public class GetCourseReportCommand implements Command {
 		int courseId = scanner.nextInt();
 		scanner.nextLine();
 		StringBuilder resultReport = new StringBuilder("Report on the names of students in courses :\n");
-		Course course = courseServices.getCourseById(courseId);
-		List<Student> enrolledStudents = studentService.getDataForCertainCourseReport(courseId);
+		Course course = courseService.getCourseById(courseId);
+		List<Student> enrolledStudents = courseService.getDataForCertainCourseReport(courseId);
 		resultReport.append("the following students study in the ").append(course.getCourseName()).append("course :\n");
 		for (Student student : enrolledStudents) {
 			String studentFullName = student.getFirstName() + " " + student.getLastName();
