@@ -24,7 +24,9 @@ public class ShowStudentInfoByNameCommand implements Command {
 		Student student = studentServices.getStudentByName(studentFirstName, studentLastName);
 		System.out.println("infirmation about student :");
 		try { 
-			System.out.println(student);
+			String message = String.format("Student has id: %d, full name: %s %s is studying in group№ %d",
+					student.getStudentID(), student.getFirstName(), student.getLastName(), student.getGroup().getGroupID());
+			System.out.println(message);
 		}catch (NullPointerException e) {
 			String message = String.format("student %s %s was not founded", studentFirstName, studentLastName);
 			System.out.println(message);
