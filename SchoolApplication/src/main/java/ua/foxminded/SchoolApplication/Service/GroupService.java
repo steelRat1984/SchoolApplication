@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import ua.foxminded.SchoolApplication.database.GroupDAO;
-import ua.foxminded.SchoolApplication.database.StudentDAO;
 import ua.foxminded.SchoolApplication.model.Group;
-import ua.foxminded.SchoolApplication.model.Student;
+
 
 public class GroupService {
 	private GroupDAO groupDAO = new GroupDAO();
