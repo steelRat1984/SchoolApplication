@@ -62,14 +62,9 @@ public class StudentService {
 	}
 
 	public void createStudent(Student inputStudent) {
-		Random random = new Random();
-		int groupId = random.nextInt(groupDAO.selectAllGroups().size());
 		int studentId = studentDAO.getMaximumStudentId() + 1;
-		Group group = groupDAO.getGroupById(groupId);
-		List<Course> courses = DataGenerator.cutCourseListRandomly(courseDAO.getAllCourses());
-		Student student = new Student(studentId, group, inputStudent.getFirstName(), inputStudent.getLastName(),
-				courses);
+		Student student = inputStudent;
+		student.setStudentID(studentId);
 		studentDAO.inserntOneStudent(student);
-		studentDAO.insertRelation(student);
 	}
 }
