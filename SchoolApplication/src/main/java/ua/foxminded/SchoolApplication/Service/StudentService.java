@@ -47,18 +47,10 @@ public class StudentService {
 	}
 
 	public boolean deletedStudentFromCourse(int studentId, int courseId) {
-		Student student = studentDAO.getStudentById(studentId);
-		List<Course> selectedCourses = student.getCourses();
-		boolean isDeleted = false;
-		Iterator<Course> iterator = selectedCourses.iterator();
-		while (iterator.hasNext()) {
-			Course selectedToDeleteCourse = iterator.next();
-			if (selectedToDeleteCourse.getCourseID() == courseId) {
-				iterator.remove();
-				studentDAO.deleteRelation(studentId, courseId);
-				isDeleted = true;
-				break;
-			}
+		int executionRequest = studentDAO.deleteRelation(studentId, courseId);
+		boolean isDeleted = false ;
+		if (executionRequest > 0) {
+			isDeleted = true;
 		}
 		return isDeleted;
 	}

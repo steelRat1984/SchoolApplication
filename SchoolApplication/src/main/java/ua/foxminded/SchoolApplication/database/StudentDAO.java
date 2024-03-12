@@ -221,16 +221,18 @@ public class StudentDAO {
 		return studentIds;
 	}
 
-	public void deleteRelation(int studentId, int courseId) {
+	public Integer deleteRelation(int studentId, int courseId) {
+		int executionRequest = 0;
 		String sql = "DELETE FROM school_app.students_courses WHERE student_id = ? AND course_id = ?";
 		try (Connection connection = Database.connection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
 			statement.setInt(1, studentId);
 			statement.setInt(2, courseId);
-			statement.executeUpdate();
+		executionRequest = statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return executionRequest;
 	}
 
 	public void addRelation(int studentId, int courseId) {
