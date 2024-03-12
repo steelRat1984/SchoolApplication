@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.foxminded.SchoolApplication.model.Group;
+import ua.foxminded.SchoolApplication.model.GroupMapper;
 
 public class GroupDAO {
 
@@ -19,11 +20,7 @@ public class GroupDAO {
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
-				int groupId = resultSet.getInt("group_id");
-				String groupName = resultSet.getString("group_name");
-				int numberOfStudents = countStudentInGroup(groupId);
-				Group group = new Group(groupId, groupName, numberOfStudents);
-				allGroups.add(group);
+				allGroups.add(GroupMapper.map(resultSet));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -39,11 +36,7 @@ public class GroupDAO {
 			preparedStatement.setInt(1, groupId);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-					int id = resultSet.getInt("group_id");
-					String name = resultSet.getString("group_name");
-					group.setNumberOfStudents(countStudentInGroup(groupId));
-					group.setGroupID(id);
-					group.setGroupName(name);
+				group = GroupMapper.map(resultSet);
 				}
 			}
 		} catch (SQLException e) {
