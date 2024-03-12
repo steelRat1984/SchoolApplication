@@ -18,12 +18,12 @@ public class GetGroupReportCommand implements Command {
 	@Override
 	public void execute() {
 		StringBuilder resultReport = new StringBuilder("Report on the number of students in groups:\n");
-		Map<Integer, List<Group>> groupsByStudentCount = groupServices.getDataforReport();
+		Map<Integer, List<Group>> groupsByStudentCount = groupServices.buildGroupReport();
 		for (Map.Entry<Integer, List<Group>> entry : groupsByStudentCount.entrySet()) {
 			int studentCount = entry.getKey();
 			List<Group> groups = entry.getValue();
 			if (studentCount > 0) {
-				resultReport.append("in groups:");
+				resultReport.append("in group:");
 				for (Group group : groups) {
 					resultReport.append(group.getGroupID()).append(", ");
 				}

@@ -33,12 +33,12 @@ public class CourseDAO {
 		return selectedCourses;
 	}
 	
-	public Course getCourseById(int InputcourseId) {
+	public Course getCourseById(int inputcourseId) {
 		Course course = new Course();
 		String sql = "SELECT course_id, course_name, course_description FROM school_app.courses WHERE course_id = ?";
 		try (Connection connection = Database.connection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-			preparedStatement.setInt(1, InputcourseId);
+			preparedStatement.setInt(1, inputcourseId);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
 					String courseName = resultSet.getString("course_name").trim();

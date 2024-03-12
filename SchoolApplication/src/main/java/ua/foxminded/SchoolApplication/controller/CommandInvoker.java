@@ -18,7 +18,7 @@ public class CommandInvoker {
 			System.out.println("The command was not found by the identifier: " + commandId);
 		}
 	}
-	public void showCommandsDescriopion () {
+	public void showCommandsDescription () {
 		System.out.println("avaible commands :");
 		for (int commandId : commands.keySet()) {
 			String description = commands.get(commandId).getDescription();

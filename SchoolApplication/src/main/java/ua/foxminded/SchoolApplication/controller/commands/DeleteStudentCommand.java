@@ -24,7 +24,7 @@ public class DeleteStudentCommand implements Command {
 		studentServices.deleteStudentById(studentId);
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("Student \n");
-		stringBuilder.append(student.toString() + "\n");
+		stringBuilder.append(student.getFirstName() + " " + student.getLastName() + "\n");
 		stringBuilder.append("has been deleted!");
 		System.out.println(stringBuilder.toString());
 

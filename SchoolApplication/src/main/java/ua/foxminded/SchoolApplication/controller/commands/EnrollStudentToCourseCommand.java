@@ -35,7 +35,7 @@ public class EnrollStudentToCourseCommand implements Command {
 			stringBuilder.append(student.getFirstName().trim()).append(" ").append(student.getLastName().trim());
 			stringBuilder.append(" has been enrolled to the course - ").append(course.getCourseName());
 			System.out.println(stringBuilder.toString());
-		}else {
+		} else {
 			stringBuilder.append(student.getFirstName()).append(" ").append(student.getLastName());
 			stringBuilder.append(" is already enrolled in this course - ").append(course.getCourseName()).append(", please choose another one");
 			System.out.println(stringBuilder.toString());

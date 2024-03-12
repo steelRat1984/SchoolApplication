@@ -23,7 +23,7 @@ public class GroupService {
 		return allGroups;
 	}
 
-	public Map<Integer, List<Group>> getDataforReport() {
+	public Map<Integer, List<Group>> buildGroupReport() {
 		Map<Integer, List<Group>> groupsByNumberOfStudents = new HashMap<>();
 		List<Group> groups = getAllGrouops();
 		Collections.sort(groups,

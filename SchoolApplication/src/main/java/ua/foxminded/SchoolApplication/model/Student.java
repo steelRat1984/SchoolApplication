@@ -57,15 +57,5 @@ public class Student {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	@Override
-	public String toString() {
-		return "student ID = " + studentID + "\n"+ " group № = " + group.getGroupID() + "\n"+ " first name = " + firstName + "\n"+ " last name = "
-				+ lastName ;
-	}
-	
-	
-	
-	
+	}	
 }

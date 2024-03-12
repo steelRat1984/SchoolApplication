@@ -37,7 +37,7 @@ public class RemoveStudentFromCourseCommand implements Command {
 			stringBuilder.append(student.getFirstName().trim()).append(" ").append(student.getLastName().trim());
 			stringBuilder.append(" has been deleted from the course -").append(course.getCourseName());
 			System.out.println(stringBuilder.toString());
-		}else {
+		} else {
 			stringBuilder.append(student.getFirstName()).append(" ").append(student.getLastName());
 			stringBuilder.append(" did not study in this course - ").append(course.getCourseName()).append(", please choose another one");
 			System.out.println(stringBuilder.toString());

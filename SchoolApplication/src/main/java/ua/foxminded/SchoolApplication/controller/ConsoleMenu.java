@@ -29,7 +29,7 @@ public class ConsoleMenu {
 		invoker.register(1, new ShowAllCoursesCommand(courseServices));
 		invoker.register(2, new GetGroupReportCommand(groupServices));
 		invoker.register(3, new GetCourseReportCommand(courseServices,studentServices, scanner));
-		invoker.register(4, new CreateStudentCommand(studentServices, scanner));
+		invoker.register(4, new CreateStudentCommand(studentServices, scanner, groupServices));
 		invoker.register(5, new ShowStudentInfoByNameCommand(studentServices, scanner));
 		invoker.register(6, new DeleteStudentCommand(studentServices, scanner));
 		invoker.register(7, new EnrollStudentToCourseCommand(courseServices, studentServices, scanner));
@@ -38,7 +38,7 @@ public class ConsoleMenu {
 	}
 
 	public void run() {
-		invoker.showCommandsDescriopion();
+		invoker.showCommandsDescription();
 		try {
 			while (true) {
 				int commandId = Integer.parseInt(scanner.nextLine());

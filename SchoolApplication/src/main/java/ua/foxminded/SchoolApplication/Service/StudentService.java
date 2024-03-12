@@ -13,9 +13,8 @@ public class StudentService {
 	StudentDAO studentDAO = new StudentDAO();
 	GroupDAO groupDAO = new GroupDAO();
 	
-	public List<Student> getDataForCertainCourseReport(int courseId ) {
-		List<Student> enrolledStudents = studentDAO.getCourseEnrolledStudents(courseId);
-		return enrolledStudents;
+	public List<Student> getDataForCertainCourseReport(int courseId) {
+		return studentDAO.getCourseEnrolledStudents(courseId);
 	}
 	
 	public Student getStudentByName(String firstName, String lastName) {
@@ -54,7 +53,6 @@ public class StudentService {
 	public void deleteStudentById(int studentId) {
 		studentDAO.deleteAllRelationsByStudentId(studentId);
 		studentDAO.deleteStudentById(studentId);
-
 	}
 
 	public void createStudent(Student inputStudent) {
