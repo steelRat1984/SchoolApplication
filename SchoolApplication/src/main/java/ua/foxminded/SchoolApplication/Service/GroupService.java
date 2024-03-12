@@ -14,6 +14,11 @@ import ua.foxminded.SchoolApplication.model.Student;
 public class GroupService {
 	private GroupDAO groupDAO = new GroupDAO();
 	
+	public Group getGroupById (int groupId) {
+		Group group = groupDAO.getGroupById(groupId);
+		return group;
+	}
+	
 	public List<Group> getAllGrouops() {
 		List<Group> allGroups = groupDAO.selectAllGroups();
 		return allGroups;
