@@ -4,6 +4,7 @@ import java.util.List;
 
 import ua.foxminded.SchoolApplication.database.CourseDAO;
 import ua.foxminded.SchoolApplication.model.Course;
+import ua.foxminded.SchoolApplication.model.Student;
 
 public class CourseService {
 	private CourseDAO courseDAO = new CourseDAO();
@@ -17,4 +18,9 @@ public class CourseService {
 		List<Course> coursesList = courseDAO.getAllCourses();
 		return coursesList;
 	}
+	
+	public List<Student> getDataForCertainCourseReport(int courseId) {
+		return courseDAO.getStudentsOnCourse(courseId);
+	}
+
 }
