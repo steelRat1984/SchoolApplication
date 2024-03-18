@@ -21,7 +21,7 @@ public class DataGenerator {
 		groupDAO.primaryinsertGroups(groups);
 		courseDAO.primaryCourseCreation(courses);
 		studentDAO.primaryInsertsStudents(students);
-		studentDAO.primaryInsertRelations(students);
+		studentDAO.primaryAsignmentCreation(students);
 	}
 
 	private List<String> generateFirstName() {

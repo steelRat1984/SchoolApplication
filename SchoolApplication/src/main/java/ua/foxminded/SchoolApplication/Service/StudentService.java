@@ -27,18 +27,18 @@ public class StudentService {
 			Course course = courseDAO.getCourseById(courseId);
 			selectedCourses.add(course);
 			student.setCourses(selectedCourses);
-			studentDAO.addRelation(studentId, courseId);
+			studentDAO.assignCourse(studentId, courseId);
 			return true;
 		}
 		return false;
 	}
 
 	public boolean deletedStudentFromCourse(int studentId, int courseId) {
-		return studentDAO.deleteRelation(studentId, courseId);
+		return studentDAO.deleteAssignments(studentId, courseId);
 	}
 
 	public void deleteStudentById(int studentId) {
-		studentDAO.deleteAllRelationsByStudentId(studentId);
+		studentDAO.deleteAllAssignmentsByStudentId(studentId);
 		studentDAO.deleteStudentById(studentId);
 	}
 

@@ -143,7 +143,7 @@ public class StudentDAO {
 		return studentIds;
 	}
 
-	public boolean deleteRelation(int studentId, int courseId) {
+	public boolean deleteAssignments(int studentId, int courseId) {
 		boolean isDeleted = false;
 		String sql = "DELETE FROM school_app.students_courses WHERE student_id = ? AND course_id = ?";
 		try (Connection connection = Database.connection();
@@ -158,7 +158,7 @@ public class StudentDAO {
 		return isDeleted;
 	}
 
-	public void addRelation(int studentId, int courseId) {
+	public void assignCourse(int studentId, int courseId) {
 		String sql = "INSERT INTO school_app.students_courses (student_id, course_id) VALUES (?, ?)";
 		try (Connection connection = Database.connection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -170,7 +170,7 @@ public class StudentDAO {
 		}
 	}
 
-	public void deleteAllRelationsByStudentId(int studentId) {
+	public void deleteAllAssignmentsByStudentId(int studentId) {
 		String sqlDeleteRelation = "DELETE FROM school_app.students_courses WHERE student_id = ?";
 		try (Connection connection = Database.connection();
 				PreparedStatement deleteRelationStatement = connection.prepareStatement(sqlDeleteRelation)) {
@@ -181,7 +181,7 @@ public class StudentDAO {
 		}
 	}
 
-	public void insertRelation(Student student) {
+	public void createAssignment(Student student) {
 		int studentId = student.getStudentID();
 		String insertRelation = "INSERT INTO school_app.students_courses (student_id, course_id) VALUES (?, ?)";
 		List<Course> currentCourses = student.getCourses();
@@ -199,7 +199,7 @@ public class StudentDAO {
 		}
 	}
 
-	public void primaryInsertRelations(List<Student> students) {
+	public void primaryAsignmentCreation(List<Student> students) {
 		String primaryInsertRelations = "INSERT INTO school_app.students_courses (student_id, course_id) VALUES (?, ?)";
 		try (Connection connection = Database.connection();
 				PreparedStatement statement = connection.prepareStatement(primaryInsertRelations)) {
