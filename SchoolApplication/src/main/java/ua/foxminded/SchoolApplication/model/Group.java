@@ -6,7 +6,7 @@ public class Group {
 
 	private int groupID;
 	private String groupName;
-	private int numberOfStudents;
+	private List<Student> studentsInGroup;
 
 	public Group(int groupID, String groupName) {
 		this.groupID = groupID;

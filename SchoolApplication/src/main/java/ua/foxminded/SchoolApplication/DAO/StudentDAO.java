@@ -75,7 +75,7 @@ public class StudentDAO {
 		}
 	}
 
-	public void primaryInsertsStudents(List<Student> students) {
+	public void primaryStudentsCreating(List<Student> students) {
 		String primaryInsertsStudents = "INSERT INTO school_app.students (group_id, first_name, last_name) VALUES (?, ?, ?)";
 		try (Connection connection = Database.connection();
 				PreparedStatement statement = connection.prepareStatement(primaryInsertsStudents)) {

@@ -96,8 +96,8 @@ public class CourseDAO {
 		try (Connection connection = Database.connection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
 			for (Course course : courses) {
-				statement.setString(2, course.getCourseName());
-				statement.setString(3, course.getCourseDescription());
+				statement.setString(1, course.getCourseName());
+				statement.setString(2, course.getCourseDescription());
 				statement.addBatch();
 			}
 			statement.executeBatch();

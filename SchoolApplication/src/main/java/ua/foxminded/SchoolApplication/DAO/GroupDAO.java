@@ -68,7 +68,7 @@ public class GroupDAO {
 		try (Connection connection = Database.connection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
 			for (Group group : groups) {
-				statement.setString(2, group.getGroupName());
+				statement.setString(1, group.getGroupName());
 				statement.addBatch();
 			}
 			statement.executeBatch();

@@ -1,9 +1,8 @@
 
---DROP TABLE IF EXISTS school_app.students,school_app.groups, school_app.courses, school_app.students_groups_relations ;
---DROP TABLE IF EXISTS school_app.students CASCADE;
---DROP TABLE IF EXISTS school_app.groups;
---DROP TABLE IF EXISTS school_app.courses CASCADE;
---DROP TABLE IF EXISTS school_app.students_groups_relations;
+DROP TABLE IF EXISTS school_app.students CASCADE;
+DROP TABLE IF EXISTS school_app.groups;
+DROP TABLE IF EXISTS school_app.courses CASCADE;
+DROP TABLE IF EXISTS school_app.students_courses CASCADE;
 
 --Table: school_app.students
 CREATE TABLE IF NOT EXISTS school_app.students
@@ -33,10 +32,7 @@ TABLESPACE pg_default;
 CREATE TABLE IF NOT EXISTS school_app.students_courses
     (
     student_id int NOT NULL,
-    course_id int NOT NULL,
-    PRIMARY KEY (student_id, course_id),
-    FOREIGN KEY (student_id) REFERENCES school_app.students(student_id),
-    FOREIGN KEY (course_id) REFERENCES school_app.courses(course_id)
+    course_id int NOT NULL
     )
     TABLESPACE pg_default;
 ALTER TABLE IF EXISTS school_app.students

@@ -8,6 +8,7 @@ import java.util.Map;
 
 import ua.foxminded.SchoolApplication.DAO.GroupDAO;
 import ua.foxminded.SchoolApplication.model.Group;
+import ua.foxminded.SchoolApplication.model.Student;
 
 
 public class GroupService {
@@ -18,9 +19,10 @@ public class GroupService {
 	}
 	
 	public List<Group> getAllGrouops() {
-		List<Group> allGroups = groupDAO.selectAllGroups();
+		List<Group> allGroups = groupDAO.getAllGroups();
 		for (Group group : allGroups) {
-			int numberOfStudent = groupDAO.getStudentsInGroup(group.getGroupID()).size();
+			List <Student> students = groupDAO.getStudentsInGroup(group.getGroupID());
+			int numberOfStudent = students.size();
 			group.setNumberOfStudents(numberOfStudent);
 		}
 		return allGroups;
