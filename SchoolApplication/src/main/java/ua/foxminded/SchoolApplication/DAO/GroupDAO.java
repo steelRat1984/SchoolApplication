@@ -64,11 +64,10 @@ public class GroupDAO {
 	}
 
 	public void primaryinsertGroups(List<Group> groups) {
-		String sql = "INSERT INTO school_app.groups (group_id, group_name) VALUES (?, ?)";
+		String sql = "INSERT INTO school_app.groups (group_name) VALUES (?)";
 		try (Connection connection = Database.connection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
 			for (Group group : groups) {
-				statement.setInt(1, group.getGroupID());
 				statement.setString(2, group.getGroupName());
 				statement.addBatch();
 			}

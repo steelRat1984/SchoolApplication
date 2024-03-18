@@ -5,7 +5,11 @@ public class Course {
 	private int numberOfStudents;
 	private String courseName;
 	private String courseDescription;
-	
+
+	public Course(String courseName, String courseDescription) {
+		this.courseName = courseName;
+		this.courseDescription = courseDescription;
+	}
 	public Course(int courseID, int numberOfStudents, String courseName, String courseDescription) {
 		this.courseID = courseID;
 		this.numberOfStudents = numberOfStudents;

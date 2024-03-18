@@ -106,17 +106,17 @@ public class DataGenerator {
 	}
 	public List<Course> generateCourse() {
 		List<Course> courses = new ArrayList<>();
-		Course courseHistory = new Course(1, "History", "learning History");
-		Course courseGeography = new Course(2, "Geography", "learning Geography");
-		Course courseChemistry = new Course(3,"Chemistry", "learning Chemistry");
-		Course coursePhysics = new Course(4,"Physics", "learning Physics");
-		Course courseBiology = new Course(5,"Biology", "learning Biology");
-		Course courseLiterature = new Course(6,"Literature", "learning Literature");
-		Course coursePhysicalEducation = new Course(7,"Physical Education",
+		Course courseHistory = new Course("History", "learning History");
+		Course courseGeography = new Course("Geography", "learning Geography");
+		Course courseChemistry = new Course("Chemistry", "learning Chemistry");
+		Course coursePhysics = new Course("Physics", "learning Physics");
+		Course courseBiology = new Course("Biology", "learning Biology");
+		Course courseLiterature = new Course("Literature", "learning Literature");
+		Course coursePhysicalEducation = new Course("Physical Education",
 				"learning Physical Education");
-		Course courseArt = new Course(8,"Art", "learning Art");
-		Course courseMusic = new Course(9,"Music", "learning Music");
-		Course courseComputerScience = new Course(10,"Computer Science",
+		Course courseArt = new Course("Art", "learning Art");
+		Course courseMusic = new Course("Music", "learning Music");
+		Course courseComputerScience = new Course("Computer Science",
 				"learning Computer Science");
 		courses.add(courseHistory);
 		courses.add(courseGeography);

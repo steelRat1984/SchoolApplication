@@ -60,48 +60,29 @@ public class StudentDAO {
 	}
 
 	public void createStudent(Student student) {
-		String insertStudent = "INSERT INTO school_app.students (student_id, group_id, first_name, last_name) VALUES (?, ?, ?, ?)";
-		int studentId = student.getStudentID();
+		String sql = "INSERT INTO school_app.students (group_id, first_name, last_name) VALUES (?, ?, ?)";
 		int groupId = student.getGroup().getGroupID();
 		String firstName = student.getFirstName();
 		String lastName = student.getLastName();
 		try (Connection connection = Database.connection();
-				PreparedStatement statement = connection.prepareStatement(insertStudent)) {
-			statement.setInt(1, studentId);
-			statement.setInt(2, groupId);
-			statement.setString(3, firstName);
-			statement.setString(4, lastName);
+				PreparedStatement statement = connection.prepareStatement(sql)) {
+			statement.setInt(1, groupId);
+			statement.setString(2, firstName);
+			statement.setString(3, lastName);
 			statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public int getMaximumStudentId() {
-		String SelectMaxID = "SELECT MAX(student_id) FROM school_app.students";
-		int maxStudentID = 0;
-		try (Connection connection = Database.connection();
-				PreparedStatement selectStatement = connection.prepareStatement(SelectMaxID)) {
-			ResultSet resultSet = selectStatement.executeQuery();
-			if (resultSet.next()) {
-				maxStudentID = resultSet.getInt(1);
-			}
-			maxStudentID = resultSet.getInt(1);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return maxStudentID;
-	}
-
 	public void primaryInsertsStudents(List<Student> students) {
-		String primaryInsertsStudents = "INSERT INTO school_app.students (student_id, group_id, first_name, last_name) VALUES (?, ?, ?, ?)";
+		String primaryInsertsStudents = "INSERT INTO school_app.students (group_id, first_name, last_name) VALUES (?, ?, ?)";
 		try (Connection connection = Database.connection();
 				PreparedStatement statement = connection.prepareStatement(primaryInsertsStudents)) {
 			for (Student student : students) {
-				statement.setInt(1, student.getStudentID());
-				statement.setInt(2, student.getGroup().getGroupID());
-				statement.setString(3, student.getFirstName());
-				statement.setString(4, student.getLastName());
+				statement.setInt(1, student.getGroup().getGroupID());
+				statement.setString(2, student.getFirstName());
+				statement.setString(3, student.getLastName());
 				statement.addBatch();
 			}
 			statement.executeBatch();
@@ -110,20 +91,20 @@ public class StudentDAO {
 		}
 	}
 
-	public List<Student> getAllStudents() {
-		List<Student> allStudents = new ArrayList<>();
-		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students";
-		try (Connection connection = Database.connection();
-				PreparedStatement preparedStatement = connection.prepareStatement(sql);
-				ResultSet resultSet = preparedStatement.executeQuery()) {
-			while (resultSet.next()) {
-				allStudents.add(StudentMapper.map(resultSet));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return allStudents;
-	}
+//	public List<Student> getAllStudents() {
+//		List<Student> allStudents = new ArrayList<>();
+//		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students";
+//		try (Connection connection = Database.connection();
+//				PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//				ResultSet resultSet = preparedStatement.executeQuery()) {
+//			while (resultSet.next()) {
+//				allStudents.add(StudentMapper.map(resultSet));
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return allStudents;
+//	}
 
 	public List<Integer> getStudentsIdByCourseId(int courseid) {
 		List<Integer> studentIds = new ArrayList<>();
