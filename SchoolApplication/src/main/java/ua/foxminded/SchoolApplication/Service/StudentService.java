@@ -34,12 +34,7 @@ public class StudentService {
 	}
 
 	public boolean deletedStudentFromCourse(int studentId, int courseId) {
-		int executionRequest = studentDAO.deleteRelation(studentId, courseId);
-		boolean isDeleted = false ;
-		if (executionRequest > 0) {
-			isDeleted = true;
-		}
-		return isDeleted;
+		return studentDAO.deleteRelation(studentId, courseId);
 	}
 
 	public void deleteStudentById(int studentId) {
