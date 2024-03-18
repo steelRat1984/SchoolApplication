@@ -26,6 +26,9 @@ public class GroupDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		for (Group group : allGroups) {
+			group.setStudentsInGroup(getStudentsInGroup(group.getGroupID()));		
+		}
 		return allGroups;
 	}
 

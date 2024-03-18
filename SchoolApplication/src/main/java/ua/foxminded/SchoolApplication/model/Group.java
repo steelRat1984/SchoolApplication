@@ -1,5 +1,6 @@
 package ua.foxminded.SchoolApplication.model;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Group {
@@ -7,6 +8,12 @@ public class Group {
 	private int groupID;
 	private String groupName;
 	private List<Student> studentsInGroup;
+	
+	public Group(int groupID, String groupName, List<Student> studentsInGroup) {
+		this.groupID = groupID;
+		this.groupName = groupName;
+		this.studentsInGroup = studentsInGroup;
+	}
 
 	public Group(int groupID, String groupName) {
 		this.groupID = groupID;
@@ -14,12 +21,6 @@ public class Group {
 	}
 	
 	public Group() {
-	}
-
-	public Group(int groupID, String groupName, int numberOfStudents) {
-		this.groupID = groupID;
-		this.groupName = groupName;
-		this.numberOfStudents = numberOfStudents;
 	}
 
 	public int getGroupID() {
@@ -38,12 +39,12 @@ public class Group {
 		this.groupName = groupName;
 	}
 
-	public int getNumberOfStudents() {
-		return numberOfStudents;
+	public List<Student> getStudentsInGroup() {
+		return studentsInGroup;
 	}
 
-	public void setNumberOfStudents(int numberOfStudents) {
-		this.numberOfStudents = numberOfStudents;
+	public void setStudentsInGroup(List<Student> studentsInGroup) {
+		this.studentsInGroup = studentsInGroup;
 	}
 
 	@Override

@@ -11,9 +11,8 @@ public class Main {
 	public static void main(String[] args) {
 //		DataGenerator dataGenerator = new DataGenerator();
 //		dataGenerator.generate();
-//		ConsoleMenu consoleMenu = new ConsoleMenu();
-//		consoleMenu.run();
-		GroupService groupService = new GroupService();
-		groupService.getAllGrouops();
+		ConsoleMenu consoleMenu = new ConsoleMenu();
+		consoleMenu.run();
+
 	}
 }
