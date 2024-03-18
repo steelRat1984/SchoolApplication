@@ -143,18 +143,19 @@ public class StudentDAO {
 		return studentIds;
 	}
 
-	public Integer deleteRelation(int studentId, int courseId) {
-		int executionRequest = 0;
+	public boolean deleteRelation(int studentId, int courseId) {
+		boolean isDeleted = false;
 		String sql = "DELETE FROM school_app.students_courses WHERE student_id = ? AND course_id = ?";
 		try (Connection connection = Database.connection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
 			statement.setInt(1, studentId);
 			statement.setInt(2, courseId);
-			executionRequest = statement.executeUpdate();
+			isDeleted = statement.executeUpdate() > 0;
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return executionRequest;
+		return isDeleted;
 	}
 
 	public void addRelation(int studentId, int courseId) {
