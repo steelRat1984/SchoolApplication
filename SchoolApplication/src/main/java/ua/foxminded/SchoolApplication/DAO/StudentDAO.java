@@ -59,7 +59,7 @@ public class StudentDAO {
 		}
 	}
 
-	public void createOneStudent(Student student) {
+	public void createStudent(Student student) {
 		String insertStudent = "INSERT INTO school_app.students (student_id, group_id, first_name, last_name) VALUES (?, ?, ?, ?)";
 		int studentId = student.getStudentID();
 		int groupId = student.getGroup().getGroupID();
