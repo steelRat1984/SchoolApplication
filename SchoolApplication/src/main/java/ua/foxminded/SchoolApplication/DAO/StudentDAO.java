@@ -7,9 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import ua.foxminded.SchoolApplication.DAO.mappers.StudentMapper;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
-import ua.foxminded.SchoolApplication.model.StudentMapper;
 
 public class StudentDAO {
 

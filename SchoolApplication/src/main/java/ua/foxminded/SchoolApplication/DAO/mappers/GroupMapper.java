@@ -1,7 +1,9 @@
-package ua.foxminded.SchoolApplication.model;
+package ua.foxminded.SchoolApplication.DAO.mappers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import ua.foxminded.SchoolApplication.model.Group;
 
 public class GroupMapper {
 	

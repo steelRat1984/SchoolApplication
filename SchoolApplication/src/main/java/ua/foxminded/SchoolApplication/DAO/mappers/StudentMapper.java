@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication.model;
+package ua.foxminded.SchoolApplication.DAO.mappers;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -6,6 +6,9 @@ import java.util.List;
 
 import ua.foxminded.SchoolApplication.DAO.CourseDAO;
 import ua.foxminded.SchoolApplication.DAO.GroupDAO;
+import ua.foxminded.SchoolApplication.model.Course;
+import ua.foxminded.SchoolApplication.model.Group;
+import ua.foxminded.SchoolApplication.model.Student;
 
 public class StudentMapper {
 
