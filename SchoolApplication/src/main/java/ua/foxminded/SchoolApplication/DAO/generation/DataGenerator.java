@@ -87,7 +87,6 @@ public class DataGenerator {
 			Group group = groups.get(random.nextInt(groups.size()));
 			List<Course> certainCourses = DataGenerator.cutCourseListRandomly(allCourses);
 			Student student = new Student();
-			student.setStudentID(i + 1);
 			student.setFirstName(firstName.get(randomFirstNameIndex));
 			student.setLastName(lastName.get(randomLastNameIndex));
 			student.setGroup(group);
@@ -100,7 +99,6 @@ public class DataGenerator {
 		List<Group> groups = new ArrayList<>();
 		for (int i = 0; i < 10; i++) {
 			Group group = new Group();
-			group.setGroupID(i + 1);
 			group.setGroupName("group" + "_" + String.valueOf(i + 1));
 			groups.add(group);
 		}
