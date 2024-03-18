@@ -14,7 +14,7 @@ import ua.foxminded.SchoolApplication.model.StudentMapper;
 
 public class GroupDAO {
 
-	public List<Group> selectAllGroups() {
+	public List<Group> getAllGroups() {
 		List<Group> allGroups = new ArrayList<>();
 		String sql = "SELECT group_id, group_name FROM school_app.groups";
 		try (Connection connection = Database.connection();
