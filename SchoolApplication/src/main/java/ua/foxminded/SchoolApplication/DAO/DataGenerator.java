@@ -19,7 +19,7 @@ public class DataGenerator {
 		List<Student> students = generateStudents();
 		List<Course> courses = generateCourse();
 		groupDAO.primaryinsertGroups(groups);
-		courseDAO.primaryGenerationCourses(courses);
+		courseDAO.primaryCourseCreation(courses);
 		studentDAO.primaryInsertsStudents(students);
 		studentDAO.primaryInsertRelations(students);
 	}

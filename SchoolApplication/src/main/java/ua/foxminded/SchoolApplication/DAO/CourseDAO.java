@@ -91,7 +91,7 @@ public class CourseDAO {
 		return students;
 	}
 
-	public void primaryGenerationCourses(List<Course> courses) {
+	public void primaryCourseCreation(List<Course> courses) {
 		String sql = "INSERT INTO school_app.courses (course_id, course_name, course_description) VALUES (?, ?, ?)";
 		try (Connection connection = Database.connection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
