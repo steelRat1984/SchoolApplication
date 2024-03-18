@@ -1,9 +1,12 @@
-package ua.foxminded.SchoolApplication.DAO;
+package ua.foxminded.SchoolApplication.DAO.generation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import ua.foxminded.SchoolApplication.DAO.CourseDAO;
+import ua.foxminded.SchoolApplication.DAO.GroupDAO;
+import ua.foxminded.SchoolApplication.DAO.StudentDAO;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
