@@ -10,17 +10,14 @@ public class CourseService {
 	private CourseDAO courseDAO = new CourseDAO();
 	
 	public Course getCourseById(int courseId) {
-		Course course = courseDAO.getCourseById(courseId);
-		return course;	
+		return courseDAO.getCourseById(courseId);	
 	}
 	
 	public List<Course> getAllCourses(){
-		List<Course> coursesList = courseDAO.getAllCourses();
-		return coursesList;
+		return  courseDAO.getAllCourses();
 	}
 	
 	public List<Student> getDataForCertainCourseReport(int courseId) {
 		return courseDAO.getStudentsOnCourse(courseId);
 	}
-
 }
