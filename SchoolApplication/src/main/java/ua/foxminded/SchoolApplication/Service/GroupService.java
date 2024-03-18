@@ -14,8 +14,7 @@ public class GroupService {
 	private GroupDAO groupDAO = new GroupDAO();
 	
 	public Group getGroupById (int groupId) {
-		Group group = groupDAO.getGroupById(groupId);
-		return group;
+		return groupDAO.getGroupById(groupId);
 	}
 	
 	public List<Group> getAllGrouops() {
