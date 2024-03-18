@@ -8,8 +8,8 @@
 --Table: school_app.students
 CREATE TABLE IF NOT EXISTS school_app.students
 (
-    student_id integer PRIMARY KEY NOT NULL,
-    group_id integer NOT NULL,
+    student_id SERIAL PRIMARY KEY,
+    group_id integer,
     first_name character(250) NOT NULL,
     last_name character(250) NOT NULL
 )
@@ -17,14 +17,14 @@ TABLESPACE pg_default;
     -- Table: school_app.groups
 CREATE TABLE IF NOT EXISTS school_app.groups
 (
-    group_id integer PRIMARY KEY NOT NULL,
+    group_id SERIAL PRIMARY KEY,
     group_name character(250) NOT NULL
 )
 TABLESPACE pg_default;
     -- Table: school_app.courses
 CREATE TABLE IF NOT EXISTS school_app.courses
 (
-    course_id integer PRIMARY KEY NOT NULL,
+    course_id SERIAL PRIMARY KEY,
     course_name character(250) NOT NULL,
     course_description character(1000)
 )
