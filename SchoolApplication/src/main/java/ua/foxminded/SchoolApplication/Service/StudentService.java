@@ -3,24 +3,20 @@ package ua.foxminded.SchoolApplication.Service;
 import java.util.List;
 
 import ua.foxminded.SchoolApplication.database.CourseDAO;
-import ua.foxminded.SchoolApplication.database.GroupDAO;
 import ua.foxminded.SchoolApplication.database.StudentDAO;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class StudentService {
-	CourseDAO courseDAO = new CourseDAO();
-	StudentDAO studentDAO = new StudentDAO();
-	GroupDAO groupDAO = new GroupDAO();
+	private CourseDAO courseDAO = new CourseDAO();
+	private StudentDAO studentDAO = new StudentDAO();
 	
 	public Student getStudentByName(String firstName, String lastName) {
-		Student student = studentDAO.getStudentByName(firstName, lastName);
-		return student;
+		return studentDAO.getStudentByName(firstName, lastName);
 	}
 
 	public Student getStudentById(int studentId) {
-		Student student = studentDAO.getStudentById(studentId);
-		return student;
+		return studentDAO.getStudentById(studentId);
 	}
 
 	public boolean enrollStudentToCourse(int studentId, int courseId) {
