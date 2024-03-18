@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication.database;
+package ua.foxminded.SchoolApplication.DAO;
 
 import java.util.ArrayList;
 import java.util.List;

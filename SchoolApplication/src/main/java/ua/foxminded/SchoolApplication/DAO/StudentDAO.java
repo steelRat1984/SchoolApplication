@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication.database;
+package ua.foxminded.SchoolApplication.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

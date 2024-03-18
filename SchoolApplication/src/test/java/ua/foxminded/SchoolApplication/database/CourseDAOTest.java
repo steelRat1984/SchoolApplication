@@ -18,6 +18,8 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import ua.foxminded.SchoolApplication.DAO.CourseDAO;
+import ua.foxminded.SchoolApplication.DAO.Database;
 import ua.foxminded.SchoolApplication.model.Course;
 
 class CourseDAOTest {

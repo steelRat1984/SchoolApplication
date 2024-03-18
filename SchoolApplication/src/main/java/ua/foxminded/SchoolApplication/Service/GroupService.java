@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ua.foxminded.SchoolApplication.database.GroupDAO;
+import ua.foxminded.SchoolApplication.DAO.GroupDAO;
 import ua.foxminded.SchoolApplication.model.Group;
 
 

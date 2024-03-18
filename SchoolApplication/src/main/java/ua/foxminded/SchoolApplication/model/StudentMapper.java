@@ -4,8 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import ua.foxminded.SchoolApplication.database.CourseDAO;
-import ua.foxminded.SchoolApplication.database.GroupDAO;
+import ua.foxminded.SchoolApplication.DAO.CourseDAO;
+import ua.foxminded.SchoolApplication.DAO.GroupDAO;
 
 public class StudentMapper {
 

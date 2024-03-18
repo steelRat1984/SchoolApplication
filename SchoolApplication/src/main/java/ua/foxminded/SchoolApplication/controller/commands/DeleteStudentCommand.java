@@ -29,6 +29,7 @@ public class DeleteStudentCommand implements Command {
 		System.out.println(stringBuilder.toString());
 
 	}
+	
 	@Override
 	public String getDescription() {
 		return "delete the student";

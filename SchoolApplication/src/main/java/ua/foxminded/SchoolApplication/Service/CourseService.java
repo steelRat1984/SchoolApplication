@@ -2,7 +2,7 @@ package ua.foxminded.SchoolApplication.Service;
 
 import java.util.List;
 
-import ua.foxminded.SchoolApplication.database.CourseDAO;
+import ua.foxminded.SchoolApplication.DAO.CourseDAO;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 

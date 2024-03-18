@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication.database;
+package ua.foxminded.SchoolApplication.DAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,7 +11,6 @@ import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.CourseMapper;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
-import ua.foxminded.SchoolApplication.model.StudentMapper;
 
 public class CourseDAO {
 	public List<Course> getSelectedCoursesForStudent(int studentId) {
