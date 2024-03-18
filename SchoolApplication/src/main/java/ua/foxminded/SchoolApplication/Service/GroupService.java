@@ -1,14 +1,12 @@
 package ua.foxminded.SchoolApplication.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import ua.foxminded.SchoolApplication.DAO.GroupDAO;
 import ua.foxminded.SchoolApplication.model.Group;
-import ua.foxminded.SchoolApplication.model.Student;
 
 
 public class GroupService {
