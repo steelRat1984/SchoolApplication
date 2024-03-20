@@ -1,14 +1,13 @@
 package ua.foxminded.SchoolApplication.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import ua.foxminded.SchoolApplication.DAO.CourseDAO;
 import ua.foxminded.SchoolApplication.DAO.StudentDAO;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class StudentService {
-	private CourseDAO courseDAO = new CourseDAO();
 	private StudentDAO studentDAO = new StudentDAO();
 	
 	public Student getStudentByName(String firstName, String lastName) {
@@ -19,15 +18,14 @@ public class StudentService {
 		return studentDAO.getStudentById(studentId);
 	}
 
-	public boolean enrollStudentToCourse(int studentId, int courseId) {
-		Student student = studentDAO.getStudentById(studentId);
+	public boolean enrollStudentToCourse(Student student, Course inputCourse) {
 		List<Course> selectedCourses = student.getCourses();
-		boolean isEnroled = selectedCourses.stream().anyMatch(course -> course.getCourseID() == courseId);
+		boolean isEnroled = selectedCourses.stream().anyMatch(course -> course.getCourseID() == inputCourse.getCourseID());
 		if (!isEnroled) {
-			Course course = courseDAO.getCourseById(courseId);
-			selectedCourses.add(course);
-			student.setCourses(selectedCourses);
-			studentDAO.assignCourse(studentId, courseId);
+			List<Course> newCourse = new ArrayList<>();
+			newCourse.add(inputCourse);
+			student.setCourses(newCourse);
+			studentDAO.createAssignment(student);
 			return true;
 		}
 		return false;
