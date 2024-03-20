@@ -20,4 +20,8 @@ public class CourseService {
 	public List<Student> getDataForCertainCourseReport(int courseId) {
 		return courseDAO.getStudentsOnCourse(courseId);
 	}
+	
+	public void createCourse (Course course) {
+		courseDAO.createCourse(course);
+	}
 }
