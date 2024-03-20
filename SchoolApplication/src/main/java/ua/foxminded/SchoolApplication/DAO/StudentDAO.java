@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import ua.foxminded.SchoolApplication.DAO.mappers.StudentMapper;
@@ -47,7 +46,7 @@ public class StudentDAO {
 		}
 		return student;
 	}
-
+	
 	public void deleteStudentById(int studentId) {
 		String sqlDeleteStudent = "DELETE FROM school_app.students WHERE student_id = ?";
 		try (Connection connection = Database.connection();
@@ -89,39 +88,6 @@ public class StudentDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-//	public List<Student> getAllStudents() {
-//		List<Student> allStudents = new ArrayList<>();
-//		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students";
-//		try (Connection connection = Database.connection();
-//				PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//				ResultSet resultSet = preparedStatement.executeQuery()) {
-//			while (resultSet.next()) {
-//				allStudents.add(StudentMapper.map(resultSet));
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return allStudents;
-//	}
-
-	public List<Integer> getStudentsIdByCourseId(int courseid) {
-		List<Integer> studentIds = new ArrayList<>();
-		String sql = "SELECT student_id FROM school_app.students_courses WHERE course_id = ?";
-		try (Connection connection = Database.connection();
-				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-			preparedStatement.setInt(1, courseid);
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					int studentId = resultSet.getInt("student_id");
-					studentIds.add(studentId);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return studentIds;
 	}
 
 	public boolean deleteAssignments(int studentId, int courseId) {
