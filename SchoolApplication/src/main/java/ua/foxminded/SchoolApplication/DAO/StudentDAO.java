@@ -74,22 +74,6 @@ public class StudentDAO {
 		}
 	}
 
-	public void primaryStudentsCreating(List<Student> students) {
-		String primaryInsertsStudents = "INSERT INTO school_app.students (group_id, first_name, last_name) VALUES (?, ?, ?)";
-		try (Connection connection = Database.connection();
-				PreparedStatement statement = connection.prepareStatement(primaryInsertsStudents)) {
-			for (Student student : students) {
-				statement.setInt(1, student.getGroup().getGroupID());
-				statement.setString(2, student.getFirstName());
-				statement.setString(3, student.getLastName());
-				statement.addBatch();
-			}
-			statement.executeBatch();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public boolean deleteAssignments(int studentId, int courseId) {
 		boolean isDeleted = false;
 		String sql = "DELETE FROM school_app.students_courses WHERE student_id = ? AND course_id = ?";
@@ -145,25 +129,4 @@ public class StudentDAO {
 			e.printStackTrace();
 		}
 	}
-
-	public void primaryAsignmentCreation(List<Student> students) {
-		String primaryInsertRelations = "INSERT INTO school_app.students_courses (student_id, course_id) VALUES (?, ?)";
-		try (Connection connection = Database.connection();
-				PreparedStatement statement = connection.prepareStatement(primaryInsertRelations)) {
-			for (Student student : students) {
-				int studentId = student.getStudentID();
-				List<Course> currentCourses = student.getCourses();
-				for (Course course : currentCourses) {
-					int courseId = course.getCourseID();
-					statement.setInt(1, studentId);
-					statement.setInt(2, courseId);
-					statement.addBatch();
-				}
-			}
-			statement.executeBatch();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 }
