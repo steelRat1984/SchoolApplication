@@ -66,15 +66,12 @@ public class GroupDAO {
 		return students;
 	}
 
-	public void primaryinsertGroups(List<Group> groups) {
+	public void createGroup(Group group) {
 		String sql = "INSERT INTO school_app.groups (group_name) VALUES (?)";
 		try (Connection connection = Database.connection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
-			for (Group group : groups) {
 				statement.setString(1, group.getGroupName());
-				statement.addBatch();
-			}
-			statement.executeBatch();
+				statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

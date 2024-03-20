@@ -21,7 +21,7 @@ public class StudentDAO {
 			preparedStatement.setString(2, lastName);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
-				student = StudentMapper.map(resultSet);
+					student = StudentMapper.map(resultSet);
 				}
 			}
 		} catch (SQLException e) {
@@ -46,7 +46,7 @@ public class StudentDAO {
 		}
 		return student;
 	}
-	
+
 	public void deleteStudentById(int studentId) {
 		String sqlDeleteStudent = "DELETE FROM school_app.students WHERE student_id = ?";
 		try (Connection connection = Database.connection();
@@ -82,7 +82,7 @@ public class StudentDAO {
 			statement.setInt(1, studentId);
 			statement.setInt(2, courseId);
 			isDeleted = statement.executeUpdate() > 0;
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
