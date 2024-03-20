@@ -89,18 +89,6 @@ public class StudentDAO {
 		return isDeleted;
 	}
 
-	public void assignCourse(int studentId, int courseId) {
-		String sql = "INSERT INTO school_app.students_courses (student_id, course_id) VALUES (?, ?)";
-		try (Connection connection = Database.connection();
-				PreparedStatement statement = connection.prepareStatement(sql)) {
-			statement.setInt(1, studentId);
-			statement.setInt(2, courseId);
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void deleteAllAssignmentsByStudentId(int studentId) {
 		String sqlDeleteRelation = "DELETE FROM school_app.students_courses WHERE student_id = ?";
 		try (Connection connection = Database.connection();
@@ -115,10 +103,10 @@ public class StudentDAO {
 	public void createAssignment(Student student) {
 		int studentId = student.getStudentID();
 		String insertRelation = "INSERT INTO school_app.students_courses (student_id, course_id) VALUES (?, ?)";
-		List<Course> currentCourses = student.getCourses();
+		List<Course> courses = student.getCourses();
 		try (Connection connection = Database.connection();
 				PreparedStatement statement = connection.prepareStatement(insertRelation)) {
-			for (Course course : currentCourses) {
+			for (Course course : courses) {
 				int courseId = course.getCourseID();
 				statement.setInt(1, studentId);
 				statement.setInt(2, courseId);
