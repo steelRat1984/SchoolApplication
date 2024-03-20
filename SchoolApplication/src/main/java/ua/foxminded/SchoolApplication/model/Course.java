@@ -25,12 +25,6 @@ public class Course {
 	public void setCourseID(int courseID) {
 		this.courseID = courseID;
 	}
-	public int getNumberOfStudents() {
-		return numberOfStudents;
-	}
-	public void setNumberOfStudents(int numberOfStudents) {
-		this.numberOfStudents = numberOfStudents;
-	}
 	public String getCourseName() {
 		return courseName;
 	}
