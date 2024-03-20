@@ -31,12 +31,12 @@ public class CourseDAO {
 		return selectedCourses;
 	}
 
-	public Course getCourseById(int inputcourseId) {
+	public Course getCourseById(int courseId) {
 		Course course = new Course();
 		String sql = "SELECT course_id, course_name, course_description FROM school_app.courses WHERE course_id = ?";
 		try (Connection connection = Database.connection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-			preparedStatement.setInt(1, inputcourseId);
+			preparedStatement.setInt(1, courseId);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				if (resultSet.next()) {
 					course = CourseMapper.map(resultSet);
