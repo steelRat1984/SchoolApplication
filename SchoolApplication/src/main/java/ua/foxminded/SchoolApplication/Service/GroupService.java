@@ -17,7 +17,7 @@ public class GroupService {
 
 	public Map<Integer, List<Group>> buildGroupReport() {
 		Map<Integer, List<Group>> groupsByNumberOfStudents = new HashMap<>();
-		List<Group> groups = groupDAO.getAllGroups();
+		List<Group> groups = groupDAO.getAllGroups2();
 		for (Group group : groups) {
 			groupsByNumberOfStudents.computeIfAbsent(group.getStudentsInGroup().size(), k -> new ArrayList<>())
 					.add(group);

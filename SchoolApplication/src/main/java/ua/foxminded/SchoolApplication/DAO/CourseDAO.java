@@ -13,6 +13,7 @@ import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class CourseDAO {
+	
 	public List<Course> getSelectedCoursesForStudent(int studentId) {
 		String sql = "SELECT c.course_id, c.course_name, c.course_description FROM school_app.courses c "
 				+ "JOIN school_app.students_courses sc ON c.course_id = sc.course_id WHERE sc.student_id = ?";

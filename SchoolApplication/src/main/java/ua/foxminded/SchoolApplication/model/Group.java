@@ -1,5 +1,6 @@
 package ua.foxminded.SchoolApplication.model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -18,6 +19,7 @@ public class Group {
 	public Group(int groupID, String groupName) {
 		this.groupID = groupID;
 		this.groupName = groupName;
+		this.studentsInGroup = new ArrayList<>();
 	}
 	
 	public Group() {
