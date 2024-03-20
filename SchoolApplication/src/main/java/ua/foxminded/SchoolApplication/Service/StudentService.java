@@ -45,4 +45,8 @@ public class StudentService {
 	public void createStudent(Student inputStudent) {
 		studentDAO.createStudent(inputStudent);
 	}
+	
+	public void createAssignment (Student student) {
+		studentDAO.createAssignment(student);
+	}
 }
