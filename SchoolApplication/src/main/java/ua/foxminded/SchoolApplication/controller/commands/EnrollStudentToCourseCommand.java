@@ -30,7 +30,7 @@ public class EnrollStudentToCourseCommand implements Command {
 		scanner.nextLine();
 		Student student = studentService.getStudentById(studentId);
 		Course course = courseService.getCourseById(courseId);
-		boolean isEnrolled = studentService.enrollStudentToCourse(studentId, courseId);
+		boolean isEnrolled = studentService.enrollStudentToCourse(student, course);
 		if (isEnrolled == true) {
 			stringBuilder.append("success! ");
 			stringBuilder.append(student.getFirstName()).append(" ").append(student.getLastName());
