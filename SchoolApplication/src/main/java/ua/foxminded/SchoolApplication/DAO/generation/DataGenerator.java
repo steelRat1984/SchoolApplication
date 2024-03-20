@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import ua.foxminded.SchoolApplication.DAO.CourseDAO;
-import ua.foxminded.SchoolApplication.DAO.GroupDAO;
-import ua.foxminded.SchoolApplication.DAO.StudentDAO;
+import ua.foxminded.SchoolApplication.Service.CourseService;
+import ua.foxminded.SchoolApplication.Service.GroupService;
+import ua.foxminded.SchoolApplication.Service.StudentService;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
@@ -15,16 +15,20 @@ public class DataGenerator {
 	private final Random random = new Random();
 
 	public void generate() {
-		StudentDAO studentDAO = new StudentDAO();
-		GroupDAO groupDAO = new GroupDAO();
-		CourseDAO courseDAO = new CourseDAO();
+		StudentService studentService = new StudentService();
+		CourseService courseService = new CourseService();
+		GroupService groupService = new GroupService();
 		List<Group> groups = generateGoup();
 		List<Student> students = generateStudents();
 		List<Course> courses = generateCourse();
-		groupDAO.primaryinsertGroups(groups);
-		courseDAO.primaryCourseCreation(courses);
-		studentDAO.primaryStudentsCreating(students);
-		studentDAO.primaryAsignmentCreation(students);
+		groups.forEach(
+				group -> groupService.createGroup(group)) ;
+		students.forEach(
+				student -> studentService.createStudent(student));
+		students.forEach(
+				student -> studentService.createAssignment(student));
+		courses.forEach(
+				course -> courseService.createCourse(course));
 	}
 
 	private List<String> generateFirstName() {
