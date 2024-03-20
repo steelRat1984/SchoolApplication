@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ua.foxminded.SchoolApplication.DAO.mappers.CourseMapper;
+import ua.foxminded.SchoolApplication.DAO.mappers.StudentMapper;
 import ua.foxminded.SchoolApplication.model.Course;
-import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class CourseDAO {
@@ -74,14 +74,7 @@ public class CourseDAO {
 			preparedStatement.setInt(1, courseId);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
 				while (resultSet.next()) {
-					Student student = new Student();
-					student.setStudentID(resultSet.getInt("student_id"));
-					student.setFirstName(resultSet.getString("first_name"));
-					student.setLastName(resultSet.getString("last_name"));
-					int groupId = resultSet.getInt("group_id");
-					Group group = new GroupDAO().getGroupById(groupId);
-					student.setGroup(group);
-					students.add(student);
+					students.add(StudentMapper.map(resultSet));
 				}
 			}
 		} catch (SQLException e) {
@@ -91,16 +84,13 @@ public class CourseDAO {
 		return students;
 	}
 
-	public void primaryCourseCreation(List<Course> courses) {
+	public void createCourse(Course course) {
 		String sql = "INSERT INTO school_app.courses (course_name, course_description) VALUES (?, ?)";
 		try (Connection connection = Database.connection();
 				PreparedStatement statement = connection.prepareStatement(sql)) {
-			for (Course course : courses) {
 				statement.setString(1, course.getCourseName());
 				statement.setString(2, course.getCourseDescription());
-				statement.addBatch();
-			}
-			statement.executeBatch();
+				statement.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
