@@ -29,6 +29,10 @@ public class EnrollStudentToCourseCommand implements Command {
 		int courseId = scanner.nextInt();
 		scanner.nextLine();
 		Student student = studentService.getStudentById(studentId);
+		if (student == null) {
+			System.out.println("Student with ID " + studentId + " not found.");
+			 return;
+		}
 		Course course = courseService.getCourseById(courseId);
 		boolean isEnrolled = studentService.enrollStudentToCourse(student, course);
 		if (isEnrolled == true) {
@@ -38,16 +42,16 @@ public class EnrollStudentToCourseCommand implements Command {
 			System.out.println(stringBuilder.toString());
 		} else {
 			stringBuilder.append(student.getFirstName()).append(" ").append(student.getLastName());
-			stringBuilder.append(" is already enrolled in this course - ").append(course.getCourseName()).append(", please choose another one");
+			stringBuilder.append(" is already enrolled in this course - ").append(course.getCourseName())
+					.append(", please choose another one");
 			System.out.println(stringBuilder.toString());
 		}
-		
-
 	}
+
 	@Override
 	public String getDescription() {
 		return "enroll a student to the course";
-		
+
 	}
 
 }

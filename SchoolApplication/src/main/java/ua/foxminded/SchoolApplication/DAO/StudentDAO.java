@@ -14,16 +14,21 @@ public class StudentDAO {
 
 	public Student getStudentByName(String firstName, String lastName) {
 		Student student = new Student();
-		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students WHERE first_name = ? AND last_name = ?";
+		String sql = "SELECT s.student_id, s.first_name, s.last_name, g.group_id, g.group_name, "
+				+ "c.course_id, c.course_name, c.course_description "
+				+ "FROM school_app.students s "
+				+ "LEFT JOIN school_app.groups g ON s.group_id = g.group_id "
+				+ "LEFT JOIN school_app.students_courses sc ON s.student_id = sc.student_id "
+				+ "LEFT JOIN school_app.courses c ON sc.course_id = c.course_id "
+				+ "WHERE s.first_name = ? AND s.last_name = ?";
 		try (Connection connection = Database.connection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 			preparedStatement.setString(1, firstName);
 			preparedStatement.setString(2, lastName);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					student = StudentMapper.map(resultSet);
-				}
+				student = StudentMapper.mapStudents(resultSet).get(0);
 			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -31,14 +36,21 @@ public class StudentDAO {
 	}
 
 	public Student getStudentById(int studentId) {
-		Student student = new Student();
-		String sql = "SELECT student_id, group_id, first_name, last_name FROM school_app.students WHERE student_id = ?";
+		Student student = null;
+		String sql = "SELECT s.student_id, s.first_name, s.last_name, g.group_id, g.group_name, "
+				+ "c.course_id, c.course_name, c.course_description "
+				+ "FROM school_app.students s "
+				+ "LEFT JOIN school_app.groups g ON s.group_id = g.group_id "
+				+ "LEFT JOIN school_app.students_courses sc ON s.student_id = sc.student_id "
+				+ "LEFT JOIN school_app.courses c ON sc.course_id = c.course_id "
+				+ "WHERE s.student_id = ?";
 		try (Connection connection = Database.connection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 			preparedStatement.setInt(1, studentId);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					student = StudentMapper.map(resultSet);
+				List<Student> students = StudentMapper.mapStudents(resultSet);
+				if (!students.isEmpty()) {
+					student = students.get(0);
 				}
 			}
 		} catch (SQLException e) {

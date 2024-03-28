@@ -66,22 +66,22 @@ public class CourseDAO {
 
 	public List<Student> getStudentsOnCourse(int courseId) {
 		List<Student> students = new ArrayList<>();
-		String sql = "SELECT s.student_id, s.first_name, s.last_name, s.group_id " +
-				"FROM school_app.students s " +
-				"JOIN school_app.students_courses sc ON s.student_id = sc.student_id " +
-				"WHERE sc.course_id = ?";
+		String sql = "SELECT s.student_id, s.first_name, s.last_name, g.group_id, g.group_name, "
+				+ "c.course_id, c.course_name, c.course_description "
+				+ "FROM school_app.students s "
+				+ "LEFT JOIN school_app.groups g ON s.group_id = g.group_id "
+				+ "LEFT JOIN school_app.students_courses sc ON s.student_id = sc.student_id "
+				+ "LEFT JOIN school_app.courses c ON sc.course_id = c.course_id "
+				+ "WHERE c.course_id = ?";
 		try (Connection connection = Database.connection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 			preparedStatement.setInt(1, courseId);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				while (resultSet.next()) {
-					students.add(StudentMapper.map(resultSet));
-				}
+				students = StudentMapper.mapStudents(resultSet);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return students;
 	}
 
