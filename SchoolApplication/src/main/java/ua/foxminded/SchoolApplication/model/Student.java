@@ -1,6 +1,7 @@
 package ua.foxminded.SchoolApplication.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Student {
 	private int studentID;
@@ -57,5 +58,25 @@ public class Student {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(courses, firstName, group, lastName, studentID);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Student other = (Student) obj;
+		return Objects.equals(courses, other.courses) && Objects.equals(firstName, other.firstName)
+				&& Objects.equals(group, other.group) && Objects.equals(lastName, other.lastName)
+				&& studentID == other.studentID;
 	}	
+	
 }
