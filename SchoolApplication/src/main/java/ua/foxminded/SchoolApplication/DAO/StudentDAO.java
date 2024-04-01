@@ -70,7 +70,8 @@ public class StudentDAO {
 		}
 	}
 
-	public void createStudent(Student student) {
+	public boolean createStudent(Student student) {
+		boolean isCreated = false;
 		String sql = "INSERT INTO school_app.students (group_id, first_name, last_name) VALUES (?, ?, ?)";
 		int groupId = student.getGroup().getGroupID();
 		String firstName = student.getFirstName();
@@ -80,10 +81,11 @@ public class StudentDAO {
 			statement.setInt(1, groupId);
 			statement.setString(2, firstName);
 			statement.setString(3, lastName);
-			statement.executeUpdate();
+			isCreated = statement.executeUpdate() > 0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return isCreated;
 	}
 
 	public boolean deleteAssignments(int studentId, int courseId) {

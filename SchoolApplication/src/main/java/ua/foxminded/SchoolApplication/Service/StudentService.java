@@ -40,8 +40,8 @@ public class StudentService {
 		studentDAO.deleteStudentById(studentId);
 	}
 
-	public void createStudent(Student inputStudent) {
-		studentDAO.createStudent(inputStudent);
+	public boolean createStudent(Student inputStudent) {
+		return studentDAO.createStudent(inputStudent);
 	}
 	
 	public void createAssignment (Student student) {

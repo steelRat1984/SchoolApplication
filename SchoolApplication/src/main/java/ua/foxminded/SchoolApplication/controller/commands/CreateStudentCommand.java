@@ -34,9 +34,17 @@ public class CreateStudentCommand implements Command {
 		student.setFirstName(studentFirstname);
 		student.setLastName(studentLastname);
 		student.setGroup(group);
-		studentServices.createStudent(student);
+		boolean isCreated = studentServices.createStudent(student);
+		if (isCreated == true) {
 		String message = String.format("Student %s %s has been added", studentFirstname, studentLastname);
 		System.out.println(message);
+		}else {
+			String message = String.format("Something wrong student %s %s has not been added, try again", studentFirstname, studentLastname);
+			System.out.println(message);
+			return;
+		}
+		
+	
 	}
 
 	@Override
