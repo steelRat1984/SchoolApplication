@@ -17,7 +17,6 @@ public class Course {
 		this.courseDescription = courseDescription;
 	}
 	public Course () {
-		
 	}
 
 	

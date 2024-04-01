@@ -25,7 +25,7 @@ public class GetCourseReportCommand implements Command {
 		scanner.nextLine();
 		StringBuilder resultReport = new StringBuilder("Report on the names of students in courses :\n");
 		Course course = courseService.getCourseById(courseId);
-		List<Student> enrolledStudents = courseService.getDataForCertainCourseReport(courseId);
+		List<Student> enrolledStudents = courseService.getStudentsOnCourse(courseId);
 		resultReport.append("the following students study in the ").append(course.getCourseName()).append("course :\n");
 		for (Student student : enrolledStudents) {
 			String studentFullName = student.getFirstName() + " " + student.getLastName();
