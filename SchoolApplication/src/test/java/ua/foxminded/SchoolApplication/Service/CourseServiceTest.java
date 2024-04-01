@@ -1,6 +1,7 @@
 package ua.foxminded.SchoolApplication.Service;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -31,11 +32,12 @@ class CourseServiceTest {
 	}
 
 	@Test
-	public void retyrnCourse_WhenCourseIdIsValid() {
+	public void returnCourse_forCertainCourseId() {
 		Course expectedCourse = new Course(1, "testCourse", "testDescription");
 		when(courseDAO.getCourseById(1)).thenReturn(expectedCourse);
 		Course actualCourse = courseService.getCourseById(1);
 		assertEquals(expectedCourse, actualCourse);
+		verify(courseDAO).getCourseById(1);
 	}
 
 	@Test
@@ -48,13 +50,14 @@ class CourseServiceTest {
 				new Course(5, "name5", "descripteion5"),
 				new Course(6, "name6", "descripteion6"),
 				new Course(7, "name7", "descripteion7"));
-		
+
 		when(courseDAO.getAllCourses()).thenReturn(expectedCourses);
 		List<Course> actualCourses = courseService.getAllCourses();
-		
+
 		assertEquals(expectedCourses.size(), actualCourses.size());
 		assertEquals(expectedCourses, actualCourses);
 		assertNotNull(actualCourses);
+		verify(courseDAO).getAllCourses();
 	}
 
 	@Test
@@ -67,19 +70,27 @@ class CourseServiceTest {
 		List<Student> expectedStudents2 = Arrays.asList(
 				new Student(1, new Group(1, "group_1"), "Mykola", "Fox", Arrays.asList(course2)),
 				new Student(2, new Group(5, "group_5"), "Sasha", "Makar", Arrays.asList(course2)));
-		
+
 		when(courseService.getStudentsOnCourse(1)).thenReturn(expectedStudents1);
 		when(courseService.getStudentsOnCourse(2)).thenReturn(expectedStudents2);
 		List<Student> actualStudents1 = courseService.getStudentsOnCourse(1);
 		List<Student> actualStudents2 = courseService.getStudentsOnCourse(2);
-		
+
 		assertEquals(expectedStudents1, actualStudents1);
 		assertEquals(expectedStudents2, actualStudents2);
 		assertEquals(expectedStudents1.size(), actualStudents2.size());
 		assertEquals(expectedStudents2.size(), actualStudents2.size());
 		assertNotEquals(expectedStudents2, actualStudents1);
 		assertNotEquals(expectedStudents1, actualStudents2);
-		
-		
+		verify(courseDAO).getStudentsOnCourse(1);
+		verify(courseDAO).getStudentsOnCourse(2);
+
+	}
+
+	@Test
+	public void createCourse_CallsCourseDAO() {
+		Course course = new Course(1, "Course1", "Description1");
+		courseService.createCourse(course);
+		verify(courseDAO).createCourse(course);
 	}
 }

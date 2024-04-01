@@ -116,10 +116,10 @@ public class StudentDAO {
 
 	public void createAssignment(Student student) {
 		int studentId = student.getStudentID();
-		String insertRelation = "INSERT INTO school_app.students_courses (student_id, course_id) VALUES (?, ?)";
+		String sql = "INSERT INTO school_app.students_courses (student_id, course_id) VALUES (?, ?)";
 		List<Course> courses = student.getCourses();
 		try (Connection connection = Database.connection();
-				PreparedStatement statement = connection.prepareStatement(insertRelation)) {
+				PreparedStatement statement = connection.prepareStatement(sql)) {
 			for (Course course : courses) {
 				int courseId = course.getCourseID();
 				statement.setInt(1, studentId);
