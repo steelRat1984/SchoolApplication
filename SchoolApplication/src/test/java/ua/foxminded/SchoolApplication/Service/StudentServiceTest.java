@@ -34,7 +34,7 @@ class StudentServiceTest {
 	}
 
 	@Test
-	public void ReturnStudent_ByCertainName() {
+	public void ReturnStudent_WhemNameIsExisting() {
 		Student exeptedStudent = new Student(1, new Group(), firstName, lastName);
 		when(studentDAO.getStudentByName(firstName, lastName)).thenReturn(exeptedStudent);
 		Student actualStudent = studentService.getStudentByName(firstName, lastName);
@@ -43,7 +43,7 @@ class StudentServiceTest {
 	}
 
 	@Test
-	public void returnStudent_forCertainStudentId() {
+	public void returnStudent_WhenNameIsExisting() {
 		Student expectedStudent = new Student(1, new Group(), firstName, lastName);
 		when(studentDAO.getStudentById(1)).thenReturn(expectedStudent);
 		Student actualStudent = studentService.getStudentById(1);

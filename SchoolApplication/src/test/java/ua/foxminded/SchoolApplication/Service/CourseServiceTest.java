@@ -32,7 +32,7 @@ class CourseServiceTest {
 	}
 
 	@Test
-	public void returnCourse_forCertainCourseId() {
+	public void returnCourse_IfCourseIdIsExisting() {
 		Course expectedCourse = new Course(1, "testCourse", "testDescription");
 		when(courseDAO.getCourseById(1)).thenReturn(expectedCourse);
 		Course actualCourse = courseService.getCourseById(1);
@@ -61,7 +61,7 @@ class CourseServiceTest {
 	}
 
 	@Test
-	public void returnStudents_forCertainCourseId() {
+	public void returnStudents_IfStudentsIsEnrolled() {
 		Course course1 = new Course("course1", "description1");
 		Course course2 = new Course("course2", "description2");
 		List<Student> expectedStudents1 = Arrays.asList(
