@@ -17,7 +17,6 @@ import ua.foxminded.SchoolApplication.dao.CourseDAO;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
-import ua.foxminded.SchoolApplication.service.CourseService;
 
 class CourseServiceTest {
 
@@ -33,7 +32,7 @@ class CourseServiceTest {
 	}
 
 	@Test
-	public void returnCourse_IfCourseIdIsExisting() {
+	public void returnCourse_IfCourseExist() {
 		Course expectedCourse = new Course(1, "testCourse", "testDescription");
 		when(courseDAO.getCourseById(1)).thenReturn(expectedCourse);
 		Course actualCourse = courseService.getCourseById(1);
@@ -42,7 +41,7 @@ class CourseServiceTest {
 	}
 
 	@Test
-	public void returnAllCourses_WhenMethodIsExecuted() {
+	public void returnAllCourses() {
 		List<Course> expectedCourses = Arrays.asList(
 				new Course(1, "name1", "descripteion1"),
 				new Course(2, "name2", "descripteion2"),
@@ -62,7 +61,7 @@ class CourseServiceTest {
 	}
 
 	@Test
-	public void returnStudents_IfStudentsIsEnrolled() {
+	public void returnStudents_WhenStudentsIsEnrolled() {
 		Course course1 = new Course("course1", "description1");
 		Course course2 = new Course("course2", "description2");
 		List<Student> expectedStudents1 = Arrays.asList(
@@ -89,7 +88,7 @@ class CourseServiceTest {
 	}
 
 	@Test
-	public void createCourse_CallsCourseDAO() {
+	public void shouldDelegateCourseCreationToCourseDAO() {
 		Course course = new Course(1, "Course1", "Description1");
 		courseService.createCourse(course);
 		verify(courseDAO).createCourse(course);

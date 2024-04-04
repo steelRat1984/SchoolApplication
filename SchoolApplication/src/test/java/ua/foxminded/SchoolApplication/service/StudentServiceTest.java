@@ -17,7 +17,6 @@ import ua.foxminded.SchoolApplication.dao.StudentDAO;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
-import ua.foxminded.SchoolApplication.service.StudentService;
 
 class StudentServiceTest {
 	private String firstName = "testFirstName";
@@ -35,7 +34,7 @@ class StudentServiceTest {
 	}
 
 	@Test
-	public void ReturnStudent_WhemNameIsExisting() {
+	public void returnStudentWhemNameExist() {
 		Student exeptedStudent = new Student(1, new Group(), firstName, lastName);
 		when(studentDAO.getStudentByName(firstName, lastName)).thenReturn(exeptedStudent);
 		Student actualStudent = studentService.getStudentByName(firstName, lastName);
@@ -44,7 +43,7 @@ class StudentServiceTest {
 	}
 
 	@Test
-	public void returnStudent_WhenNameIsExisting() {
+	public void returnStudentWhenNameExist() {
 		Student expectedStudent = new Student(1, new Group(), firstName, lastName);
 		when(studentDAO.getStudentById(1)).thenReturn(expectedStudent);
 		Student actualStudent = studentService.getStudentById(1);
@@ -53,7 +52,7 @@ class StudentServiceTest {
 	}
 
 	@Test
-	public void enrollStudentToNewCourse_Success() {
+	public void shouldEnrollStudentToNewCourse() {
 		Student student = new Student();
 		Course course1 = new Course(1, "Course1", "Description1");
 		Course course2 = new Course(2, "Course2", "Description2");
@@ -65,7 +64,7 @@ class StudentServiceTest {
 	}
 
 	@Test
-	public void enrollStudentToExistingCourse_Failure() {
+	public void shouldNotEnrollStudentToExistingCourse() {
 		Student student = new Student();
 		Course course1 = new Course(1, "Course1", "Description1");
 		Course course2 = new Course(2, "Course2", "Description2");
@@ -77,7 +76,7 @@ class StudentServiceTest {
 	}
 
 	@Test
-	public void returnTrue_whenStudentIsDeletedFromCourse() {
+	public void shouldDeleteStudentFromCourse() {
 		int studentId = 1;
 		int courseId = 1;
 		boolean result = false;
@@ -87,7 +86,7 @@ class StudentServiceTest {
 		verify(studentDAO).deleteAssignments(studentId, courseId);
 	}
 	@Test
-	public void returnFalce_whenStudentIsDeletedFromCourse() {
+	public void shouldNotDeleteStudentFromCourse() {
 		int studentId = 1;
 		int courseId = 1;
 		when(studentDAO.deleteAssignments(studentId, courseId)).thenReturn(false);
@@ -96,14 +95,14 @@ class StudentServiceTest {
 		verify(studentDAO).deleteAssignments(studentId, courseId);
 	}
 	@Test
-	public void deleteStudent_callsStudentDAO() {
+	public void shouldDelegateStudentDeletingToStudentDAO() {
 		int studentId = 1; 
 		studentService.deleteStudentById(studentId);
 		verify(studentDAO).deleteStudentById(studentId);
 		verify(studentDAO).deleteAllAssignmentsByStudentId(studentId);
 	}
 	@Test
-	public void returnTrue_whenStudentIsCreated () {
+	public void shouldCreateStudent() {
 		Student student = new Student();
 		when(studentDAO.createStudent(student)).thenReturn(true);
 		boolean result = studentService.createStudent(student);
@@ -111,7 +110,7 @@ class StudentServiceTest {
 		verify(studentDAO).createStudent(student);
 	}
 	@Test
-	public void returnFalce_whenStudentIsCreated () {
+	public void shouldNotCreateStudent () {
 		Student student = new Student();
 		when(studentDAO.createStudent(student)).thenReturn(false);
 		boolean result = studentService.createStudent(student);
@@ -120,7 +119,7 @@ class StudentServiceTest {
 	}
 	
 	@Test
-	public void createAssignment_callsStudentDao() {
+	public void shouldDelegateAssigmentCreationToStudentDAO() {
 		Student student = new Student();
 		studentService.createAssignment(student);
 		verify(studentDAO).createAssignment(student);

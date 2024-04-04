@@ -17,7 +17,6 @@ import org.mockito.MockitoAnnotations;
 import ua.foxminded.SchoolApplication.dao.GroupDAO;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
-import ua.foxminded.SchoolApplication.service.GroupService;
 
 class GroupServiсeTest {
 
@@ -33,7 +32,7 @@ class GroupServiсeTest {
 	}
 
 	@Test
-	public void returnGroup_IfGroupIdIsExisting() {
+	public void returnGroup_WhenGroupIdExist() {
 		Group expectedGroup = new Group(1, "groupName");
 		when(groupDAO.getGroupById(1)).thenReturn(expectedGroup);
 		Group actualGroup = groupService.getGroupById(1);
@@ -42,7 +41,7 @@ class GroupServiсeTest {
 	}
 
 	@Test
-	public void buildGroupReport_ReturnsCorrectMap() {
+	public void buildGroupReport() {
 		Group group1 = new Group(1, "group1", Arrays.asList(new Student(), new Student()));
 		Group group2 = new Group(1, "group2", Arrays.asList(new Student()));
 		Group group3 = new Group(1, "group3", Arrays.asList(new Student(), new Student(), new Student()));
@@ -58,7 +57,7 @@ class GroupServiсeTest {
 	}
 	
 	@Test
-	public void createGroup_CallsGroupDAO() {
+	public void shouldDelegateGroupCreationToGroupDAO() {
 		Group group = new Group();
 		groupService.createGroup(group);
 		verify(groupDAO).createGroup(group);
