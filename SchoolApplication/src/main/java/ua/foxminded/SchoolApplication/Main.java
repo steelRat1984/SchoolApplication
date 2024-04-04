@@ -1,7 +1,7 @@
 package ua.foxminded.SchoolApplication;
 
-import ua.foxminded.SchoolApplication.DAO.generation.DataGenerator;
 import ua.foxminded.SchoolApplication.controller.ConsoleMenu;
+import ua.foxminded.SchoolApplication.dao.generation.DataGenerator;
 
 public class Main {
 

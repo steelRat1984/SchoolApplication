@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication.DAO;
+package ua.foxminded.SchoolApplication.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -2,11 +2,11 @@ package ua.foxminded.SchoolApplication.controller.commands;
 
 import java.util.Scanner;
 
-import ua.foxminded.SchoolApplication.Service.GroupService;
-import ua.foxminded.SchoolApplication.Service.StudentService;
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
+import ua.foxminded.SchoolApplication.service.GroupService;
+import ua.foxminded.SchoolApplication.service.StudentService;
 
 public class CreateStudentCommand implements Command {
 	private final StudentService studentServices;

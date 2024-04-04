@@ -1,8 +1,8 @@
-package ua.foxminded.SchoolApplication.Service;
+package ua.foxminded.SchoolApplication.service;
 
 import java.util.List;
 
-import ua.foxminded.SchoolApplication.DAO.CourseDAO;
+import ua.foxminded.SchoolApplication.dao.CourseDAO;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 

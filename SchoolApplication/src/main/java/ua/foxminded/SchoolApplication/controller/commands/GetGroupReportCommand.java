@@ -3,9 +3,9 @@ package ua.foxminded.SchoolApplication.controller.commands;
 import java.util.List;
 import java.util.Map;
 
-import ua.foxminded.SchoolApplication.Service.GroupService;
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Group;
+import ua.foxminded.SchoolApplication.service.GroupService;
 
 public class GetGroupReportCommand implements Command {
 	private final GroupService groupServices;

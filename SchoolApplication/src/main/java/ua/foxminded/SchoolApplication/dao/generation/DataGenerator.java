@@ -1,15 +1,15 @@
-package ua.foxminded.SchoolApplication.DAO.generation;
+package ua.foxminded.SchoolApplication.dao.generation;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import ua.foxminded.SchoolApplication.Service.CourseService;
-import ua.foxminded.SchoolApplication.Service.GroupService;
-import ua.foxminded.SchoolApplication.Service.StudentService;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
+import ua.foxminded.SchoolApplication.service.CourseService;
+import ua.foxminded.SchoolApplication.service.GroupService;
+import ua.foxminded.SchoolApplication.service.StudentService;
 
 public class DataGenerator {
 	private final Random random = new Random();

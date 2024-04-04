@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication.DAO;
+package ua.foxminded.SchoolApplication.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-import ua.foxminded.SchoolApplication.DAO.Database;
+import ua.foxminded.SchoolApplication.dao.Database;
 
 class DatabaseTest {
 

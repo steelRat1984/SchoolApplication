@@ -2,9 +2,6 @@ package ua.foxminded.SchoolApplication.controller;
 
 import java.util.Scanner;
 
-import ua.foxminded.SchoolApplication.Service.CourseService;
-import ua.foxminded.SchoolApplication.Service.GroupService;
-import ua.foxminded.SchoolApplication.Service.StudentService;
 import ua.foxminded.SchoolApplication.controller.commands.CreateStudentCommand;
 import ua.foxminded.SchoolApplication.controller.commands.DeleteStudentCommand;
 import ua.foxminded.SchoolApplication.controller.commands.EnrollStudentToCourseCommand;
@@ -13,6 +10,9 @@ import ua.foxminded.SchoolApplication.controller.commands.GetGroupReportCommand;
 import ua.foxminded.SchoolApplication.controller.commands.RemoveStudentFromCourseCommand;
 import ua.foxminded.SchoolApplication.controller.commands.ShowAllCoursesCommand;
 import ua.foxminded.SchoolApplication.controller.commands.ShowStudentInfoByNameCommand;
+import ua.foxminded.SchoolApplication.service.CourseService;
+import ua.foxminded.SchoolApplication.service.GroupService;
+import ua.foxminded.SchoolApplication.service.StudentService;
 
 public class ConsoleMenu {
 	private final CommandInvoker invoker = new CommandInvoker();

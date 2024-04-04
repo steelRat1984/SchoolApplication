@@ -1,4 +1,4 @@
-package ua.foxminded.SchoolApplication.Service;
+package ua.foxminded.SchoolApplication.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
@@ -14,9 +14,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import ua.foxminded.SchoolApplication.DAO.GroupDAO;
+import ua.foxminded.SchoolApplication.dao.GroupDAO;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
+import ua.foxminded.SchoolApplication.service.GroupService;
 
 class GroupServiсeTest {
 

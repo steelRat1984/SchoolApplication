@@ -2,11 +2,11 @@ package ua.foxminded.SchoolApplication.controller.commands;
 
 import java.util.Scanner;
 
-import ua.foxminded.SchoolApplication.Service.CourseService;
-import ua.foxminded.SchoolApplication.Service.StudentService;
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
+import ua.foxminded.SchoolApplication.service.CourseService;
+import ua.foxminded.SchoolApplication.service.StudentService;
 
 public class RemoveStudentFromCourseCommand implements Command {
 

@@ -2,9 +2,9 @@ package ua.foxminded.SchoolApplication.controller.commands;
 
 import java.util.List;
 
-import ua.foxminded.SchoolApplication.Service.CourseService;
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Course;
+import ua.foxminded.SchoolApplication.service.CourseService;
 
 public class ShowAllCoursesCommand implements Command {
 	private CourseService courseServices = new CourseService();
