@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
 
-import ua.foxminded.SchoolApplication.dao.Database;
 
 class DatabaseTest {
 

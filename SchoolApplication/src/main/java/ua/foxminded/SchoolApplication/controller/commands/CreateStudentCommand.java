@@ -43,8 +43,6 @@ public class CreateStudentCommand implements Command {
 			System.out.println(message);
 			return;
 		}
-		
-	
 	}
 
 	@Override

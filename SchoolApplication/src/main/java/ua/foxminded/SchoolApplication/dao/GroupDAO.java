@@ -11,20 +11,30 @@ import ua.foxminded.SchoolApplication.dao.mappers.GroupMapper;
 import ua.foxminded.SchoolApplication.model.Group;
 
 public class GroupDAO {
-	public List<Group> getAllGroups() {
-		List<Group> allGroups = new ArrayList<>();
-		String sql = "SELECT g.group_id, g.group_name, s.student_id, s.first_name, s.last_name "
-				+ "FROM school_app.groups g "
-				+ "LEFT JOIN school_app.students s ON g.group_id = s.group_id "
-				+ "ORDER BY g.group_id, s.student_id"; 
+
+	public List<Group> getGroupByNumberOfStudents(int numberOfStudents) {
+		List<Group> groups = new ArrayList<>();
+		String sql = "SELECT g.* " +
+				"FROM school_app.groups g " +
+				"WHERE g.group_id IN ( " +
+				"SELECT s.group_id " +
+				"FROM school_app.students s " +
+				"GROUP BY s.group_id " +
+				"HAVING COUNT(s.student_id) <= ?)";
+
 		try (Connection connection = Database.connection();
-				PreparedStatement preparedStatement = connection.prepareStatement(sql);
-				ResultSet resultSet = preparedStatement.executeQuery()) {
-					allGroups = GroupMapper.map(resultSet);
-		} catch (SQLException e) {
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+			preparedStatement.setInt(1, numberOfStudents);
+
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				while (resultSet.next()) {
+					groups.add(GroupMapper.map(resultSet));
+				}
+			}
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return allGroups;
+		return groups;
 	}
 
 	public Group getGroupById(int groupId) {
@@ -32,12 +42,14 @@ public class GroupDAO {
 		String sql = "SELECT g.group_id, g.group_name, s.student_id, s.first_name, s.last_name "
 				+ "FROM school_app.groups g "
 				+ "LEFT JOIN school_app.students s ON g.group_id = s.group_id "
-				+ "ORDER BY g.group_id, s.student_id"; 
+				+ "ORDER BY g.group_id, s.student_id";
 		try (Connection connection = Database.connection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql);
 				ResultSet resultSet = preparedStatement.executeQuery()) {
-					group = GroupMapper.map(resultSet).get(0);
-				
+			if (resultSet.next()) {
+				group = GroupMapper.map(resultSet);
+			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

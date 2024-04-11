@@ -20,13 +20,16 @@ public class StudentDAO {
 				+ "LEFT JOIN school_app.groups g ON s.group_id = g.group_id "
 				+ "LEFT JOIN school_app.students_courses sc ON s.student_id = sc.student_id "
 				+ "LEFT JOIN school_app.courses c ON sc.course_id = c.course_id "
-				+ "WHERE s.first_name = ? AND s.last_name = ?";
+				+ "WHERE s.first_name = ? AND s.last_name = ? "
+				+ "ORDER BY c.course_id";
 		try (Connection connection = Database.connection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 			preparedStatement.setString(1, firstName);
 			preparedStatement.setString(2, lastName);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				student = StudentMapper.mapStudents(resultSet).get(0);
+				if (resultSet.next()) {
+					student = StudentMapper.map(resultSet);
+				}
 			}
 
 		} catch (SQLException e) {
@@ -36,21 +39,21 @@ public class StudentDAO {
 	}
 
 	public Student getStudentById(int studentId) {
-		Student student = null;
+		Student student = new Student();
 		String sql = "SELECT s.student_id, s.first_name, s.last_name, g.group_id, g.group_name, "
 				+ "c.course_id, c.course_name, c.course_description "
 				+ "FROM school_app.students s "
 				+ "LEFT JOIN school_app.groups g ON s.group_id = g.group_id "
 				+ "LEFT JOIN school_app.students_courses sc ON s.student_id = sc.student_id "
 				+ "LEFT JOIN school_app.courses c ON sc.course_id = c.course_id "
-				+ "WHERE s.student_id = ?";
+				+ "WHERE s.student_id = ? "
+				+ "ORDER BY c.course_id";
 		try (Connection connection = Database.connection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 			preparedStatement.setInt(1, studentId);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				List<Student> students = StudentMapper.mapStudents(resultSet);
-				if (!students.isEmpty()) {
-					student = students.get(0);
+				if (resultSet.next()) {
+					student = StudentMapper.map(resultSet);
 				}
 			}
 		} catch (SQLException e) {

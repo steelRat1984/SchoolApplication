@@ -1,25 +1,16 @@
 package ua.foxminded.SchoolApplication.model;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Objects;
 
 public class Group {
 
 	private int groupID;
 	private String groupName;
-	private List<Student> studentsInGroup;
 	
-	public Group(int groupID, String groupName, List<Student> studentsInGroup) {
-		this.groupID = groupID;
-		this.groupName = groupName;
-		this.studentsInGroup = studentsInGroup;
-	}
-
 	public Group(int groupID, String groupName) {
 		this.groupID = groupID;
 		this.groupName = groupName;
-		this.studentsInGroup = new ArrayList<>();
 	}
 	
 	public Group() {
@@ -40,15 +31,6 @@ public class Group {
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
-
-	public List<Student> getStudentsInGroup() {
-		return studentsInGroup;
-	}
-
-	public void setStudentsInGroup(List<Student> studentsInGroup) {
-		this.studentsInGroup = studentsInGroup;
-	}
-
 	@Override
 	public int hashCode() {
 		return Objects.hash(groupID, groupName);

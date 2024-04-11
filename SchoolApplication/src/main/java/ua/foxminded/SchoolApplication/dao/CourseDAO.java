@@ -15,9 +15,9 @@ import ua.foxminded.SchoolApplication.model.Student;
 public class CourseDAO {
 	
 	public List<Course> getSelectedCoursesForStudent(int studentId) {
+		List<Course> selectedCourses = new ArrayList<>();
 		String sql = "SELECT c.course_id, c.course_name, c.course_description FROM school_app.courses c "
 				+ "JOIN school_app.students_courses sc ON c.course_id = sc.course_id WHERE sc.student_id = ?";
-		List<Course> selectedCourses = new ArrayList<>();
 		try (Connection connection = Database.connection();
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 			preparedStatement.setInt(1, studentId);
@@ -77,7 +77,9 @@ public class CourseDAO {
 				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 			preparedStatement.setInt(1, courseId);
 			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				students = StudentMapper.mapStudents(resultSet);
+				while (resultSet.next()) {
+					students.add(StudentMapper.map(resultSet));
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

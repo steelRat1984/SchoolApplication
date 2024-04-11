@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,9 +15,8 @@ import org.mockito.MockitoAnnotations;
 
 import ua.foxminded.SchoolApplication.dao.GroupDAO;
 import ua.foxminded.SchoolApplication.model.Group;
-import ua.foxminded.SchoolApplication.model.Student;
 
-class GroupServiсeTest {
+class GroupServiceTest {
 
 	@Mock
 	private GroupDAO groupDAO;
@@ -41,25 +39,21 @@ class GroupServiсeTest {
 	}
 
 	@Test
-	public void buildGroupReport() {
-		Group group1 = new Group(1, "group1", Arrays.asList(new Student(), new Student()));
-		Group group2 = new Group(1, "group2", Arrays.asList(new Student()));
-		Group group3 = new Group(1, "group3", Arrays.asList(new Student(), new Student(), new Student()));
-		Group group4 = new Group(1, "group4", Arrays.asList(new Student(), new Student(), new Student()));
-		List<Group> groups = Arrays.asList(group1, group2, group3, group4);
-		when(groupDAO.getAllGroups()).thenReturn(groups);
-		Map<Integer, List<Group>> actualReport = groupService.buildGroupReport();
+	public void returnGroupsByNumberOfStudents() {
+		Group group1 = new Group(1, "Group1");
+		Group group2 = new Group(2, "Group2");
+		List<Group> expectedGroups = Arrays.asList(group1, group2);
+		when(groupDAO.getGroupByNumberOfStudents(10)).thenReturn(expectedGroups);
+		List<Group> actualGroups = groupService.getGroupByNumberOfStudents(10);
 
-		assertEquals(3, actualReport.size());
-		assertEquals(Arrays.asList(group2), actualReport.get(1));
-		assertEquals(Arrays.asList(group1), actualReport.get(2));
-		assertEquals(Arrays.asList(group3, group4), actualReport.get(3));
+		assertEquals(expectedGroups, actualGroups);
 	}
-	
+
 	@Test
 	public void shouldDelegateGroupCreationToGroupDAO() {
 		Group group = new Group();
 		groupService.createGroup(group);
 		verify(groupDAO).createGroup(group);
 	}
+
 }

@@ -6,7 +6,7 @@ import ua.foxminded.SchoolApplication.controller.commands.CreateStudentCommand;
 import ua.foxminded.SchoolApplication.controller.commands.DeleteStudentCommand;
 import ua.foxminded.SchoolApplication.controller.commands.EnrollStudentToCourseCommand;
 import ua.foxminded.SchoolApplication.controller.commands.GetCourseReportCommand;
-import ua.foxminded.SchoolApplication.controller.commands.GetGroupReportCommand;
+import ua.foxminded.SchoolApplication.controller.commands.GetGroupByUnderOrEquelStudentNumber;
 import ua.foxminded.SchoolApplication.controller.commands.RemoveStudentFromCourseCommand;
 import ua.foxminded.SchoolApplication.controller.commands.ShowAllCoursesCommand;
 import ua.foxminded.SchoolApplication.controller.commands.ShowStudentInfoByNameCommand;
@@ -27,7 +27,7 @@ public class ConsoleMenu {
 
 	private void registerCommands() {
 		invoker.register(1, new ShowAllCoursesCommand(courseService));
-		invoker.register(2, new GetGroupReportCommand(groupService));
+		invoker.register(2, new GetGroupByUnderOrEquelStudentNumber(groupService, scanner));
 		invoker.register(3, new GetCourseReportCommand(courseService, scanner));
 		invoker.register(4, new CreateStudentCommand(studentService, scanner, groupService));
 		invoker.register(5, new ShowStudentInfoByNameCommand(studentService, scanner));

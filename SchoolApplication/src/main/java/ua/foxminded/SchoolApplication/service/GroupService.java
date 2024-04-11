@@ -1,9 +1,6 @@
 package ua.foxminded.SchoolApplication.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import ua.foxminded.SchoolApplication.dao.GroupDAO;
 import ua.foxminded.SchoolApplication.model.Group;
@@ -15,16 +12,10 @@ public class GroupService {
 		return groupDAO.getGroupById(groupId);
 	}
 
-	public Map<Integer, List<Group>> buildGroupReport() {
-		Map<Integer, List<Group>> groupsByNumberOfStudents = new HashMap<>();
-		List<Group> groups = groupDAO.getAllGroups();
-		for (Group group : groups) {
-			groupsByNumberOfStudents.computeIfAbsent(group.getStudentsInGroup().size(), k -> new ArrayList<>())
-					.add(group);
-		}
-		return groupsByNumberOfStudents;
+	public List<Group> getGroupByNumberOfStudents (int numberOfStudents){
+		return groupDAO.getGroupByNumberOfStudents(numberOfStudents);
 	}
-
+	
 	public void createGroup(Group group) {
 		groupDAO.createGroup(group);
 	}
