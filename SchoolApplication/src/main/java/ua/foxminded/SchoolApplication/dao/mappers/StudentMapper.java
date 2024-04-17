@@ -15,13 +15,44 @@ public class StudentMapper {
 		int studentId = resultSet.getInt("student_id");
 		String firstName = resultSet.getString("first_name").trim();
 		String lastName = resultSet.getString("last_name").trim();
-		
+
 		Group group = GroupMapper.map(resultSet);
 		List<Course> courses = new ArrayList<>();
 		while (resultSet.wasNull()) {
-				courses.add(CourseMapper.map(resultSet));
+			courses.add(CourseMapper.map(resultSet));
 		}
 		return new Student(studentId, group, firstName, lastName, courses);
-
 	}
+
+	public static List<Student> mapStudents(ResultSet resultSet) throws SQLException {
+		List<Student> students = new ArrayList<>();
+		Student student = null;
+		int lastStudentId = -1;
+
+		while (resultSet.next()) {
+			int currentStudentId = resultSet.getInt("student_id");
+			if (currentStudentId != lastStudentId) {
+				if (student != null) {
+					students.add(student);
+				}
+				String firstName = resultSet.getString("first_name").trim();
+				String lastName = resultSet.getString("last_name").trim();
+				Group group = GroupMapper.map(resultSet);
+				student = new Student(currentStudentId, group, firstName, lastName, new ArrayList<>());
+				lastStudentId = currentStudentId;
+			}
+			int courseId = resultSet.getInt("course_id");
+			if (!resultSet.wasNull()) {
+				String courseName = resultSet.getString("course_name").trim();
+				String courseDescription = resultSet.getString("course_description").trim();
+				Course course = new Course(courseId, courseName, courseDescription);
+				student.getCourses().add(course);
+			}
+		}
+		if (student != null) {
+			students.add(student);
+		}
+		return students;
+	}
+
 }

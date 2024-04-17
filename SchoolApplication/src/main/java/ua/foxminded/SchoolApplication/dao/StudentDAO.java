@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import ua.foxminded.SchoolApplication.dao.mappers.StudentMapper;
@@ -11,6 +12,26 @@ import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
 public class StudentDAO {
+
+	public List<Student> getStudents() {
+		List<Student> students = new ArrayList<>();
+		String sql = "SELECT s.student_id, s.first_name, s.last_name, g.group_id, g.group_name, "
+				+ "c.course_id, c.course_name, c.course_description "
+				+ "FROM school_app.students s "
+				+ "LEFT JOIN school_app.groups g ON s.group_id = g.group_id "
+				+ "LEFT JOIN school_app.students_courses sc ON s.student_id = sc.student_id "
+				+ "LEFT JOIN school_app.courses c ON sc.course_id = c.course_id "
+				+ "ORDER BY s.student_id, c.course_id";
+		try (Connection connection = Database.connection();
+				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+			try (ResultSet resultSet = preparedStatement.executeQuery()) {
+				students = StudentMapper.mapStudents(resultSet);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return students;
+	}
 
 	public Student getStudentByName(String firstName, String lastName) {
 		Student student = new Student();
