@@ -3,7 +3,10 @@ package ua.foxminded.SchoolApplication.dao.mappers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Group;
@@ -24,35 +27,27 @@ public class StudentMapper {
 		return new Student(studentId, group, firstName, lastName, courses);
 	}
 
-	public static List<Student> mapStudents(ResultSet resultSet) throws SQLException {
-		List<Student> students = new ArrayList<>();
-		Student student = null;
-		int lastStudentId = -1;
-
+	public static List<Student> mapAllStudents(ResultSet resultSet) throws SQLException {
+		Map<Integer, Student> idAndStudents = new TreeMap<>();
 		while (resultSet.next()) {
-			int currentStudentId = resultSet.getInt("student_id");
-			if (currentStudentId != lastStudentId) {
-				if (student != null) {
-					students.add(student);
-				}
+			int studentId = resultSet.getInt("student_id");
+			Student student = idAndStudents.get(studentId);
+
+			if (student == null) {
 				String firstName = resultSet.getString("first_name").trim();
 				String lastName = resultSet.getString("last_name").trim();
 				Group group = GroupMapper.map(resultSet);
-				student = new Student(currentStudentId, group, firstName, lastName, new ArrayList<>());
-				lastStudentId = currentStudentId;
+				List<Course> courses = new ArrayList<>();
+				student = new Student(studentId, group, firstName, lastName, courses);
+				idAndStudents.put(studentId, student);
 			}
 			int courseId = resultSet.getInt("course_id");
 			if (!resultSet.wasNull()) {
-				String courseName = resultSet.getString("course_name").trim();
-				String courseDescription = resultSet.getString("course_description").trim();
-				Course course = new Course(courseId, courseName, courseDescription);
+				Course course = CourseMapper.map(resultSet);
 				student.getCourses().add(course);
 			}
 		}
-		if (student != null) {
-			students.add(student);
-		}
-		return students;
+		return new ArrayList<>(idAndStudents.values());
 	}
 
 }
