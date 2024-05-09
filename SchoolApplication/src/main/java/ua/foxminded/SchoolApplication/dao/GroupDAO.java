@@ -7,10 +7,21 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
+
 import ua.foxminded.SchoolApplication.dao.mappers.GroupMapper;
 import ua.foxminded.SchoolApplication.model.Group;
 
+@Component
 public class GroupDAO {
+	private final JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	public GroupDAO(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
 
 	public List<Group> getGroupByNumberOfStudents(int numberOfStudents) {
 		List<Group> groups = new ArrayList<>();
@@ -58,13 +69,9 @@ public class GroupDAO {
 
 	public void createGroup(Group group) {
 		String sql = "INSERT INTO school_app.groups (group_name) VALUES (?)";
-		try (Connection connection = Database.connection();
-				PreparedStatement statement = connection.prepareStatement(sql)) {
-			statement.setString(1, group.getGroupName());
-			statement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		jdbcTemplate.update(sql, group.getGroupName());
+	
 	}
+	
 
 }

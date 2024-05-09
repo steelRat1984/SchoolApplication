@@ -7,13 +7,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Component;
+
 import ua.foxminded.SchoolApplication.dao.mappers.StudentMapper;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
+@Component
 public class StudentDAO {
-	
-	
+	private final JdbcTemplate jdbcTemplate;
+
+	@Autowired
+	public StudentDAO(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
 	public List<Student> getAllStudents() {
 		List<Student> students = new ArrayList<>();
 		String sql = "SELECT s.student_id, s.first_name, s.last_name, g.group_id, g.group_name, "
@@ -32,7 +42,7 @@ public class StudentDAO {
 		}
 		return students;
 	}
-	
+
 	public Student getStudentByName(String firstName, String lastName) {
 		Student student = new Student();
 		String sql = "SELECT s.student_id, s.first_name, s.last_name, g.group_id, g.group_name, "
@@ -84,75 +94,36 @@ public class StudentDAO {
 	}
 
 	public void deleteStudentById(int studentId) {
-		String sqlDeleteStudent = "DELETE FROM school_app.students WHERE student_id = ?";
-		try (Connection connection = Database.connection();
-				PreparedStatement deleteStudentStatement = connection.prepareStatement(sqlDeleteStudent)) {
-			deleteStudentStatement.setInt(1, studentId);
-			deleteStudentStatement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		String sql = "DELETE FROM school_app.students WHERE student_id = ?";
+		jdbcTemplate.update(sql, studentId);
 	}
 
 	public boolean createStudent(Student student) {
-		boolean isCreated = false;
 		String sql = "INSERT INTO school_app.students (group_id, first_name, last_name) VALUES (?, ?, ?)";
-		int groupId = student.getGroup().getGroupID();
-		String firstName = student.getFirstName();
-		String lastName = student.getLastName();
-		try (Connection connection = Database.connection();
-				PreparedStatement statement = connection.prepareStatement(sql)) {
-			statement.setInt(1, groupId);
-			statement.setString(2, firstName);
-			statement.setString(3, lastName);
-			isCreated = statement.executeUpdate() > 0;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return isCreated;
+		return jdbcTemplate.update(sql,
+				student.getGroup().getGroupID(),
+				student.getFirstName(),
+				student.getLastName()) > 0;
+
 	}
 
 	public boolean deleteAssignments(int studentId, int courseId) {
-		boolean isDeleted = false;
 		String sql = "DELETE FROM school_app.students_courses WHERE student_id = ? AND course_id = ?";
-		try (Connection connection = Database.connection();
-				PreparedStatement statement = connection.prepareStatement(sql)) {
-			statement.setInt(1, studentId);
-			statement.setInt(2, courseId);
-			isDeleted = statement.executeUpdate() > 0;
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return isDeleted;
+		return jdbcTemplate.update(sql, studentId, courseId) > 0;
 	}
 
 	public void deleteAllAssignmentsByStudentId(int studentId) {
-		String sqlDeleteRelation = "DELETE FROM school_app.students_courses WHERE student_id = ?";
-		try (Connection connection = Database.connection();
-				PreparedStatement deleteRelationStatement = connection.prepareStatement(sqlDeleteRelation)) {
-			deleteRelationStatement.setInt(1, studentId);
-			deleteRelationStatement.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		String sql = "DELETE FROM school_app.students_courses WHERE student_id = ?";
+		jdbcTemplate.update(sql, studentId);
 	}
 
 	public void createAssignment(Student student) {
-		int studentId = student.getStudentID();
 		String sql = "INSERT INTO school_app.students_courses (student_id, course_id) VALUES (?, ?)";
 		List<Course> courses = student.getCourses();
-		try (Connection connection = Database.connection();
-				PreparedStatement statement = connection.prepareStatement(sql)) {
-			for (Course course : courses) {
-				int courseId = course.getCourseID();
-				statement.setInt(1, studentId);
-				statement.setInt(2, courseId);
-				statement.addBatch();
-			}
-			statement.executeBatch();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		List<Object[]> parameters = new ArrayList<>();
+		for (Course course : courses) {
+			parameters.add(new Object[] { student.getStudentID(), course.getCourseID() });
 		}
+		jdbcTemplate.batchUpdate(sql, parameters);
 	}
 }
