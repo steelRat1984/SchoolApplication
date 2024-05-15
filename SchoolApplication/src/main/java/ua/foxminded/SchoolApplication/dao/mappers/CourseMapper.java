@@ -4,19 +4,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import ua.foxminded.SchoolApplication.model.Course;
 
+@Component
 public class CourseMapper implements RowMapper<Course>{
-	
-	
-	
-	public static Course map(ResultSet resultSet) throws SQLException {
-		int courseId = resultSet.getInt("course_id");
-		String courseName = resultSet.getString("course_name").trim();
-		String courseDesctiption = resultSet.getString("course_description").trim();
-		return new Course(courseId, courseName, courseDesctiption);
-	}
 
 	@Override
 	public Course mapRow(ResultSet rs, int rowNum) throws SQLException {

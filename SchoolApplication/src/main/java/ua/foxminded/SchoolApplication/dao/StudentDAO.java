@@ -1,50 +1,42 @@
 package ua.foxminded.SchoolApplication.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-import ua.foxminded.SchoolApplication.dao.mappers.StudentMapper;
+import ua.foxminded.SchoolApplication.dao.mappers.SingleStudentResultSetExtractor;
+import ua.foxminded.SchoolApplication.dao.mappers.StudentResultSetExtractor;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
-@Component
+@Repository
 public class StudentDAO {
 	private final JdbcTemplate jdbcTemplate;
+	private final StudentResultSetExtractor studentExtractor;
+	private final SingleStudentResultSetExtractor singleStudentExtractor;
 
 	@Autowired
-	public StudentDAO(JdbcTemplate jdbcTemplate) {
+	public StudentDAO(JdbcTemplate jdbcTemplate,
+			StudentResultSetExtractor studentExtractor, SingleStudentResultSetExtractor singleStudentExtractor) {
 		this.jdbcTemplate = jdbcTemplate;
+		this.studentExtractor = studentExtractor;
+		this.singleStudentExtractor = singleStudentExtractor;
 	}
 
 	public List<Student> getAllStudents() {
-		List<Student> students = new ArrayList<>();
 		String sql = "SELECT s.student_id, s.first_name, s.last_name, g.group_id, g.group_name, "
 				+ "c.course_id, c.course_name, c.course_description "
 				+ "FROM school_app.students s "
 				+ "LEFT JOIN school_app.groups g ON s.group_id = g.group_id "
 				+ "LEFT JOIN school_app.students_courses sc ON s.student_id = sc.student_id "
 				+ "LEFT JOIN school_app.courses c ON sc.course_id = c.course_id ";
-		try (Connection connection = Database.connection();
-				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				students = StudentMapper.mapAllStudents(resultSet);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return students;
+		return jdbcTemplate.query(sql, studentExtractor);
 	}
 
 	public Student getStudentByName(String firstName, String lastName) {
-		Student student = new Student();
 		String sql = "SELECT s.student_id, s.first_name, s.last_name, g.group_id, g.group_name, "
 				+ "c.course_id, c.course_name, c.course_description "
 				+ "FROM school_app.students s "
@@ -53,24 +45,11 @@ public class StudentDAO {
 				+ "LEFT JOIN school_app.courses c ON sc.course_id = c.course_id "
 				+ "WHERE s.first_name = ? AND s.last_name = ? "
 				+ "ORDER BY c.course_id";
-		try (Connection connection = Database.connection();
-				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-			preparedStatement.setString(1, firstName);
-			preparedStatement.setString(2, lastName);
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					student = StudentMapper.map(resultSet);
-				}
-			}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return student;
+		return jdbcTemplate.query(sql, singleStudentExtractor, firstName, lastName);
 	}
 
 	public Student getStudentById(int studentId) {
-		Student student = new Student();
 		String sql = "SELECT s.student_id, s.first_name, s.last_name, g.group_id, g.group_name, "
 				+ "c.course_id, c.course_name, c.course_description "
 				+ "FROM school_app.students s "
@@ -79,18 +58,7 @@ public class StudentDAO {
 				+ "LEFT JOIN school_app.courses c ON sc.course_id = c.course_id "
 				+ "WHERE s.student_id = ? "
 				+ "ORDER BY c.course_id";
-		try (Connection connection = Database.connection();
-				PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-			preparedStatement.setInt(1, studentId);
-			try (ResultSet resultSet = preparedStatement.executeQuery()) {
-				if (resultSet.next()) {
-					student = StudentMapper.map(resultSet);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return student;
+		return jdbcTemplate.query(sql, singleStudentExtractor, studentId);
 	}
 
 	public void deleteStudentById(int studentId) {
