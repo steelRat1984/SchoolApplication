@@ -2,17 +2,23 @@ package ua.foxminded.SchoolApplication.controller.commands;
 
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 import ua.foxminded.SchoolApplication.service.CourseService;
 import ua.foxminded.SchoolApplication.service.StudentService;
 
+@Component
 public class EnrollStudentToCourseCommand implements Command {
+	
 	private final CourseService courseService;
 	private final StudentService studentService;
 	private final Scanner scanner;
 
+	@Autowired
 	public EnrollStudentToCourseCommand(CourseService courseService, StudentService studentService, Scanner scanner) {
 		this.courseService = courseService;
 		this.studentService = studentService;

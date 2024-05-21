@@ -2,19 +2,24 @@ package ua.foxminded.SchoolApplication.controller.commands;
 
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 import ua.foxminded.SchoolApplication.service.GroupService;
 import ua.foxminded.SchoolApplication.service.StudentService;
 
+@Component
 public class CreateStudentCommand implements Command {
+	
 	private final StudentService studentServices;
 	private final Scanner scanner;
 	private final GroupService groupService;
 
+	@Autowired
 	public CreateStudentCommand(StudentService studentServices, Scanner scanner, GroupService groupService) {
-		super();
 		this.studentServices = studentServices;
 		this.scanner = scanner;
 		this.groupService = groupService;

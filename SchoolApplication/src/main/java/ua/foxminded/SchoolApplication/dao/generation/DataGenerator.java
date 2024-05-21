@@ -4,20 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 import ua.foxminded.SchoolApplication.service.CourseService;
 import ua.foxminded.SchoolApplication.service.GroupService;
 import ua.foxminded.SchoolApplication.service.StudentService;
-
+@Component
 public class DataGenerator {
 	private final Random random = new Random();
+	private final StudentService studentService;
+	private final CourseService courseService;
+	private final GroupService groupService;
+	
+	
+	@Autowired
+	public DataGenerator(StudentService studentService, CourseService courseService, GroupService groupService) {
+		this.studentService = studentService;
+		this.courseService = courseService;
+		this.groupService = groupService;
+	}
 
 	public void generate() {
-		StudentService studentService = new StudentService();
-		CourseService courseService = new CourseService();
-		GroupService groupService = new GroupService();
+
 		List<Group> groups = generateGoup();
 		List<Student> students = generateStudents();
 		List<Course> courses = generateCourse();

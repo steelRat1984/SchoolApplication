@@ -10,10 +10,11 @@ import java.util.TreeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.stereotype.Component;
 
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
-
+@Component
 public class StudentResultSetExtractor implements ResultSetExtractor<List<Student>> {
 
     private final CourseMapper courseMapper;

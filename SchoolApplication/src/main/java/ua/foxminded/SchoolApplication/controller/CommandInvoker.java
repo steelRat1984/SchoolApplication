@@ -3,6 +3,9 @@ package ua.foxminded.SchoolApplication.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class CommandInvoker {
 	private final Map<Integer, Command> commands = new HashMap<>();
 

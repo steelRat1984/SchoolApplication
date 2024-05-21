@@ -33,7 +33,9 @@ public class GroupDAO {
 	}
 
 	public Group getGroupById(int groupId) {
-		String sql = "SELECT group_id, group_name FROM school_app.groups WHERE group_id = ?";
+		String sql = "SELECT group_id, group_name "
+				+ "FROM school_app.groups "
+				+ "WHERE group_id = ?";
 		return jdbcTemplate.queryForObject(sql, groupMapper, groupId);
 	}
 

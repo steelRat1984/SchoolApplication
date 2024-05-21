@@ -3,14 +3,20 @@ package ua.foxminded.SchoolApplication.controller.commands;
 import java.util.List;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.service.GroupService;
 
+@Component
 public class GetGroupByUnderOrEquelStudentNumber implements Command {
+	
 	private final GroupService groupServices;
 	private final Scanner scanner;
 
+	@Autowired
 	public GetGroupByUnderOrEquelStudentNumber(GroupService groupServices, Scanner scanner) {
 		this.groupServices = groupServices;
 		this.scanner = scanner;

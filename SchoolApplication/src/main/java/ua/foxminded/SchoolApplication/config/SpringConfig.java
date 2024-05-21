@@ -1,5 +1,7 @@
 package ua.foxminded.SchoolApplication.config;
 
+import java.util.Scanner;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,28 +22,31 @@ public class SpringConfig {
 	private final Environment environment;
 	private final ApplicationContext applicationContext;
 	
-	@Autowired
+@Autowired
 	public SpringConfig(Environment environment, ApplicationContext applicationContext) {
 		this.environment = environment;
 		this.applicationContext = applicationContext;
 	}
 
-
 	@Bean
 	public DataSource dataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-		dataSource.setDriverClassName(environment.getProperty("driver"));
-		dataSource.setUrl(environment.getProperty("url"));
-		dataSource.setUsername(environment.getProperty("username"));
-		dataSource.setPassword(environment.getProperty("password"));
+		dataSource.setDriverClassName("org.postgresql.Driver");
+		dataSource.setUrl("jdbc:postgresql://localhost:5432/school_app");
+		dataSource.setUsername("school_admin");
+		dataSource.setPassword("1234");
 
 		return dataSource;
 	}
-
+	
 	@Bean
 	public JdbcTemplate jdbcTemplate() {
 		return new JdbcTemplate(dataSource());
 	}
 
+	@Bean
+	public Scanner scanner () {
+		return new Scanner(System.in);
+	}
 }

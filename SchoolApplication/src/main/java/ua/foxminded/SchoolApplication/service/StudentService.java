@@ -3,13 +3,22 @@ package ua.foxminded.SchoolApplication.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import ua.foxminded.SchoolApplication.dao.StudentDAO;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
-
+@Service
 public class StudentService {
-	private StudentDAO studentDAO = new StudentDAO();
 	
+	private final StudentDAO studentDAO;
+	
+	@Autowired
+	public StudentService(StudentDAO studentDAO) {
+		this.studentDAO = studentDAO;
+	}
+
 	public Student getStudentByName(String firstName, String lastName) {
 		return studentDAO.getStudentByName(firstName, lastName);
 	}

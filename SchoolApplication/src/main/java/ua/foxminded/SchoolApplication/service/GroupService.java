@@ -2,11 +2,20 @@ package ua.foxminded.SchoolApplication.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import ua.foxminded.SchoolApplication.dao.GroupDAO;
 import ua.foxminded.SchoolApplication.model.Group;
 
+@Service
 public class GroupService {
-	private GroupDAO groupDAO = new GroupDAO();
+	private final GroupDAO groupDAO;
+	
+	@Autowired
+	public GroupService(GroupDAO groupDAO) {
+		this.groupDAO = groupDAO;
+	}
 
 	public Group getGroupById(int groupId) {
 		return groupDAO.getGroupById(groupId);
