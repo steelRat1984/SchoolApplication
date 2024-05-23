@@ -30,14 +30,14 @@ public class SpringConfig {
 
 	@Bean
 	public DataSource dataSource() {
-		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+	    DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-		dataSource.setDriverClassName("org.postgresql.Driver");
-		dataSource.setUrl("jdbc:postgresql://localhost:5432/school_app");
-		dataSource.setUsername("school_admin");
-		dataSource.setPassword("1234");
+	    dataSource.setDriverClassName(environment.getProperty("driver"));
+	    dataSource.setUrl(environment.getProperty("url"));
+	    dataSource.setUsername(environment.getProperty("db.username"));
+	    dataSource.setPassword(environment.getProperty("db.password"));
 
-		return dataSource;
+	    return dataSource;
 	}
 	
 	@Bean
