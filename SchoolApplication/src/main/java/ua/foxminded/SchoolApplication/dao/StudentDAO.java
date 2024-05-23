@@ -25,7 +25,7 @@ public class StudentDAO {
 		this.studentExtractor = studentExtractor;
 		this.singleStudentExtractor = singleStudentExtractor;
 	}
-
+x
 	public List<Student> getAllStudents() {
 		String sql = "SELECT s.student_id, s.first_name, s.last_name, g.group_id, g.group_name, "
 				+ "c.course_id, c.course_name, c.course_description "

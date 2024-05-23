@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -29,7 +28,7 @@ public class StudentResultSetExtractor implements ResultSetExtractor<List<Studen
 
     @Override
     public List<Student> extractData(ResultSet rs) throws SQLException, DataAccessException {
-        Map<Integer, Student> students = new HashMap<Integer, Student>();
+        Map<Integer, Student> students = new HashMap<>();
         while (rs.next()) {
             int studentId = rs.getInt("student_id");
             Student student = students.get(studentId);
