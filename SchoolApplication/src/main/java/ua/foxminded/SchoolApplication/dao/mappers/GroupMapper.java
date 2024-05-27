@@ -3,7 +3,6 @@ package ua.foxminded.SchoolApplication.dao.mappers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 

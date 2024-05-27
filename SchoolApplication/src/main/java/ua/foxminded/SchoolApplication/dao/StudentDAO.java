@@ -3,28 +3,22 @@ package ua.foxminded.SchoolApplication.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import lombok.RequiredArgsConstructor;
 import ua.foxminded.SchoolApplication.dao.mappers.SingleStudentResultSetExtractor;
 import ua.foxminded.SchoolApplication.dao.mappers.StudentResultSetExtractor;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
 @Repository
+@RequiredArgsConstructor
 public class StudentDAO {
+	
 	private final JdbcTemplate jdbcTemplate;
 	private final StudentResultSetExtractor studentExtractor;
 	private final SingleStudentResultSetExtractor singleStudentExtractor;
-
-	@Autowired
-	public StudentDAO(JdbcTemplate jdbcTemplate,
-			StudentResultSetExtractor studentExtractor, SingleStudentResultSetExtractor singleStudentExtractor) {
-		this.jdbcTemplate = jdbcTemplate;
-		this.studentExtractor = studentExtractor;
-		this.singleStudentExtractor = singleStudentExtractor;
-	}
 
 	public List<Student> getAllStudents() {
 		String sql = "SELECT s.student_id, s.first_name, s.last_name, g.group_id, g.group_name, "

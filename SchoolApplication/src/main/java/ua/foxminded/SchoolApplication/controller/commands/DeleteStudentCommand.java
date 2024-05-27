@@ -2,24 +2,19 @@ package ua.foxminded.SchoolApplication.controller.commands;
 
 import java.util.Scanner;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import lombok.RequiredArgsConstructor;
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Student;
 import ua.foxminded.SchoolApplication.service.StudentService;
 
+@RequiredArgsConstructor
 @Component
 public class DeleteStudentCommand implements Command {
-	
-	private final  StudentService studentServices;
-	private final Scanner scanner;
 
-	@Autowired
-	public DeleteStudentCommand(StudentService studentServices, Scanner scanner) {
-		this.studentServices = studentServices;
-		this.scanner = scanner;
-	}
+	private final StudentService studentServices;
+	private final Scanner scanner;
 
 	@Override
 	public void execute() {
@@ -35,7 +30,7 @@ public class DeleteStudentCommand implements Command {
 		System.out.println(stringBuilder.toString());
 
 	}
-	
+
 	@Override
 	public String getDescription() {
 		return "delete the student";

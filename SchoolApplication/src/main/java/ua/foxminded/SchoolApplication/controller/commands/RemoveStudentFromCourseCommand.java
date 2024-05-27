@@ -2,29 +2,23 @@ package ua.foxminded.SchoolApplication.controller.commands;
 
 import java.util.Scanner;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import lombok.RequiredArgsConstructor;
 import ua.foxminded.SchoolApplication.controller.Command;
+
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 import ua.foxminded.SchoolApplication.service.CourseService;
 import ua.foxminded.SchoolApplication.service.StudentService;
 
+@RequiredArgsConstructor
 @Component
 public class RemoveStudentFromCourseCommand implements Command {
 	
 	private final CourseService courseServices;
 	private final StudentService studentServices;
 	private final Scanner scanner;
-
-	@Autowired
-	public RemoveStudentFromCourseCommand(CourseService courseServices, StudentService studentServices,
-			Scanner scanner) {
-		this.courseServices = courseServices;
-		this.studentServices = studentServices;
-		this.scanner = scanner;
-	}
 
 	@Override
 	public void execute() {

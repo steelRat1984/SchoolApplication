@@ -5,9 +5,12 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Component
 public class CommandInvoker {
-	private final Map<Integer, Command> commands = new HashMap<>();
+	private final Map<Integer, Command> commands;
 
 	public void register(int commandId, Command command) {
 		commands.put(commandId, command);

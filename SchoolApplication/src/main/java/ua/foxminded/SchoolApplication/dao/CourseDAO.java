@@ -2,28 +2,21 @@ package ua.foxminded.SchoolApplication.dao;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import lombok.RequiredArgsConstructor;
 import ua.foxminded.SchoolApplication.dao.mappers.CourseMapper;
 import ua.foxminded.SchoolApplication.dao.mappers.StudentResultSetExtractor;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 
+@RequiredArgsConstructor
 @Repository
 public class CourseDAO {
 	private final JdbcTemplate jdbcTemplate;
 	private final CourseMapper courseMapper;
 	private final StudentResultSetExtractor studentExtractor;
-	
-	@Autowired
-	public CourseDAO(JdbcTemplate jdbcTemplate, CourseMapper courseMapper, StudentResultSetExtractor studentExtractor) {
-		this.jdbcTemplate = jdbcTemplate;
-		this.courseMapper = courseMapper;
-		this.studentExtractor = studentExtractor;
-	}
-
 
 	public List<Course> getSelectedCoursesForStudent(int studentId) {
 		String sql = "SELECT c.course_id, c.course_name, c.course_description FROM school_app.courses c "

@@ -2,28 +2,22 @@ package ua.foxminded.SchoolApplication.controller.commands;
 
 import java.util.Scanner;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import lombok.RequiredArgsConstructor;
 import ua.foxminded.SchoolApplication.controller.Command;
 import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Student;
 import ua.foxminded.SchoolApplication.service.CourseService;
 import ua.foxminded.SchoolApplication.service.StudentService;
 
+@RequiredArgsConstructor
 @Component
 public class EnrollStudentToCourseCommand implements Command {
-	
+
 	private final CourseService courseService;
 	private final StudentService studentService;
 	private final Scanner scanner;
-
-	@Autowired
-	public EnrollStudentToCourseCommand(CourseService courseService, StudentService studentService, Scanner scanner) {
-		this.courseService = courseService;
-		this.studentService = studentService;
-		this.scanner = scanner;
-	}
 
 	@Override
 	public void execute() {
@@ -37,7 +31,7 @@ public class EnrollStudentToCourseCommand implements Command {
 		Student student = studentService.getStudentById(studentId);
 		if (student == null) {
 			System.out.println("Student with ID " + studentId + " not found.");
-			 return;
+			return;
 		}
 		Course course = courseService.getCourseById(courseId);
 		boolean isEnrolled = studentService.enrollStudentToCourse(student, course);

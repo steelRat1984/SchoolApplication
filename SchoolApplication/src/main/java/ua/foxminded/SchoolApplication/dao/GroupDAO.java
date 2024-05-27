@@ -3,23 +3,19 @@ package ua.foxminded.SchoolApplication.dao;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import lombok.RequiredArgsConstructor;
 import ua.foxminded.SchoolApplication.dao.mappers.GroupMapper;
 import ua.foxminded.SchoolApplication.model.Group;
 
+@RequiredArgsConstructor
 @Repository
 public class GroupDAO {
 	private final JdbcTemplate jdbcTemplate;
 	private final GroupMapper groupMapper;
 	
-	@Autowired
-	public GroupDAO(JdbcTemplate jdbcTemplate, GroupMapper groupMapper) {
-		this.jdbcTemplate = jdbcTemplate;
-		this.groupMapper = groupMapper;
-	}
 
 	public List<Group> getGroupByNumberOfStudents(int numberOfStudents) {
 		String sql = "SELECT g.* " +
