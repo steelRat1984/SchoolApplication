@@ -2,9 +2,9 @@ package ua.foxminded.SchoolApplication.controller;
 
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import lombok.RequiredArgsConstructor;
 import ua.foxminded.SchoolApplication.controller.commands.CreateStudentCommand;
 import ua.foxminded.SchoolApplication.controller.commands.DeleteStudentCommand;
 import ua.foxminded.SchoolApplication.controller.commands.EnrollStudentToCourseCommand;
@@ -17,7 +17,6 @@ import ua.foxminded.SchoolApplication.service.CourseService;
 import ua.foxminded.SchoolApplication.service.GroupService;
 import ua.foxminded.SchoolApplication.service.StudentService;
 
-@RequiredArgsConstructor
 @Component
 public class ConsoleMenu {
 	private final CommandInvoker invoker;
@@ -26,6 +25,17 @@ public class ConsoleMenu {
 	private final CourseService courseService;
 	private final GroupService groupService;
 	
+	@Autowired
+	public ConsoleMenu(CommandInvoker invoker, Scanner scanner, StudentService studentService,
+			CourseService courseService, GroupService groupService) {
+		this.invoker = invoker;
+		this.scanner = new Scanner(System.in);
+		this.studentService = studentService;
+		this.courseService = courseService;
+		this.groupService = groupService;
+		registerCommands();
+	}
+
 	private void registerCommands() {
 		invoker.register(1, new ShowAllCoursesCommand(courseService));
 		invoker.register(2, new GetGroupByUnderOrEquelStudentNumber(groupService, scanner));
