@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    driver: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/school_app
+    username: school_admin
+    password: 1234
