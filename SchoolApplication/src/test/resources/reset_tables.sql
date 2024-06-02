@@ -1,4 +1,4 @@
-TRUNCATE TABLE school_app.students_courses;
-TRUNCATE TABLE school_app.students;
-TRUNCATE TABLE school_app.courses;
-TRUNCATE TABLE school_app.groups
+TRUNCATE TABLE school_app.students_courses RESTART IDENTITY CASCADE;
+TRUNCATE TABLE school_app.students RESTART IDENTITY CASCADE;
+TRUNCATE TABLE school_app.courses RESTART IDENTITY CASCADE;
+TRUNCATE TABLE school_app.groups RESTART IDENTITY CASCADE;

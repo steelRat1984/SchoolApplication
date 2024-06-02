@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:tc:postgresql:13:///school_app_test
+    url: jdbc:tc:postgresql:13:///school_app
     username: school_admin
     password: 1234
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
@@ -8,3 +8,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+      
+logging:
+  level:
+    root: info
+    org.springframework.jdbc.core: debug
+    org.springframework.jdbc.datasource.init.ScriptUtils: debug
