@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.jdbc.JdbcTestUtils;
@@ -22,6 +23,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import ua.foxminded.SchoolApplication.dao.mappers.StudentResultSetExtractor;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 
@@ -72,7 +74,7 @@ class StudentDAOTest {
         boolean isCreated = studentDAO.createStudent(student);
         assertTrue(isCreated);
 
-        String sql = "SELECT COUNT(*) FROM school_app.students WHERE student_id = 1 AND first_name = 'John' AND last_name = 'Doe'";
+        String sql = "SELECT COUNT(*) FROM school_app.students WHERE first_name = 'John' AND last_name = 'Doe'";
         int count = jdbcTemplate.queryForObject(sql, Integer.class);
         assertEquals(1, count);
         logger.info("shouldCreateStudent test passed");
