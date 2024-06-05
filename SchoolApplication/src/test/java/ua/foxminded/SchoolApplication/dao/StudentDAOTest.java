@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.jdbc.JdbcTestUtils;
@@ -31,16 +32,18 @@ import ua.foxminded.SchoolApplication.model.Student;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@TestPropertySource(locations = "classpath:application-test.yml")
 @Transactional
-@Sql(scripts = "/create_schema.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = {"/create_schema.sql", "/create_tables.sql", "/insert_data.sql"}, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "/reset_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 
 class StudentDAOTest {
     private static final Logger logger = LoggerFactory.getLogger(StudentDAOTest.class);
 
 	
 	 @Container
-	    public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:13")
-	            .withDatabaseName("school_app")
+	    public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:16.3")
+	            .withDatabaseName("testВb")
 	            .withUsername("school_admin")
 	            .withPassword("1234");
 	
@@ -51,18 +54,16 @@ class StudentDAOTest {
     private JdbcTemplate jdbcTemplate;
     
     @BeforeEach
-    @Sql(scripts = "/insert_data.sql")
     public void setup() {
         System.out.println("Inserting test data");
-        int rowCount = JdbcTestUtils.countRowsInTable(jdbcTemplate, "school_app.students");
+        int rowCount = JdbcTestUtils.countRowsInTable(jdbcTemplate, "testВb.students");
         System.out.println("Rows in students table before test: " + rowCount);
     }
 
     @AfterEach
-    @Sql(scripts = "/reset_tables.sql")
     public void tearDown() {
         System.out.println("Resetting tables");
-        int rowCount = JdbcTestUtils.countRowsInTable(jdbcTemplate, "school_app.students");
+        int rowCount = JdbcTestUtils.countRowsInTable(jdbcTemplate, "testВb.students");
         System.out.println("Rows in students table after reset: " + rowCount);
     }
 
@@ -74,7 +75,7 @@ class StudentDAOTest {
         boolean isCreated = studentDAO.createStudent(student);
         assertTrue(isCreated);
 
-        String sql = "SELECT COUNT(*) FROM school_app.students WHERE first_name = 'John' AND last_name = 'Doe'";
+        String sql = "SELECT COUNT(*) FROM testВb.students WHERE first_name = 'John' AND last_name = 'Doe'";
         int count = jdbcTemplate.queryForObject(sql, Integer.class);
         assertEquals(1, count);
         logger.info("shouldCreateStudent test passed");
