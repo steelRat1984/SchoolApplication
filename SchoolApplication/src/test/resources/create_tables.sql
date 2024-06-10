@@ -23,7 +23,5 @@ CREATE TABLE IF NOT EXISTS school_app.students_courses
 (
     student_id int NOT NULL,
     course_id int NOT NULL,
-    PRIMARY KEY (student_id, course_id),
-    FOREIGN KEY (student_id) REFERENCES school_app.students (student_id),
-    FOREIGN KEY (course_id) REFERENCES school_app.courses (course_id)
+    PRIMARY KEY (student_id, course_id)
 );

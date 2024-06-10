@@ -2,8 +2,10 @@ package ua.foxminded.SchoolApplication.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import ua.foxminded.SchoolApplication.model.Course;
 import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 
@@ -79,6 +82,15 @@ class StudentDAOTest {
         int count = jdbcTemplate.queryForObject(sql, Integer.class);
         assertEquals(1, count);
     }
+    
+    @Test
+    public void shoudReturnStudentByName() {
+    	String firstName = "John";
+    	String lastName = "Doe";
+    	Student student = studentDAO.getStudentByName(firstName, lastName);
+    	assertEquals(firstName, student.getFirstName());
+    	assertEquals(lastName, student.getLastName());
+    }
 
     @Test
     public void shouldReturnAllStudents() {
@@ -88,14 +100,83 @@ class StudentDAOTest {
         assertNotNull(students);
         assertEquals(3, students.size());  // Assuming there are 3 students in the database
 
-        Student foundStudent1 = students.stream().filter(s -> s.getFirstName().equals("John") && s.getLastName().equals("Doe")).findFirst().orElse(null);
-        assertNotNull(foundStudent1);
+        Student exspectedStudent1 = studentDAO.getStudentByName("John", "Doe");
+        Student exspectedStudent2 = studentDAO.getStudentByName("Jane", "Smith");
+        Student exspectedStudent3 = studentDAO.getStudentByName("Emily", "Johnson");
+        assertNotNull(exspectedStudent1);
+        assertNotNull(exspectedStudent2);
+        assertNotNull(exspectedStudent3);        
 
-        Student foundStudent2 = students.stream().filter(s -> s.getFirstName().equals("Jane") && s.getLastName().equals("Smith")).findFirst().orElse(null);
-        assertNotNull(foundStudent2);
-
-        Student foundStudent3 = students.stream().filter(s -> s.getFirstName().equals("Emily") && s.getLastName().equals("Johnson")).findFirst().orElse(null);
-        assertNotNull(foundStudent3);
+    }
+    
+    @Test
+    public void shouldReturnStudentById() {
+        Student actualStudent1 = studentDAO.getStudentByName("John", "Doe");
+        Student actualStudent2 = studentDAO.getStudentByName("Jane", "Smith");
+        Student actualStudent3 = studentDAO.getStudentByName("Emily", "Johnson");
+        Student expectedStudent1 = studentDAO.getStudentById(actualStudent1.getStudentID());
+        Student expectedStudent2 = studentDAO.getStudentById(actualStudent2.getStudentID());
+        Student expectedStudent3 = studentDAO.getStudentById(actualStudent3.getStudentID());
+        assertEquals(expectedStudent1.getStudentID(), actualStudent1.getStudentID());
+        assertEquals(expectedStudent2.getStudentID(), actualStudent2.getStudentID());
+        assertEquals(expectedStudent3.getStudentID(), actualStudent3.getStudentID());
+    }
+    
+    @Test
+    public void shouldDeleteStudentByID() {
+        Student actualStudent1 = studentDAO.getStudentByName("John", "Doe");
+        Student actualStudent2 = studentDAO.getStudentByName("Jane", "Smith");
+        Student actualStudent3 = studentDAO.getStudentByName("Emily", "Johnson");
+        studentDAO.deleteStudentById(actualStudent1.getStudentID());
+        studentDAO.deleteStudentById(actualStudent2.getStudentID());
+        studentDAO.deleteStudentById(actualStudent3.getStudentID());
+        assertNull(studentDAO.getStudentById(actualStudent1.getStudentID()));
+        assertNull(studentDAO.getStudentById(actualStudent2.getStudentID()));
+        assertNull(studentDAO.getStudentById(actualStudent3.getStudentID()));
+    }
+    
+    @Test
+    public void shoudDeleteAssigment () {
+        int studentId = jdbcTemplate.queryForObject("SELECT student_id FROM school_app.students WHERE first_name = 'John' AND last_name = 'Doe'", Integer.class);
+        int courseId = jdbcTemplate.queryForObject("SELECT course_id FROM school_app.courses WHERE course_name = 'Math'", Integer.class);
+        boolean deleted = studentDAO.deleteAssignments(studentId, courseId);
+        assertTrue(deleted);
+        
+        String sql = "SELECT COUNT(*) FROM school_app.students_courses WHERE student_id = (SELECT student_id FROM school_app.students WHERE first_name = 'John' AND last_name = 'Doe') AND course_id = (SELECT course_id FROM school_app.courses WHERE course_name = 'Math')";
+        int counter = jdbcTemplate.queryForObject(sql, Integer.class);
+        assertFalse(counter > 0);
+        
+    }
+    
+    @Test
+    public void shoudDeleteAllAssigmentsByStudentId () {
+    	String sql = "SELECT student_id FROM school_app.students WHERE first_name = 'John' AND last_name = 'Doe'";
+    	int studentId = jdbcTemplate.queryForObject(sql, Integer.class);
+    	studentDAO.deleteAllAssignmentsByStudentId(studentId);
+    	String sql2 = "SELECT COUNT(*) FROM school_app.students_courses WHERE student_id = " + studentId; 
+    	int nunberAssigments = jdbcTemplate.queryForObject(sql2, Integer.class); 
+    	assertTrue(nunberAssigments == 0);
+    }
+    
+    @Test
+    public void shoudCreateAssigment () {
+    	Course physic = new Course(11, "physic", "learning physic");
+    	Course geography = new Course(12, "geography", "learning geography");
+    	List<Course> courses = new ArrayList<Course>();
+    	courses.add(physic);
+    	courses.add(geography);
+    	Student student = new Student(10, new Group(), "Vlad", "Slyvych", courses);
+    	studentDAO.createAssignment(student);
+    	String sqlSelectIdPhysic = "SELECT student_id FROM school_app.students_courses WHERE course_id = " + physic.getCourseID(); 
+    	String sqlSelectIdgeography = "SELECT student_id FROM school_app.students_courses WHERE course_id = " + geography.getCourseID(); 
+    	String sqlSelectNumber = "SELECT COUNT(*) FROM school_app.students_courses WHERE student_id = " + student.getStudentID(); 
+    	int actualStudentIdForPhysic = jdbcTemplate.queryForObject(sqlSelectIdPhysic, Integer.class);
+    	int actualStudentIdForGeography = jdbcTemplate.queryForObject(sqlSelectIdgeography, Integer.class);
+    	int actualStringNumber = jdbcTemplate.queryForObject(sqlSelectNumber, Integer.class);
+    	assertEquals(10, actualStudentIdForPhysic);
+    	assertEquals(10, actualStudentIdForGeography);
+    	assertEquals(2, actualStringNumber);
+    	
     }
     
     }
