@@ -5,8 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -16,7 +15,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.jdbc.JdbcTestUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
@@ -53,21 +51,6 @@ class StudentDAOTest {
         registry.add("spring.datasource.url", () -> "jdbc:tc:postgresql:16.3:///test?currentSchema=school_app&TC_REUSABLE=true");
         registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
         registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
-    }
-
-    
-    @BeforeEach
-    public void setup() {
-        System.out.println("Inserting test data");
-        int rowCount = JdbcTestUtils.countRowsInTable(jdbcTemplate, "school_app.students");
-        System.out.println("Rows in students table before test: " + rowCount);
-    }
-
-    @AfterEach
-    public void tearDown() {
-        System.out.println("Resetting tables");
-        int rowCount = JdbcTestUtils.countRowsInTable(jdbcTemplate, "school_app.students");
-        System.out.println("Rows in students table after reset: " + rowCount);
     }
 
     @Test

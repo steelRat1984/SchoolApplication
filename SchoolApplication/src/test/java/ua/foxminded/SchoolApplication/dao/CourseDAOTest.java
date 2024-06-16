@@ -81,7 +81,7 @@ class CourseDAOTest {
 		assertEquals(expectedCourses.size(), actualCourses.size());
 		assertEquals(expectedCourses, actualCourses);	
 	}
-
+	
 	@Test
     public void shouldReturnAllStudentsOnCourse() {
         List<Student> students = courseDAO.getStudentsOnCourse(1);

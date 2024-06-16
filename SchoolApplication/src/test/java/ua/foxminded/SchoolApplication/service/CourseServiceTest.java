@@ -1,96 +1,104 @@
 package ua.foxminded.SchoolApplication.service;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import ua.foxminded.SchoolApplication.dao.CourseDAO;
 import ua.foxminded.SchoolApplication.model.Course;
-import ua.foxminded.SchoolApplication.model.Group;
 import ua.foxminded.SchoolApplication.model.Student;
 
+@Testcontainers
+@JdbcTest
+@ComponentScan(basePackages = "ua.foxminded.SchoolApplication")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
+@Sql(scripts = { "/create_schema.sql", "/create_tables.sql",
+		"/insert_data.sql" }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "/reset_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 class CourseServiceTest {
 
-	@Mock
+	@Container
+	public static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>("postgres:16.3")
+			.withDatabaseName("test")
+			.withUsername("root")
+			.withPassword("test");
+
+	@Autowired
 	private CourseDAO courseDAO;
 
-	@InjectMocks
+	@Autowired
 	private CourseService courseService;
 
-	@BeforeEach
-	public void setUp() {
-		MockitoAnnotations.openMocks(this);
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+
+	@DynamicPropertySource
+	static void registerPgProperties(DynamicPropertyRegistry registry) {
+		registry.add("spring.datasource.url",
+				() -> "jdbc:tc:postgresql:16.3:///test?currentSchema=school_app&TC_REUSABLE=true");
+		registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
+		registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
 	}
 
 	@Test
-	public void returnCourse_IfCourseExist() {
-		Course expectedCourse = new Course(1, "testCourse", "testDescription");
-		when(courseDAO.getCourseById(1)).thenReturn(expectedCourse);
+	public void returnCourseByCourseId() {
+		Course expectedCourse = new Course(1, "Math", "Mathematics Course");
 		Course actualCourse = courseService.getCourseById(1);
 		assertEquals(expectedCourse, actualCourse);
-		verify(courseDAO).getCourseById(1);
+
 	}
 
 	@Test
-	public void returnAllCourses() {
+	public void shouldReturnAllCourses() {
 		List<Course> expectedCourses = Arrays.asList(
-				new Course(1, "name1", "descripteion1"),
-				new Course(2, "name2", "descripteion2"),
-				new Course(3, "name3", "descripteion3"),
-				new Course(4, "name4", "descripteion4"),
-				new Course(5, "name5", "descripteion5"),
-				new Course(6, "name6", "descripteion6"),
-				new Course(7, "name7", "descripteion7"));
+				new Course(1, "Math", "Mathematics Course"),
+				new Course(2, "Science", "Science Course"));
 
-		when(courseDAO.getAllCourses()).thenReturn(expectedCourses);
 		List<Course> actualCourses = courseService.getAllCourses();
-
 		assertEquals(expectedCourses.size(), actualCourses.size());
 		assertEquals(expectedCourses, actualCourses);
 		assertNotNull(actualCourses);
-		verify(courseDAO).getAllCourses();
 	}
 
 	@Test
-	public void returnStudents_WhenStudentsIsEnrolled() {
-		Course course1 = new Course("course1", "description1");
-		Course course2 = new Course("course2", "description2");
-		List<Student> expectedStudents1 = Arrays.asList(
-				new Student(1, new Group(1, "group_1"), "Vlad", "Slyvych", Arrays.asList(course1)),
-				new Student(2, new Group(5, "group_5"), "Max", "Mad", Arrays.asList(course1)));
-		List<Student> expectedStudents2 = Arrays.asList(
-				new Student(1, new Group(1, "group_1"), "Mykola", "Fox", Arrays.asList(course2)),
-				new Student(2, new Group(5, "group_5"), "Sasha", "Makar", Arrays.asList(course2)));
+	public void ShuldReturnEnroledStudents() {
+		List<Student> students = courseService.getStudentsOnCourse(1);
 
-		when(courseService.getStudentsOnCourse(1)).thenReturn(expectedStudents1);
-		when(courseService.getStudentsOnCourse(2)).thenReturn(expectedStudents2);
-		List<Student> actualStudents1 = courseService.getStudentsOnCourse(1);
-		List<Student> actualStudents2 = courseService.getStudentsOnCourse(2);
+		Student student1 = students.get(0);
+		Student student2 = students.get(1);
 
-		assertEquals(expectedStudents1, actualStudents1);
-		assertEquals(expectedStudents2, actualStudents2);
-		assertEquals(expectedStudents1.size(), actualStudents2.size());
-		assertEquals(expectedStudents2.size(), actualStudents2.size());
-		assertNotEquals(expectedStudents2, actualStudents1);
-		assertNotEquals(expectedStudents1, actualStudents2);
-		verify(courseDAO).getStudentsOnCourse(1);
-		verify(courseDAO).getStudentsOnCourse(2);
-
+		assertEquals(2, students.size());
+		assertEquals("John", student1.getFirstName());
+		assertEquals("Doe", student1.getLastName());
+		assertEquals("Jane", student2.getFirstName());
+		assertEquals("Smith", student2.getLastName());
 	}
 
 	@Test
-	public void shouldDelegateCourseCreationToCourseDAO() {
-		Course course = new Course(1, "Course1", "Description1");
-		courseService.createCourse(course);
-		verify(courseDAO).createCourse(course);
+	public void shoudCreateCourse() {
+		Course expectedCourse = new Course("Physic", "Physic description");
+		courseService.createCourse(expectedCourse);
+        String sql = "SELECT course_id FROM school_app.courses WHERE course_name = 'Physic' AND course_description = 'Physic description'";
+		int courseId = jdbcTemplate.queryForObject(sql, Integer.class);
+		expectedCourse.setCourseID(courseId);
+		Course actualCourse = courseDAO.getCourseById(courseId);
+		assertEquals(expectedCourse, actualCourse);
+		
 	}
 }

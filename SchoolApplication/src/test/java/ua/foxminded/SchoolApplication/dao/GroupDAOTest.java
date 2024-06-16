@@ -66,7 +66,7 @@ class GroupDAOTest {
 		assertEquals(expectedGroup, actualGroup);
 		
 	}
-
+	
 	@Test
 	void ShouldCreateGroup() {
 		Group expectedGroup = new Group();
