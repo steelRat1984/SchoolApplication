@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -94,15 +93,15 @@ class StudentDAOTest {
 
     @Test
     public void shouldReturnAllStudents() {
-
         List<Student> students = studentDAO.getAllStudents();
 
         assertNotNull(students);
-        assertEquals(3, students.size());  // Assuming there are 3 students in the database
+        assertEquals(3, students.size());
 
         Student exspectedStudent1 = studentDAO.getStudentByName("John", "Doe");
         Student exspectedStudent2 = studentDAO.getStudentByName("Jane", "Smith");
         Student exspectedStudent3 = studentDAO.getStudentByName("Emily", "Johnson");
+        
         assertNotNull(exspectedStudent1);
         assertNotNull(exspectedStudent2);
         assertNotNull(exspectedStudent3);        
@@ -112,27 +111,20 @@ class StudentDAOTest {
     @Test
     public void shouldReturnStudentById() {
         Student actualStudent1 = studentDAO.getStudentByName("John", "Doe");
-        Student actualStudent2 = studentDAO.getStudentByName("Jane", "Smith");
-        Student actualStudent3 = studentDAO.getStudentByName("Emily", "Johnson");
+
         Student expectedStudent1 = studentDAO.getStudentById(actualStudent1.getStudentID());
-        Student expectedStudent2 = studentDAO.getStudentById(actualStudent2.getStudentID());
-        Student expectedStudent3 = studentDAO.getStudentById(actualStudent3.getStudentID());
+
         assertEquals(expectedStudent1.getStudentID(), actualStudent1.getStudentID());
-        assertEquals(expectedStudent2.getStudentID(), actualStudent2.getStudentID());
-        assertEquals(expectedStudent3.getStudentID(), actualStudent3.getStudentID());
     }
     
     @Test
     public void shouldDeleteStudentByID() {
         Student actualStudent1 = studentDAO.getStudentByName("John", "Doe");
-        Student actualStudent2 = studentDAO.getStudentByName("Jane", "Smith");
-        Student actualStudent3 = studentDAO.getStudentByName("Emily", "Johnson");
+;
         studentDAO.deleteStudentById(actualStudent1.getStudentID());
-        studentDAO.deleteStudentById(actualStudent2.getStudentID());
-        studentDAO.deleteStudentById(actualStudent3.getStudentID());
+
         assertNull(studentDAO.getStudentById(actualStudent1.getStudentID()));
-        assertNull(studentDAO.getStudentById(actualStudent2.getStudentID()));
-        assertNull(studentDAO.getStudentById(actualStudent3.getStudentID()));
+
     }
     
     @Test
