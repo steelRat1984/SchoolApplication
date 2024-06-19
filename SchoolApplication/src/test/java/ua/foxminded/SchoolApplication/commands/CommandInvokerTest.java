@@ -3,6 +3,9 @@ package ua.foxminded.SchoolApplication.commands;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -13,14 +16,16 @@ import ua.foxminded.SchoolApplication.controller.CommandInvoker;
 
 class CommandInvokerTest {
 	private CommandInvoker commandInvoker;
-	
+
 	@Mock
 	private Command mockCommand;
-	
+
 	@BeforeEach
 	public void setUp() {
 		MockitoAnnotations.openMocks(this);
-		commandInvoker = new CommandInvoker();
+		
+		Map<Integer,Command> commands = new HashMap<Integer, Command>();
+		commandInvoker = new CommandInvoker(commands);
 	}
 
 	@Test

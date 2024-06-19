@@ -51,7 +51,7 @@ class GroupDAOTest {
 	}	
 
 	@Test
-	void ShoudReturnGroupByNumberOfStudents() {
+	void shoudReturnGroupByNumberOfStudents() {
 		List<Group> groups= groupDao.getGroupByNumberOfStudents(1);
 		Group expectedGroup = new Group(2, "Group B");
 		
@@ -60,15 +60,15 @@ class GroupDAOTest {
 	}
 
 	@Test
-	void ShouldRturnGroupById() {
-		Group expectedGroup = new Group(1, "Group A");
+	void shouldReturnGroupById() {
 		Group actualGroup = groupDao.getGroupById(1);
-		assertEquals(expectedGroup, actualGroup);
+		assertEquals(1, actualGroup.getGroupID());
+		assertEquals("Group A", actualGroup.getGroupName());
 		
 	}
 	
 	@Test
-	void ShouldCreateGroup() {
+	void shouldCreateGroup() {
 		Group expectedGroup = new Group();
 		expectedGroup.setGroupName("Group C");
 		groupDao.createGroup(expectedGroup);

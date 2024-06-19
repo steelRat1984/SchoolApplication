@@ -2,7 +2,6 @@ package ua.foxminded.SchoolApplication.dao;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -56,59 +55,78 @@ class CourseDAOTest {
 	@Test
 	public void shouldFindAllCoursesForStudent() {
 		List<Course> courses = courseDAO.getSelectedCoursesForStudent(1);
-		Course course1 = new Course(1, "Math", "Mathematics Course");
-		Course course2 = new Course(2, "Science", "Science Course");
-		
-		assertEquals(2, courses.size());
-		assertTrue(courses.stream().anyMatch(course -> course.equals(course1))); 
-		assertTrue(courses.stream().anyMatch(course -> course.equals(course2))); 
 
+		Course actualCourse1 = courses.stream()
+				.filter(course -> course.getCourseID() == 1)
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Course with ID " + 1 + " not found"));
+
+		Course actualCourse2 = courses.stream()
+				.filter(course -> course.getCourseID() == 2)
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Course with ID " + 2 + " not found"));
+
+		assertEquals(2, courses.size());
+		assertEquals("Math", actualCourse1.getCourseName());
+		assertEquals("Mathematics Course", actualCourse1.getCourseDescription());
+		assertEquals("Science", actualCourse2.getCourseName());
+		assertEquals("Science Course", actualCourse2.getCourseDescription());
 	}
-	
+
 	@Test
 	public void shoudRetyrnCourseById() {
-		Course expectedCourse = new Course(1, "Math", "Mathematics Course");
 		Course actualCourse = courseDAO.getCourseById(1);
-		assertEquals(expectedCourse, actualCourse);
+
+		assertEquals(1, actualCourse.getCourseID());
+		assertEquals("Math", actualCourse.getCourseName());
+		assertEquals("Mathematics Course", actualCourse.getCourseDescription());
 	}
-	
+
 	@Test
 	public void shoudReturnAllCourses() {
-		Course course1 = new Course(1, "Math", "Mathematics Course");
-		Course course2 = new Course(2, "Science", "Science Course");
-		List<Course> expectedCourses = Arrays.asList(course1, course2);
 		List<Course> actualCourses = courseDAO.getAllCourses();
-		assertEquals(expectedCourses.size(), actualCourses.size());
-		assertEquals(expectedCourses, actualCourses);	
+
+		Course actualCourse1 = actualCourses.stream()
+				.filter(course -> course.getCourseID() == 1)
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Course with ID " + 1 + " not found"));
+
+		Course actualCourse2 = actualCourses.stream()
+				.filter(course -> course.getCourseID() == 2)
+				.findFirst()
+				.orElseThrow(() -> new AssertionError("Course with ID " + 1 + " not found"));
+
+		assertEquals(2, actualCourses.size());
+		assertEquals("Math", actualCourse1.getCourseName());
+		assertEquals("Mathematics Course", actualCourse1.getCourseDescription());
+		assertEquals("Science", actualCourse2.getCourseName());
+		assertEquals("Science Course", actualCourse2.getCourseDescription());
 	}
-	
+
 	@Test
-    public void shouldReturnAllStudentsOnCourse() {
-        List<Student> students = courseDAO.getStudentsOnCourse(1);
+	public void shouldReturnAllStudentsOnCourse() {
+		List<Student> students = courseDAO.getStudentsOnCourse(1);
 
-        Student student1 = students.get(0);
-        Student student2 = students.get(1);
+		Student student1 = students.get(0);
+		Student student2 = students.get(1);
 
-        assertEquals(2, students.size());
+		assertEquals(2, students.size());
 
-        assertEquals("John", student1.getFirstName());
-        assertEquals("Doe", student1.getLastName());
+		assertEquals("John", student1.getFirstName());
+		assertEquals("Doe", student1.getLastName());
 
-        assertEquals("Jane", student2.getFirstName());
-        assertEquals("Smith", student2.getLastName());
-	}	
-	
+		assertEquals("Jane", student2.getFirstName());
+		assertEquals("Smith", student2.getLastName());
+	}
+
 	@Test
 	public void shoudCreateCourse() {
 		Course expectedCourse = new Course("Physic", "Physic course");
 		courseDAO.createCourse(expectedCourse);
-        String sql = "SELECT course_id FROM school_app.courses WHERE course_name = 'Physic' AND course_description = 'Physic course'";
+		String sql = "SELECT course_id FROM school_app.courses WHERE course_name = 'Physic' AND course_description = 'Physic course'";
 		int courseId = jdbcTemplate.queryForObject(sql, Integer.class);
 		expectedCourse.setCourseID(courseId);
 		Course actualCourse = courseDAO.getCourseById(courseId);
 		assertEquals(expectedCourse, actualCourse);
-		
-		
-	
 	}
 }
