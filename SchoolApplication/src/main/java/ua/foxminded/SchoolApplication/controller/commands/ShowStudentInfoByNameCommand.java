@@ -24,13 +24,13 @@ public class ShowStudentInfoByNameCommand implements Command {
 		String studentLastName = scanner.nextLine();
 		Student student = studentServices.getStudentByName(studentFirstName, studentLastName);
 		try {
-			System.out.println("infirmation about student :");
+			System.out.println("information about student :");
 			String message = String.format("Student has id: %d, full name: %s %s is studying in group№ %d",
 					student.getStudentID(), student.getFirstName(), student.getLastName(),
 					student.getGroup().getGroupID());
 			System.out.println(message);
 		} catch (NullPointerException e) {
-			String message = String.format("student %s %s was not founded", studentFirstName, studentLastName);
+			String message = String.format("student %s %s was not found", studentFirstName, studentLastName);
 			System.out.println(message);
 		}
 	}
