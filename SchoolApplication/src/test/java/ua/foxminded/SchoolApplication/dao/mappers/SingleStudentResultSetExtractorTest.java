@@ -31,27 +31,27 @@ public class SingleStudentResultSetExtractorTest {
 
 	@InjectMocks
 	private SingleStudentResultSetExtractor extractor;
-	
+
 	private Student student;
-    private Course course1;
-    private Course course2;
+	private Course course1;
+	private Course course2;
 
-	  @BeforeEach
-	    public void setUp() throws SQLException {
-	        MockitoAnnotations.openMocks(this);
-	        
-	        Group group = new Group(1, "Group A");
-	        student = new Student(1, group, "John", "Doe", new ArrayList<>());
-	        course1 = new Course(1, "Math", "Math course");
-	        course2 = new Course(2, "Science", "Science course");
+	@BeforeEach
+	public void setUp() throws SQLException {
+		MockitoAnnotations.openMocks(this);
 
-	        when(studentMapper.mapRow(any(ResultSet.class), anyInt())).thenReturn(student);
-	        when(courseMapper.mapRow(any(ResultSet.class), anyInt())).thenReturn(course1).thenReturn(course2);
+		Group group = new Group(1, "Group A");
+		student = new Student(1, group, "John", "Doe", new ArrayList<>());
+		course1 = new Course(1, "Math", "Math course");
+		course2 = new Course(2, "Science", "Science course");
 
-	        when(rs.next()).thenReturn(true, true, false); 
-	        when(rs.getInt("course_id")).thenReturn(1).thenReturn(2);
-	        when(rs.wasNull()).thenReturn(false);
-	    }
+		when(studentMapper.mapRow(any(ResultSet.class), anyInt())).thenReturn(student);
+		when(courseMapper.mapRow(any(ResultSet.class), anyInt())).thenReturn(course1).thenReturn(course2);
+
+		when(rs.next()).thenReturn(true, true, false);
+		when(rs.getInt("course_id")).thenReturn(1).thenReturn(2);
+		when(rs.wasNull()).thenReturn(false);
+	}
 
 	@Test
 	public void shoudNotReturnNullStudentAndCourses() throws DataAccessException, SQLException {
@@ -62,7 +62,7 @@ public class SingleStudentResultSetExtractorTest {
 	}
 
 	@Test
-	public void shouldReturnCorrectStudentFields() throws DataAccessException, SQLException {
+	public void shouldReturnFieldsOfStudent() throws DataAccessException, SQLException {
 		Student actualStudent = extractor.extractData(rs);
 		assertEquals(1, actualStudent.getStudentID());
 		assertEquals("John", actualStudent.getFirstName());
@@ -71,7 +71,7 @@ public class SingleStudentResultSetExtractorTest {
 	}
 
 	@Test
-	public void shoudReturnCorrectCourseFields() throws DataAccessException, SQLException {
+	public void shoudReturnFieldsOfCourse() throws DataAccessException, SQLException {
 		Student actualStudent = extractor.extractData(rs);
 		Course actualCourse1 = actualStudent.getCourses().stream()
 				.filter(course -> course.getCourseName() == "Math")
