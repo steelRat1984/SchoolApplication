@@ -14,7 +14,7 @@ import ua.foxminded.SchoolApplication.service.CourseService;
 import ua.foxminded.SchoolApplication.service.GroupService;
 import ua.foxminded.SchoolApplication.service.StudentService;
 @Component
-public class Generator {
+public class DataGenerator {
 	private final Random random = new Random();
 	private final StudentService studentService;
 	private final CourseService courseService;
@@ -22,7 +22,7 @@ public class Generator {
 	
 	
 	@Autowired
-	public Generator(StudentService studentService, CourseService courseService, GroupService groupService) {
+	public DataGenerator(StudentService studentService, CourseService courseService, GroupService groupService) {
 		this.studentService = studentService;
 		this.courseService = courseService;
 		this.groupService = groupService;
@@ -101,7 +101,7 @@ public class Generator {
 			int randomFirstNameIndex = random.nextInt(firstName.size());
 			int randomLastNameIndex = random.nextInt(firstName.size());
 			Group group = groups.get(random.nextInt(groups.size()));
-			List<Course> certainCourses = Generator.cutCourseListRandomly(allCourses);
+			List<Course> certainCourses = DataGenerator.cutCourseListRandomly(allCourses);
 			Student student = new Student();
 			student.setStudentID(i + 1);
 			student.setFirstName(firstName.get(randomFirstNameIndex));
