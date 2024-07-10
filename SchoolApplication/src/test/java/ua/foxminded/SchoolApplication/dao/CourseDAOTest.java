@@ -26,7 +26,7 @@ import ua.foxminded.SchoolApplication.model.Student;
 @ComponentScan(basePackages = "ua.foxminded.SchoolApplication")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
-@Sql(scripts = { "/create_schema.sql", "/create_tables.sql",
+@Sql(scripts = {"/create_tables.sql",
 		"/insert_data.sql" }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "/reset_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 

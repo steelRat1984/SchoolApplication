@@ -21,10 +21,10 @@ public class DatabaseChecker {
 
         Map<String, Object> counts = jdbcTemplate.queryForMap(sql);
 
-        int studentCount = ((Integer) counts.get("student_count")).intValue();
-        int groupCount = ((Integer) counts.get("group_count")).intValue();
-        int courseCount = ((Integer) counts.get("course_count")).intValue();
-        int studentCourseCount = ((Integer) counts.get("student_course_count")).intValue();
+        int studentCount = ((Number) counts.get("student_count")).intValue();
+        int groupCount = ((Number) counts.get("group_count")).intValue();
+        int courseCount = ((Number) counts.get("course_count")).intValue();
+        int studentCourseCount = ((Number) counts.get("student_course_count")).intValue();
 
         return studentCount == 0 && groupCount == 0 && courseCount == 0 && studentCourseCount == 0;
     }

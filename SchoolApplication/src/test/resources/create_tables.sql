@@ -1,3 +1,4 @@
+
 CREATE TABLE IF NOT EXISTS school_app.students
 (
     student_id SERIAL PRIMARY KEY,

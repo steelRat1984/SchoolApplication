@@ -11,8 +11,8 @@ import ua.foxminded.SchoolApplication.dao.generation.DataGenerator;
 @RequiredArgsConstructor
 public class DataInitializer implements ApplicationRunner {
 
-	private static DatabaseChecker databaseChecker;
-	private static DataGenerator generator;
+	private final DatabaseChecker databaseChecker;
+	private final DataGenerator generator;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
